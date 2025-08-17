@@ -9,6 +9,9 @@ const theme = createTheme({
       main: "#9c27b0",
     },
   },
+  typography: {
+    fontFamily: "Prata, serif",
+  },
   components: {
     MuiButton: {
       defaultProps: {

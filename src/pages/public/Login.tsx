@@ -40,12 +40,14 @@ const Login: React.FC = () => {
         backgroundRepeat: "no-repeat",
       }}
     >
+       <div className="absolute inset-0 bg-black opacity-30"></div>
       <Box
         width="40rem"
         bgcolor="rgba(255, 255, 255, 0.8)"
         p={6}
         borderRadius={2}
         boxShadow={3}
+        zIndex={1}
       >
         <Typography variant="h4" mb={3} textAlign="center" fontWeight="bold">
           Login Page

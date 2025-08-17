@@ -1,9 +1,11 @@
 import { Routes, Route } from "react-router-dom";
 import PublicRoute from "./PublicRoutes";
 import { lazy, Suspense } from "react";
+import PrivateRoute from "./PrivateRoutes";
 
 const Login = lazy(() => import("../pages/public/Login"));
 const Register = lazy(() => import("../pages/public/Register"));
+const Dashboard = lazy(() => import("../pages/private/Dashboard"))
 
 function AppRoutes() {
   return (
@@ -15,7 +17,7 @@ function AppRoutes() {
         <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
 
         {/* Private Routes */}
-        {/* <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} /> */}
+        <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
       </Routes>
     </Suspense>
   );
