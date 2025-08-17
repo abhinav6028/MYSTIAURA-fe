@@ -1,17 +1,23 @@
 import { Routes, Route } from "react-router-dom";
-import Login from "../pages/public/Login";
 import PublicRoute from "./PublicRoutes";
+import { lazy, Suspense } from "react";
+
+const Login = lazy(() => import("../pages/public/Login"));
+const Register = lazy(() => import("../pages/public/Register"));
 
 function AppRoutes() {
   return (
-    <Routes>
-      {/* Public Routes */}
-      <Route path="/" element={<Login />} />
-      <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+    <Suspense fallback={<div>Loading...</div>}>
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+        <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
 
-      {/* Private Routes */}
-      {/* <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} /> */}
-    </Routes>
+        {/* Private Routes */}
+        {/* <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} /> */}
+      </Routes>
+    </Suspense>
   );
 }
 
