@@ -5,9 +5,12 @@ import PrivateRoute from "./PrivateRoutes";
 
 const Login = lazy(() => import("../pages/public/Login"));
 const Register = lazy(() => import("../pages/public/Register"));
-const Dashboard = lazy(() => import("../pages/private/Dashboard"))
+const Dashboard = lazy(() => import("../pages/private/Dashboard"));
+const ProductListingPage = lazy(() => import("../pages/private/Inventory"));
+const HomePage = lazy(() => import("../pages/private/HomePage"));
 
 function AppRoutes() {
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
@@ -17,7 +20,11 @@ function AppRoutes() {
         <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
 
         {/* Private Routes */}
-        <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+        <Route path="/" element={<PrivateRoute roles={["admin"]}><Dashboard /></PrivateRoute>} >
+          <Route index element={<HomePage />} />
+          <Route path="home" element={<HomePage />} />
+          <Route path="inventory" element={<ProductListingPage />} />
+        </Route>
       </Routes>
     </Suspense>
   );

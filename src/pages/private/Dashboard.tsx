@@ -1,12 +1,12 @@
 import Header from './Header'
 import Footer from './Footer'
-import ProductListingPage from './Inventory'
+import { Outlet } from 'react-router-dom'
 
 const Dashboard = () => {
     return (
         <div>
             <Header />
-            <ProductListingPage />
+            <Outlet />
             <Footer />
         </div>
     )

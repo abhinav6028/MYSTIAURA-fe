@@ -52,8 +52,8 @@ const Footer: React.FC = () => {
             <div className="bg-[#b48d72] text-white py-6 px-10 xl:px-20">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     {
-                        topInfoRow.map((val) => {
-                            return <div className="flex items-center gap-5">
+                        topInfoRow.map((val,index) => {
+                            return <div className="flex items-center gap-5" key={index}>
                                 <div>
                                     <img src={val.image} alt="img" />
                                 </div>

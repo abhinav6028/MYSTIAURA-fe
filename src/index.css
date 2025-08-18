@@ -1,6 +1,13 @@
 @import "tailwindcss";
 
+*,
 *::before,
 *::after {
   box-sizing: border-box;
+  font-family: "Prata", serif;
+}
+
+
+@theme {
+  --color-primary: #B38D70;
 }
