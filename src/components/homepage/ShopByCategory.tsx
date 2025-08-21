@@ -11,8 +11,8 @@ const categories = [
 const ShopByCategory = () => {
   return (
     <div className="py-10">
-        <h1 className="text-4xl mb-8">Shop By Category</h1>
-        <div className="grid grid-cols-[65%_35%] space-x-10">
+        <h1 className="text-2xl md:text-4xl mb-8">Shop By Category</h1>
+        <div className="grid grid-cols-1 md:grid-cols-[65%_35%] md:space-x-10">
             <div className="flex flex-col justify-between">
                 {
                     categories?.map((val)=>{

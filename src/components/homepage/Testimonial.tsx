@@ -20,8 +20,8 @@ const testimonialsData = [
 
 const Testimonial: React.FC = () => {
   return (
-    <section className="py-16 bg-beige-100 px-6 lg:px-20">
-      <h2 className="text-3xl font-serif mb-10">Testimonials</h2>
+    <section className="py-5 md:py-16 bg-beige-100 px-5 md:px-10 lg:px-20">
+      <h2 className="text-2xl md:text-3xl font-serif mb-10">Testimonials</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {testimonialsData.map((t, i) => (
           <div

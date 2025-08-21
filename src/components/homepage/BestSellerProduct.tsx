@@ -38,7 +38,7 @@ const bestSellerData = [
 const BestSellerProduct = () => {
     return (
         <div className='pb-8'>
-            <h1 className="text-4xl mb-8">Best Seller Products</h1>
+            <h1 className="text-2xl md:text-3xl mb-8">Best Seller Products</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                 {bestSellerData?.map((val, index) => (
                     <div key={index} className="flex flex-col mb-3 shadow-sm">

@@ -8,7 +8,7 @@ interface LayoutContainerProps {
 
 const LayoutContainer = ({ children, className }: LayoutContainerProps) => {
   return (
-    <div className={clsx("px-10 lg:px-20", className)}>
+    <div className={clsx("px-5 md:px-10 lg:px-20", className)}>
       {children}
     </div>
   );
