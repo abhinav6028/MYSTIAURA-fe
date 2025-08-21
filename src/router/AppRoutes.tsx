@@ -8,6 +8,7 @@ const Register = lazy(() => import("../pages/public/Register"));
 const Dashboard = lazy(() => import("../pages/private/Dashboard"));
 const ProductListingPage = lazy(() => import("../pages/private/Inventory"));
 const HomePage = lazy(() => import("../pages/private/HomePage"));
+const SingleProductDetails = lazy(() => import("../pages/private/ProductDetails"));
 
 function AppRoutes() {
 
@@ -20,10 +21,11 @@ function AppRoutes() {
         <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
 
         {/* Private Routes */}
-        <Route path="/" element={<PrivateRoute roles={["admin"]}><Dashboard /></PrivateRoute>} >
+        <Route path="/" element={<PrivateRoute roles={["users"]}><Dashboard /></PrivateRoute>} >
           <Route index element={<HomePage />} />
           <Route path="home" element={<HomePage />} />
           <Route path="inventory" element={<ProductListingPage />} />
+          <Route path="product-details" element={<SingleProductDetails />} />
         </Route>
       </Routes>
     </Suspense>

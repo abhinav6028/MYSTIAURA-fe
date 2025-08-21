@@ -1,16 +1,17 @@
 import React from "react";
+import { Avatar } from "@mui/material";
 
 const testimonialsData = [
   {
     name: "Ralph Edwards",
-    image: "",
+    image: "https://i.pravatar.cc/40?img=",
     quote: "Luxury and elegance in every piece!",
     description:
       "The attention to detail in every piece is breathtaking—truly a work of art.",
   },
   {
     name: "Eleanor Pena",
-    image: "",
+    image: "https://i.pravatar.cc/40?img=",
     quote: "Perfect gift for my loved ones!",
     description:
       "The intricate details and premium finish make every piece a memorable keepsake.",
@@ -28,18 +29,14 @@ const Testimonial: React.FC = () => {
             className="bg-white p-6 rounded-lg shadow-md"
           >
             <div className="flex items-center mb-4">
-              <img
-                src={t.image}
-                alt={t.name}
-                className="w-10 h-10 rounded-full mr-3"
-              />
-              <span className="font-semibold">{t.name}</span>
+              <Avatar src={`${t.image}${i + 1}`} />
+              <span className="font-semibold pl-3">{t.name}</span>
             </div>
             <h3 className="text-lg font-serif mb-2">&quot;{t.quote}&quot;</h3>
             <p className="text-sm text-gray-600 mb-3">{t.description}</p>
             <div className="flex space-x-1 text-yellow-500">
               {Array.from({ length: 5 }).map((_, starIndex) => (
-                <span key={starIndex}>★</span>
+                <span key={starIndex} className="text-2xl">★</span>
               ))}
             </div>
           </div>
