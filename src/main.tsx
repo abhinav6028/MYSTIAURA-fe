@@ -17,8 +17,8 @@ createRoot(document.getElementById('root')!).render(
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <QueryClientProvider client={queryClient}>
-           <ThemeProvider theme={theme}>
-          <App />
+          <ThemeProvider theme={theme}>
+            <App />
           </ThemeProvider>
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>

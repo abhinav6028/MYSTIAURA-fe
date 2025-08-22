@@ -16,8 +16,8 @@ type FormData = yup.InferType<typeof schema>;
 
 const Login: React.FC = () => {
 
-   const [showPassword, setShowPassword] = useState(false);
-   
+  const [showPassword, setShowPassword] = useState(false);
+
   const {
     handleSubmit,
     control,
@@ -29,7 +29,6 @@ const Login: React.FC = () => {
   const onSubmit = (data: FormData) => {
     console.log("Form Data:", data);
   };
-
   return (
     <div
       className="w-full h-screen flex justify-center items-center"
@@ -40,7 +39,7 @@ const Login: React.FC = () => {
         backgroundRepeat: "no-repeat",
       }}
     >
-       <div className="absolute inset-0 bg-black opacity-30"></div>
+      <div className="absolute inset-0 bg-black opacity-30"></div>
       <Box
         width="40rem"
         bgcolor="rgba(255, 255, 255, 0.8)"
@@ -99,6 +98,7 @@ const Login: React.FC = () => {
               />
             )}
           />
+          <button>Login with google</button>
 
           <Button
             type="submit"
@@ -108,6 +108,15 @@ const Login: React.FC = () => {
             sx={{ mt: 3 }}
           >
             Login
+          </Button>
+
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            sx={{ mt: 2 }}
+          >
+            Login With Google
           </Button>
         </form>
       </Box>
