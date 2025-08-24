@@ -17,7 +17,7 @@ export default function Sidebar() {
     const pathName = useLocation();
 
     return (
-        <div className="w-64 h-screen border-r bg-white border-gray-200 flex flex-col">
+        <div className="w-64 h-screen border-r bg-white border-gray-200 flex flex-col ">
             {/* Header */}
             <div className="p-6 border-b  border-gray-200 py-10 mx-4">
                 <h1 className="text-xl font-bold text-gray-800">
@@ -33,7 +33,7 @@ export default function Sidebar() {
                         return (
                             <li key={index} className="relative cursor-pointer" onClick={() => item.path && navigate(item.path)}>
                                 <p
-                                    style={{ fontFamily: 'GFS Didot' }}
+                                    style={{  }}
                                     className={`flex items-center gap-3 px-3 py-3 rounded-lg transition-colors ${pathName?.pathname == item?.path
                                         ? "text-gray-900 bg-gray-50"
                                         : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
@@ -44,7 +44,7 @@ export default function Sidebar() {
                                 </p>
                                 {/* Active indicator */}
                                 {pathName?.pathname == item?.path && (
-                                    <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-1 h-10 bg-blue-500 rounded-l-full"></div>
+                                    <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-1 h-10 bg-blue-700 rounded-l-full"></div>
                                 )}
                             </li>
                         )

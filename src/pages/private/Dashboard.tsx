@@ -14,10 +14,10 @@ const Dashboard = () => {
                 pathName?.pathname?.split('/').includes('admin') ? <SideBar /> : <Header />
             }
 
-            <div className='flex-1'>
-
+            <div
+                className={`flex-1 ${pathName?.pathname?.split('/').includes('admin') ? 'bg-[#F6F6F6]' : ''}`}
+            >
                 <Outlet />
-                
             </div>
 
             {
