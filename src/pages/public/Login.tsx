@@ -1,26 +1,52 @@
-import React, { useState } from "react";
-import banner from "../../assets/banner.jpg";
-import { Box, Typography, TextField, Button, InputAdornment, IconButton } from "@mui/material";
-import { Controller, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { useState } from 'react';
+import Header from '../private/Header';
+import LayoutContainer from '../../components/layout/LayoutContainer';
+import HeroBannerSection from '../../components/homepage/HeroBannerSection';
+import ShopByCategory from '../../components/homepage/ShopByCategory';
+import ShopByShape from '../../components/homepage/ShopByShape';
+import { Dialog } from "@mui/material";
+import { Controller, useForm } from 'react-hook-form';
 import * as yup from "yup";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Eye, EyeOff } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
+import { PRIMARY_COLOUR } from '../../utils';
 
-// Validation Schema
-const schema = yup.object({
-  email: yup.string().email("Invalid email").required("Email is required"),
-  password: yup.string().min(6, "Minimum 6 characters").required("Password is required"),
-});
 
-type FormData = yup.InferType<typeof schema>;
 
-const Login: React.FC = () => {
+export default function Login() {
+
+  console.log("PRIMARY_COLOUR", PRIMARY_COLOUR);
+
 
   const [showPassword, setShowPassword] = useState(false);
+
+  const fetchPosts = async () => {
+    const res = await fetch("https://jsonplaceholder.typicode.com/posts");
+    if (!res.ok) {
+      throw new Error("Failed to fetch posts");
+    }
+    return res.json();
+  };
+
+  const { data, error, isLoading, isError, refetch } = useQuery({
+    queryKey: ["posts"],
+    queryFn: fetchPosts,
+    enabled: false
+  });
+
+  // Validation Schema
+  const schema = yup.object({
+    email: yup.string().email("Invalid email").required("Email is required"),
+    password: yup.string().min(6, "Minimum 6 characters").required("Password is required"),
+  });
+
+  type FormData = yup.InferType<typeof schema>;
 
   const {
     handleSubmit,
     control,
+    formState: { errors }
   } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
@@ -29,99 +55,123 @@ const Login: React.FC = () => {
   const onSubmit = (data: FormData) => {
     console.log("Form Data:", data);
   };
+
   return (
-    <div
-      className="w-full h-screen flex justify-center items-center"
-      style={{
-        background: `url(${banner})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
-      <div className="absolute inset-0 bg-black opacity-30"></div>
-      <Box
-        width="40rem"
-        bgcolor="rgba(255, 255, 255, 0.8)"
-        p={6}
-        borderRadius={2}
-        boxShadow={3}
-        zIndex={1}
-      >
-        <Typography variant="h4" mb={3} textAlign="center" fontWeight="bold">
-          Login Page
-        </Typography>
+    <div className="w-full">
+      <Dialog open={true}>
+        <div className="fixed inset-0 flex md:items-center items-baseline-last justify-center bg-opacity-100 z-50">
+          <div className="bg-white w-[100%] md:w-[500px] shadow-lg p-6 relative">
+            {/* Title */}
+            <h2 style={{ fontFamily: 'Prata' }} className="lg:text-3xl text-2xl font-medium text-gray-900 md:mb-1">Welcome</h2>
+            <p className="text-gray-600 sm:text-lg md:mb-4 mb-2">Please login here</p>
 
-        <form onSubmit={handleSubmit(onSubmit)} noValidate>
-          <Controller
-            name="email"
-            control={control}
-            defaultValue=""
-            render={({ field, fieldState }) => (
-              <TextField
-                {...field} // includes value, onChange, onBlur
-                label="Email"
-                fullWidth
-                margin="normal"
-                size="small"
-                error={!!fieldState.error}
-                helperText={fieldState.error?.message}
-              />
-            )}
-          />
+            <form onSubmit={handleSubmit(onSubmit)} noValidate>
+              {/* Email Field */}
+              <div className="mb-3">
+                <label className="block text-gray-700 mb-2">Email Address</label>
+                <Controller
+                  name="email"
+                  control={control}
+                  render={({ field, fieldState }) => (
+                    <>
+                      <input
+                        {...field}
+                        type="email"
+                        placeholder="alexa.williams@example.com"
+                        className={`w-full border px-4 py-2 focus:outline-none focus:ring-0 ${fieldState.error ? "border-red-500" : "border-gray-300"
+                          }`}
+                      />
+                      {fieldState.error && (
+                        <p className="text-red-500 text-sm mt-1">{fieldState.error.message}</p>
+                      )}
+                    </>
+                  )}
+                />
+              </div>
 
-          <Controller
-            name="password"
-            control={control}
-            render={({ field, fieldState }) => (
-              <TextField
-                {...field}
-                label="Password"
-                type={showPassword ? "text" : "password"}
-                fullWidth
-                margin="normal"
-                size="small"
-                error={!!fieldState.error}
-                helperText={fieldState.error?.message}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        onClick={() => setShowPassword((prev) => !prev)}
-                        edge="end"
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            )}
-          />
-          <button>Login with google</button>
+              {/* Password Field */}
+              <div className="md:mb-4 mb-2">
+                <label className="block text-gray-700 mb-2">Password</label>
+                <Controller
+                  name="password"
+                  control={control}
+                  render={({ field, fieldState }) => (
+                    <>
+                      <div className="relative">
+                        <input
+                          {...field}
+                          type={showPassword ? "text" : "password"}
+                          placeholder="••••••••"
+                          className={`w-full border px-4 py-2 pr-10 focus:outline-none focus:ring-0 ${fieldState.error ? "border-red-500" : "border-gray-300"
+                            }`}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowPassword(!showPassword)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                        >
+                          {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                        </button>
+                      </div>
+                      {fieldState.error && (
+                        <p className="text-red-500 text-sm mt-1">{fieldState.error.message}</p>
+                      )}
+                    </>
+                  )}
+                />
+              </div>
 
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            fullWidth
-            sx={{ mt: 3 }}
-          >
-            Login
-          </Button>
+              {/* Remember Me & Forgot Password */}
+              <div className="flex items-center justify-between md:mb-5 mb-4">
+                <label className="flex items-center text-gray-700">
+                  <input
+                    type="checkbox"
+                    defaultChecked
+                    className="w-4 h-4 text-[#660033] border-gray-300 focus:ring-[#660033]"
+                  />
+                  <span className="ml-2">Remember Me</span>
+                </label>
+                <a href="#" className="text-[#660033] hover:underline text-sm">
+                  Forgot Password?
+                </a>
+              </div>
 
-          <Button
-            variant="contained"
-            color="primary"
-            fullWidth
-            sx={{ mt: 2 }}
-          >
-            Login With Google
-          </Button>
-        </form>
-      </Box>
+              {/* Login Button */}
+              <button
+                type="submit"
+                className="w-full bg-[#660033] text-white font-semibold py-3 cursor-pointer hover:bg-[#51052b] md:mb-4 mb-2 transition"
+              >
+                LOGIN
+              </button>
+
+              {/* Register Button */}
+              <button
+                type="button"
+                className="w-full border border-[#660033] text-[#660033] font-semibold py-3 md:mb-4 mb-2 hover:border-[#51052b] cursor-pointer hover:text-[#51052b] transition"
+              >
+                REGISTER
+              </button>
+
+              <button
+                onClick={() => refetch()}
+                type="button"
+                className="w-full border border-[PRIMARY_COLOUR] text-[#660033] font-semibold py-3 hover:border-[#51052b] cursor-pointer hover:text-[#51052b] transition"
+              >
+                LOGIN WITH GOOGLE
+              </button>
+            </form>
+          </div>
+        </div>
+      </Dialog>
+
+      <div>
+        <Header />
+        <LayoutContainer>
+          <HeroBannerSection />
+          <ShopByCategory />
+          <ShopByShape />
+        </LayoutContainer>
+      </div>
     </div>
   );
-};
-
-export default Login;
+}

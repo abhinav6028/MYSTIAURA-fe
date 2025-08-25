@@ -20,7 +20,7 @@ function App() {
 
 
   return (
-    <Router>.
+    <Router>
       <AppRoutes />
     </Router>
   )
