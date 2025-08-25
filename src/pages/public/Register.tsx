@@ -6,21 +6,21 @@ import ShopByCategory from "../../components/homepage/ShopByCategory";
 import ShopByShape from "../../components/homepage/ShopByShape";
 import SendOtpForm from "./Components/SendOtpForm";
 import VerifyOtpForm from "./Components/VerifyOtpForm";
+import PasswordSection from "./Components/PasswordSection";
 
 const Register: React.FC = () => {
 
-  const [showForms, setShowForm] = useState(1)
+  const [showForms, setShowForm] = useState(3)
 
 
-  return (
+  return ( 
     <div className="w-full">
 
       {showForms === 1 && <SendOtpForm setShowForm={setShowForm} />}
 
       {showForms === 2 && <VerifyOtpForm setShowForm={setShowForm} />}
 
-
-      {/* VerifyOtpForm */}
+      {showForms === 3 && <PasswordSection setShowForm={setShowForm} />}
 
       <div>
         <Header />

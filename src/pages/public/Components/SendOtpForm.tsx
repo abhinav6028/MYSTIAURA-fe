@@ -15,7 +15,6 @@ type FormData = yup.InferType<typeof schema>;
 
 export default function SendOtpForm({ setShowForm }) {
 
-
     const navigate = useNavigate()
 
     const { handleSubmit, control } = useForm<FormData>({
@@ -24,7 +23,7 @@ export default function SendOtpForm({ setShowForm }) {
 
     const onSubmit = (data: FormData) => {
         console.log("Register Data:", data);
-        setShowForm(2)
+        setShowForm(3)
     };
 
     return (
