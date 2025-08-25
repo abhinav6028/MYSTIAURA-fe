@@ -36,8 +36,6 @@ function AppRoutes() {
           <Route path="admin/users/create" element={<>Create Users</>} />
           <Route path="admin/orders" element={<Orders />} />
           <Route path="admin/orders/create" element={<CreateOrders />} />
-
-          {/* CreateOrders */}
         </Route>
       </Routes>
     </Suspense>
