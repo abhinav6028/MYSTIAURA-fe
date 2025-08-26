@@ -11,10 +11,6 @@ import LoginForm from './Components/LoginForm';
 
 export default function Login() {
 
-
-
- 
-
   const fetchPosts = async () => {
     const res = await fetch("https://jsonplaceholder.typicode.com/posts");
     if (!res.ok) {
@@ -29,13 +25,17 @@ export default function Login() {
     enabled: false
   });
 
-  // Validation Schema
+  const [showForms, setShowForm] = useState(1)
+
 
 
   return (
     <div className="w-full">
 
-      <LoginForm />
+      {showForms && <LoginForm setShowForm={setShowForm} />}
+
+      {/* {showForms && <LoginForm setShowForm={setShowForm} />} */}
+
 
       <div>
         <Header />

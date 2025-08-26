@@ -10,7 +10,7 @@ import PasswordSection from "./Components/PasswordSection";
 
 const Register: React.FC = () => {
 
-  const [showForms, setShowForm] = useState(3)
+  const [showForms, setShowForm] = useState(1)
 
 
   return ( 

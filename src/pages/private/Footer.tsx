@@ -16,6 +16,7 @@ import paypalSvg from "../../assets/footer/paypal.svg";
 import amexSvg from "../../assets/footer/amex.svg";
 import discoverSvg from "../../assets/footer/discover.svg";
 import mastercardSvg from "../../assets/footer/mastercard.svg";
+import { FONT_FAMILY, PRIMARY_COLOUR } from "../../utils";
 
 const topInfoRow = [
     {
@@ -49,10 +50,10 @@ const Footer: React.FC = () => {
     return (
         <footer className="w-full">
             {/* Top Info Row */}
-            <div className="bg-[#b48d72] text-white py-6 px-10 xl:px-20">
+            <div style={{ background: PRIMARY_COLOUR }} className="text-white py-6 px-10 xl:px-20">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     {
-                        topInfoRow.map((val,index) => {
+                        topInfoRow.map((val, index) => {
                             return <div className="flex items-center gap-5" key={index}>
                                 <div>
                                     <img src={val.image} alt="img" />
@@ -73,22 +74,22 @@ const Footer: React.FC = () => {
                     {/* Contact */}
                     <div className="flex justify-center flex-col">
                         <h3 className="font-bold mb-2">CONTACT US</h3>
-                        <p>(405) 555-0128</p>
+                        <p style={{ color: PRIMARY_COLOUR }}>(405) 555-0128</p>
                     </div>
 
                     {/* Subscribe */}
                     <div>
-                        <h3 className="font-bold text-xl mb-2">Let’s Get In Touch!</h3>
-                        <p className="text-sm mb-4">
+                        <h3 style={{ fontFamily: FONT_FAMILY }} className="font-bold md:text-3xl text-xl mb-2">Let’s Get In Touch!</h3>
+                        <p style={{ color: PRIMARY_COLOUR }} className="text-sm mb-4">
                             What’s inside? Exclusive sales, new arrivals & much more.
                         </p>
                         <div className="flex justify-center md:justify-start">
                             <input
                                 type="email"
                                 placeholder="Email Address"
-                                className="border border-gray-300 px-3 py-2 w-2/3 rounded-l-md focus:outline-none"
+                                className="border border-gray-300 px-3 py-3 w-2/4 focus:outline-none"
                             />
-                            <button className="bg-[#b48d72] text-white px-4 rounded-r-md">
+                            <button style={{ background: PRIMARY_COLOUR }} className=" text-white px-8">
                                 SIGN UP
                             </button>
                         </div>
@@ -123,7 +124,7 @@ const Footer: React.FC = () => {
             </div>
 
             {/* Copyright + Payment */}
-            <div className="bg-[#b48d72] text-white text-sm py-4">
+            <div style={{ background: PRIMARY_COLOUR }} className=" text-white text-sm py-4">
                 <div className="px-10 xl:px-20 flex flex-col md:flex-row justify-between items-center gap-4">
                     <p>Copyright © 2025 PeariGem. All Rights Reserved.</p>
                     <div className="flex gap-4 items-center">

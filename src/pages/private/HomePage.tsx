@@ -12,15 +12,16 @@ import LayoutContainer from "../../components/layout/LayoutContainer"
 const HomePage = () => {
     return (
         <div>
+
             <LayoutContainer>
                 <HeroBannerSection />
                 <ShopByCategory />
-                <ShopByShape />
+                {/* <ShopByShape /> */}
                 <BestSellerProduct />
             </LayoutContainer>
             <SectionSix />
             <LayoutContainer>
-                <PopularProducts />
+                {/* <PopularProducts /> */}
                 <StunningBanner />
             </LayoutContainer>
             <Testimonial />

@@ -7,6 +7,9 @@ import CreateProduct from "../pages/Admin/Products/CreateProduct";
 import UsersTable from "../pages/Admin/Users/UsersTable";
 import Orders from "../pages/Admin/Orders/Orders";
 import CreateOrders from "../pages/Admin/Orders/CreateOrders";
+import ProductDetailPage from "../pages/ProductDetailPage/ProductDetailPage";
+import MyCart from "../pages/MyCart/MyCart";
+
 
 const Login = lazy(() => import("../pages/public/Login"));
 const Register = lazy(() => import("../pages/public/Register"));
@@ -29,6 +32,10 @@ function AppRoutes() {
           <Route index element={<HomePage />} />
           <Route path="home" element={<HomePage />} />
           <Route path="inventory" element={<ProductListingPage />} />
+          <Route path="productdetailPage" element={<ProductDetailPage />} />
+          <Route path="mycart" element={<MyCart />} />
+
+          {/* ProductDetailPage */}
           <Route path="admin/dashboard" element={<>ADMIN DASHBOARD</>} />
           <Route path="admin/products" element={<Products />} />
           <Route path="admin/products/create" element={<CreateProduct />} />

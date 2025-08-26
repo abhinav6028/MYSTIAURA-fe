@@ -1,23 +1,47 @@
-import React from "react";
-import { Button } from "@mui/material";
+import React, { useState } from "react";
+import { Button, MenuItem, Select } from "@mui/material";
 import SidebarFilters from "../../components/inventory/InventorySideFilter";
 import ProductGrid from "../../components/inventory/ProductGrid";
+import { PRIMARY_COLOUR } from "../../utils";
+import { ListFilter } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const ProductListingPage: React.FC = () => {
+
+  const [lang, setLang] = useState("EN");
+
+  const navigate = useNavigate()
+
+  // ProductdetailPage
+
   return (
     <div className="flex">
       {/* Sidebar */}
-      <SidebarFilters />
+      <div className="hidden lg:block">
+        <SidebarFilters />
+      </div>
 
       {/* Products */}
       <main className="flex-1 p-6">
         <div className="flex justify-between items-center mb-6">
           <p className="text-gray-600">Showing 1-10 of 60 results</p>
           <div className="flex gap-3">
-            <Button variant="outlined">Filter</Button>
-            <Button variant="outlined">Sort by Popularity</Button>
+            <button style={{ background: PRIMARY_COLOUR, }} className="text-white px-3 md:px-5 flex items-center gap-1.5 cursor-pointer"> <ListFilter size={16} /> Filter</button>
+            <Select
+              value={lang}
+              onChange={(e) => setLang(e.target.value)}
+              variant="standard"
+              disableUnderline
+              className="text-sm border px-3"
+            >
+              <MenuItem value="EN">Sort by Popularity</MenuItem>
+              <MenuItem value="FR">FR</MenuItem>
+              <MenuItem value="ES">ES</MenuItem>
+            </Select>
+
           </div>
         </div>
+
         <ProductGrid />
       </main>
     </div>

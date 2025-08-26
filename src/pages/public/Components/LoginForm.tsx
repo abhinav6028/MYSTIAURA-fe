@@ -6,7 +6,7 @@ import { Eye, EyeOff } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
-export default function LoginForm() {
+export default function LoginForm({ setShowForm }) {
 
 
     const navigate = useNavigate()
@@ -107,9 +107,9 @@ export default function LoginForm() {
                                 />
                                 <span className="ml-2">Remember Me</span>
                             </label>
-                            <a href="#" className="text-[#660033] hover:underline text-sm">
+                            <p onClick={() => setShowPassword(2)} className="text-[#660033] cursor-pointer hover:underline text-sm">
                                 Forgot Password?
-                            </a>
+                            </p>
                         </div>
 
                         {/* Login Button */}
