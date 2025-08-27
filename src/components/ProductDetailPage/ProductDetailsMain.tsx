@@ -188,6 +188,7 @@ import ring from "../../assets/homepage/bestseller1.png";
 import category from "../../assets/homepage/selectcategory.jpg";
 import { FONT_FAMILY, PRIMARY_COLOUR } from "../../utils";
 import ReviewModal from "./ReviewModal";
+import { useNavigate } from "react-router-dom";
 
 const RING_SIZES = Array.from({ length: (8 - 4) / 0.5 + 1 }, (_, i) => 4 + i * 0.5);
 
@@ -198,7 +199,9 @@ const ProductDetailsMain = () => {
     const handleChange = (e: any) => {
         setRingSize(e.target.value as number);
     };
+    // selectadress
 
+    const navigaet = useNavigate()
 
 
     const compareSection = [
@@ -211,7 +214,7 @@ const ProductDetailsMain = () => {
     return (
         <div className="pt-10 px-4 md:px-10 lg:px-10">
 
-          
+
 
             {/* Main grid: images + details */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -305,6 +308,7 @@ const ProductDetailsMain = () => {
                     </div>
 
                     <Button
+                        onClick={() => navigaet('/selectadress')}
                         variant="outlined"
                         sx={{ width: "100%", height: "42px", fontFamily: "sans-serif", borderRadius: 0, borderColor: PRIMARY_COLOUR, color: PRIMARY_COLOUR }}
                     >
@@ -345,14 +349,14 @@ const ProductDetailsMain = () => {
                         </div>
 
                         {/* COMPARE */}
-                        <div className="flex items-center gap-5 py-5 border-b border-b-gray-300">
+                        {/* <div className="flex items-center gap-5 py-5 border-b border-b-gray-300">
                             {compareSection.map((val, index) => {
                                 return <div key={index} className="flex items-center gap-3">
                                     <span>{val.image}</span>
                                     <h3>{val.title}</h3>
                                 </div>
                             })}
-                        </div>
+                        </div> */}
 
                         {/* SHIPPING COUNT */}
                         {/* <div className="py-5 border-b border-b-gray-400">

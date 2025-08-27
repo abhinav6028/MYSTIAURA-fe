@@ -15,6 +15,7 @@ import bestSeller2 from "../../assets/homepage/bestseller2 (4).png";
 import LayoutContainer from "../../components/layout/LayoutContainer";
 import { Trash, X } from "lucide-react";
 import { FONT_FAMILY, PRIMARY_COLOUR } from "../../utils";
+import { useNavigate } from "react-router-dom";
 // import { LiaShippingFastSolid } from "react-icons/lia";
 // import { IoMdClose } from "react-icons/io";
 // import { RiDeleteBinLine } from "react-icons/ri";
@@ -75,6 +76,8 @@ const MyCart = () => {
         setCart((prev) => prev.filter((item) => item.id !== id));
     };
 
+    const navigate = useNavigate()
+
     return (
         <LayoutContainer>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 my-10">
@@ -95,7 +98,6 @@ const MyCart = () => {
                             </span>
 
                             <p
-
                                 style={{ color: PRIMARY_COLOUR, border: `1px solid ${PRIMARY_COLOUR}` }}
                                 className="text-white py-2 px-5 cursor-pointer flex items-center"
                             >
@@ -231,6 +233,7 @@ const MyCart = () => {
                         </div>
 
                         <Button
+                            onClick={() => navigate('/selectadress')}
                             fullWidth
                             variant="contained"
                             sx={{ bgcolor: PRIMARY_COLOUR, py: 1, borderRadius: 0, fontFamily: 'monospace' }}

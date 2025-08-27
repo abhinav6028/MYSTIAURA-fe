@@ -41,7 +41,7 @@ const ProductGrid: React.FC = () => {
   const navigate = useNavigate()
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4 mb-5 md:mb-10">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:px-4 mb-5 md:mb-10">
       {bestSellerData?.map((val, index) => (
         <div
           key={index}
@@ -53,8 +53,8 @@ const ProductGrid: React.FC = () => {
             <Heart size={18} className="text-gray-600" />
           </div>
 
-          {/* Image Section */}
-          <div className="w-full h-60 md:h-80 flex justify-center bg-[#f9f9f9] p-4">
+
+          <div className="w-full h-80 md:h-80 flex justify-center bg-[#f9f9f9]">
             <img
               src={val.image}
               alt="Ring"

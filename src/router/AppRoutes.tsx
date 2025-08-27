@@ -9,6 +9,9 @@ import Orders from "../pages/Admin/Orders/Orders";
 import CreateOrders from "../pages/Admin/Orders/CreateOrders";
 import ProductDetailPage from "../pages/ProductDetailPage/ProductDetailPage";
 import MyCart from "../pages/MyCart/MyCart";
+import SelectAdress from "../pages/SelectAdress/SelectAdress";
+import Payment from "../pages/Payment/Payment";
+import ReviewOrder from "../pages/ReviewOrder/ReviewOrder";
 
 
 const Login = lazy(() => import("../pages/public/Login"));
@@ -34,6 +37,13 @@ function AppRoutes() {
           <Route path="inventory" element={<ProductListingPage />} />
           <Route path="productdetailPage" element={<ProductDetailPage />} />
           <Route path="mycart" element={<MyCart />} />
+          <Route path="selectadress" element={<SelectAdress />} />
+          <Route path="payment" element={<Payment />} />
+          <Route path="revieworder" element={<ReviewOrder />} />
+
+
+          {/* <Route path="payment" element={<Payment />} /> */}
+
 
           {/* ProductDetailPage */}
           <Route path="admin/dashboard" element={<>ADMIN DASHBOARD</>} />

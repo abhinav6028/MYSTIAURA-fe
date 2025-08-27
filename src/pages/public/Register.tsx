@@ -12,6 +12,7 @@ const Register: React.FC = () => {
 
   const [showForms, setShowForm] = useState(1)
 
+  
 
   return ( 
     <div className="w-full">

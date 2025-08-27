@@ -72,7 +72,8 @@ const BestSellerProduct = () => {
 
                     <div
                         key={index}
-                        className="bg-[#f9f9f9] flex flex-col items-center relative"
+                        onClick={() => navigate('/productdetailPage')}
+                        className="bg-[#f9f9f9] flex flex-col items-center relative cursor-pointer"
                     >
                         {/* Heart Icon for small screens */}
                         <div className="absolute top-2 left-2 sm:hidden w-8 h-8 flex items-center justify-center border-gray-300 bg-white">

@@ -6,15 +6,14 @@ import {
     DialogActions,
     TextField,
     Button,
-    Rating,
     IconButton,
-    Typography,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { PRIMARY_COLOUR } from "../../utils";
+import { Plus } from "lucide-react";
 
 // Validation schema
 const schema = yup.object().shape({
@@ -34,7 +33,7 @@ type ReviewFormData = {
     review: string;
 };
 
-const ReviewDialog = () => {
+const AddNewAddressModal = () => {
     const [open, setOpen] = useState(false);
 
     const {
@@ -62,53 +61,31 @@ const ReviewDialog = () => {
         <div>
 
 
-            <p
-                onClick={() => setOpen(true)}
-                style={{ background: PRIMARY_COLOUR }}
-                className="text-white py-3 px-5 cursor-pointer"
-            >
-                WRITE A REVIEW
-            </p>
+            <p onClick={() => setOpen(true)}
+                className='md:px-6 px-4 py-2 border w-fit md:mt-3 mt-2 md:mb-6 mb-1 flex cursor-pointer'> <Plus strokeWidth={1} /> <span className='ml-1'> ADD NEW ADDRESS</span> </p>
 
             <Dialog open={open} onClose={() => setOpen(false)} maxWidth="sm" fullWidth
                 PaperProps={{
                     sx: {
                         padding: "1rem",
+                        width: 500
                     },
                 }}
             >
-                <DialogTitle className="flex justify-between items-center">
-                    Write A Review
+                <DialogTitle
+                    sx={{
+                        px: 2,
+                        py: 1
+                    }}
+                    className="flex justify-between items-center">
+                    Add New Address
                     <IconButton onClick={() => setOpen(false)}>
                         <CloseIcon />
                     </IconButton>
                 </DialogTitle>
 
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <DialogContent dividers>
-                        {/* Rating */}
-                        <div className="mb-1">
-                            <Controller
-                                name="rating"
-                                control={control}
-                                render={({ field }) => (
-                                    <>
-                                        <Rating
-                                            {...field}
-                                            value={field.value}
-                                            onChange={(_, val) => field.onChange(val)}
-                                            precision={0.5}
-                                            size="large"
-                                        />
-                                        {errors.rating && (
-                                            <Typography color="error" variant="caption" display="block">
-                                                {errors.rating.message}
-                                            </Typography>
-                                        )}
-                                    </>
-                                )}
-                            />
-                        </div>
+                    <DialogContent dividers sx={{ borderTop: 'none !important', paddingTop: 2 }}>
 
                         {/* Name */}
                         <Controller
@@ -118,14 +95,15 @@ const ReviewDialog = () => {
                                 <TextField
                                     {...field}
                                     label="Name"
+                                    size="small"
                                     fullWidth
-                                    margin="normal"
+                                    margin="dense"
                                     error={!!errors.name}
                                     helperText={errors.name?.message}
                                     variant="outlined" // make sure variant is outlined
                                     sx={{
                                         "& .MuiOutlinedInput-root": {
-                                            borderRadius: 0, // sharp corners
+                                            borderRadius: 0,
                                         },
                                     }}
                                 />
@@ -134,14 +112,16 @@ const ReviewDialog = () => {
 
                         {/* Email */}
                         <Controller
-                            name="email"
+                            name="phone"
                             control={control}
                             render={({ field }) => (
                                 <TextField
+                                    type="number"
                                     {...field}
-                                    label="Email Address"
+                                    label="Phone Number"
+                                    size="small"
                                     fullWidth
-                                    margin="normal"
+                                    margin="dense"
                                     error={!!errors.email}
                                     helperText={errors.email?.message}
                                     variant="outlined" // make sure variant is outlined
@@ -156,23 +136,18 @@ const ReviewDialog = () => {
 
                         {/* Review */}
                         <Controller
-                            name="review"
+                            name="adress"
                             control={control}
                             render={({ field }) => (
                                 <TextField
                                     {...field}
-                                    label="Enter Your Review"
+                                    label="Enter Your Address"
+                                    size="small"
                                     fullWidth
-                                    margin="normal"
-                                    multiline
-                                    rows={3}
+                                    margin="dense"
                                     inputProps={{ maxLength: 100 }}
                                     error={!!errors.review}
-                                    helperText={
-                                        errors.review
-                                            ? errors.review.message
-                                            : `${field.value.length}/100`
-                                    }
+                                    helperText={errors.email?.message}
                                     variant="outlined"
                                     sx={{
                                         "& .MuiOutlinedInput-root": {
@@ -182,23 +157,68 @@ const ReviewDialog = () => {
                                 />
                             )}
                         />
+
+                        <Controller
+                            name="city"
+                            control={control}
+                            render={({ field }) => (
+                                <TextField
+                                    {...field}
+                                    label="Enter City"
+                                    size="small"
+                                    fullWidth
+                                    margin="dense"
+                                    error={!!errors.name}
+                                    helperText={errors.name?.message}
+                                    variant="outlined" // make sure variant is outlined
+                                    sx={{
+                                        "& .MuiOutlinedInput-root": {
+                                            borderRadius: 0, // sharp corners
+                                        },
+                                    }}
+                                />
+                            )}
+                        />
+
+                        <Controller
+                            name="country"
+                            control={control}
+                            render={({ field }) => (
+                                <TextField
+                                    {...field}
+                                    label="Enter Country"
+                                    size="small"
+                                    fullWidth
+                                    margin="dense"
+                                    error={!!errors.name}
+                                    helperText={errors.name?.message}
+                                    variant="outlined"
+                                    sx={{
+                                        "& .MuiOutlinedInput-root": {
+                                            borderRadius: 0,
+                                        },
+                                    }}
+                                />
+                            )}
+                        />
+
+                        <DialogActions sx={{ bgcolor: 'red', p: 0, my: 1 }}>
+                            <Button
+                                type="submit"
+                                fullWidth
+                                sx={{ bgcolor: PRIMARY_COLOUR, borderRadius: 0, color: 'white', fontFamily: 'revert', py: 1 }}
+                                className="text-white py-2 normal-case"
+                                variant="outlined"
+                            >
+                                Submit
+                            </Button>
+                        </DialogActions>
                     </DialogContent>
 
-                    <DialogActions>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            sx={{ bgcolor: PRIMARY_COLOUR, borderRadius: 0, color: 'white', fontFamily: 'revert', py: 1 }}
-                            className="text-white py-2 normal-case"
-                            variant="outlined"
-                        >
-                            Submit
-                        </Button>
-                    </DialogActions>
                 </form>
             </Dialog>
-        </div>
+        </div >
     );
 };
 
-export default ReviewDialog;
+export default AddNewAddressModal;
