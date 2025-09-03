@@ -13,28 +13,28 @@ import { useNavigate } from "react-router-dom";
 
 const bestSellerData = [
     {
-        id: 1, image: bestSeller1, name: "Solitaire Diamond Engagement Ring"
+        id: 1, image: bestSeller1, name: "Solitaire Diamond Engagement Ring", newPrice: "160.00", oldPrice: "170"
     },
     {
-        id: 2, image: bestSeller2, name: "Gold Prestige Intertwined Earrings"
+        id: 2, image: bestSeller2, name: "Gold Prestige Intertwined Earrings", newPrice: "160.00", oldPrice: "170"
     },
     {
-        id: 3, image: bestSeller3, name: "Gold Pigeon Blood Earrings"
+        id: 3, image: bestSeller3, name: "Gold Pigeon Blood Earrings", newPrice: "160.00", oldPrice: "170"
     },
     {
-        id: 4, image: bestSeller2, name: "Rose Gold Diamond Ring"
+        id: 4, image: bestSeller2, name: "Rose Gold Diamond Ring", newPrice: "160.00", oldPrice: "170"
     },
     {
-        id: 5, image: bestSeller5, name: "Rose Gold Lotus Necklace"
+        id: 5, image: bestSeller5, name: "Rose Gold Lotus Necklace", newPrice: "160.00", oldPrice: "170"
     },
     {
-        id: 6, image: bestSeller8, name: "Diamond Engagement Ring"
+        id: 6, image: bestSeller8, name: "Diamond Engagement Ring", newPrice: "160.00", oldPrice: "170"
     },
     {
-        id: 7, image: bestSeller7, name: "Prestige Diamond Earrings"
+        id: 7, image: bestSeller7, name: "Prestige Diamond Earrings", newPrice: "160.00", oldPrice: "170"
     },
     {
-        id: 8, image: bestSeller8, name: "Diamond Pearl Engagement Ring"
+        id: 8, image: bestSeller8, name: "Diamond Pearl Engagement Ring", newPrice: "160.00", oldPrice: "170"
     }
 ]
 const BestSellerProduct = () => {

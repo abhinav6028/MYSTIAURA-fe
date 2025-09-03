@@ -8,10 +8,8 @@ import UsersTable from "../pages/Admin/Users/UsersTable";
 import Orders from "../pages/Admin/Orders/Orders";
 import CreateOrders from "../pages/Admin/Orders/CreateOrders";
 import ProductDetailPage from "../pages/ProductDetailPage/ProductDetailPage";
-import MyCart from "../pages/MyCart/MyCart";
 import SelectAdress from "../pages/SelectAdress/SelectAdress";
 import Payment from "../pages/Payment/Payment";
-import ReviewOrder from "../pages/ReviewOrder/ReviewOrder";
 
 
 const Login = lazy(() => import("../pages/public/Login"));
@@ -19,6 +17,11 @@ const Register = lazy(() => import("../pages/public/Register"));
 const Dashboard = lazy(() => import("../pages/private/Dashboard"));
 const ProductListingPage = lazy(() => import("../pages/private/Inventory"));
 const HomePage = lazy(() => import("../pages/private/HomePage"));
+const SingleProductDetails = lazy(() => import("../pages/private/ProductDetails"));
+const MyCart = lazy(() => import("../pages/private/MyCart"));
+const Checkout = lazy(() => import("../pages/private/Checkout"));
+const Profile = lazy(() => import("../pages/private/Profile"));
+const ReviewOrder = lazy(() => import("../pages/private/ReviewOrder"));
 
 function AppRoutes() {
 
@@ -29,8 +32,9 @@ function AppRoutes() {
         <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
         <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
 
-        {/* User Routes */}
-        <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>}>
+        {/* Private Routes */}
+        <Route path="/" element={<PrivateRoute roles={["user"]}><Dashboard /></PrivateRoute>} >
+          {/* User Routes */}
           <Route index element={<HomePage />} />
           <Route path="home" element={<HomePage />} />
           <Route path="inventory" element={<ProductListingPage />} />
@@ -43,13 +47,13 @@ function AppRoutes() {
 
         {/* Admin Routes */}
         <Route path="/admin" element={<PrivateRoute roles={["admin"]}><Dashboard /></PrivateRoute>}>
-          <Route path="dashboard" element={<>ADMIN DASHBOARD</>} />
-          <Route path="products" element={<Products />} />
-          <Route path="products/create" element={<CreateProduct />} />
-          <Route path="users" element={<UsersTable />} />
-          <Route path="users/create" element={<>Create Users</>} />
-          <Route path="orders" element={<Orders />} />
-          <Route path="orders/create" element={<CreateOrders />} />
+          <Route path="admin/dashboard" element={<>ADMIN DASHBOARD</>} />
+          <Route path="admin/products" element={<Products />} />
+          <Route path="admin/products/create" element={<CreateProduct />} />
+          <Route path="admin/users" element={<UsersTable />} />
+          <Route path="admin/users/create" element={<>Create Users</>} />
+          <Route path="admin/orders" element={<Orders />} />
+          <Route path="admin/orders/create" element={<CreateOrders />} />
         </Route>
 
         {/* Unauthorized Page */}

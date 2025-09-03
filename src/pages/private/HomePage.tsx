@@ -10,7 +10,6 @@ import LayoutContainer from "../../components/layout/LayoutContainer"
 const HomePage = () => {
     return (
         <div>
-
             <LayoutContainer>
                 <HeroBannerSection />
                 <ShopByCategory />

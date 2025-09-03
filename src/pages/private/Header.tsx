@@ -5,7 +5,7 @@ import phone from "../../assets/phone.svg"
 import { CircleUser, Heart, Search, ShoppingCart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useLogout } from "../../services/api/auth/auth";
-
+import LayoutContainer from "../../components/layout/LayoutContainer";
 
 const Header: React.FC = () => {
   const [lang, setLang] = React.useState("EN");
@@ -22,45 +22,50 @@ const Header: React.FC = () => {
   return (
     <header className="w-full">
       {/* Top Bar */}
-      <div className="flex justify-between items-center px-10 xl:px-20 py-2 text-sm border-b bg-gray-50">
-        <div className="flex items-center gap-2">
-          <img src={phone} alt="phone" />
-          <span>(307) 555-0133</span>
-        </div>
-        <span className="text-center flex-1 font-medium">
-          Get 50% OFF on Engagement Rings
-        </span>
-        <div className="flex items-center gap-4">
-          {/* Language Dropdown */}
-          <Select
-            value={lang}
-            onChange={(e) => setLang(e.target.value)}
-            variant="standard"
-            disableUnderline
-            className="text-sm"
-          >
-            <MenuItem value="EN">EN</MenuItem>
-            <MenuItem value="FR">FR</MenuItem>
-            <MenuItem value="ES">ES</MenuItem>
-          </Select>
+      <div className=" py-2 text-sm border-b bg-gray-50">
+        <LayoutContainer>
+          <div className="sm:flex hidden justify-between items-center">
+            <div className="flex items-center gap-2">
+              <img src={phone} alt="phone" />
+              <span>(307) 555-0133</span>
+            </div>
+            <span className="text-center flex-1 font-medium">
+              Get 50% OFF on Engagement Rings
+            </span>
+            <div className="flex items-center gap-4">
+              {/* Language Dropdown */}
+              <Select
+                value={lang}
+                onChange={(e) => setLang(e.target.value)}
+                variant="standard"
+                disableUnderline
+                className="text-sm"
+              >
+                <MenuItem value="EN">EN</MenuItem>
+                <MenuItem value="FR">FR</MenuItem>
+                <MenuItem value="ES">ES</MenuItem>
+              </Select>
 
-          {/* Currency Dropdown */}
-          <Select
-            value={currency}
-            onChange={(e) => setCurrency(e.target.value)}
-            variant="standard"
-            disableUnderline
-            className="text-sm"
-          >
-            <MenuItem value="USD">USD</MenuItem>
-            <MenuItem value="EUR">EUR</MenuItem>
-            <MenuItem value="INR">INR</MenuItem>
-          </Select>
-        </div>
+              {/* Currency Dropdown */}
+              <Select
+                value={currency}
+                onChange={(e) => setCurrency(e.target.value)}
+                variant="standard"
+                disableUnderline
+                className="text-sm"
+              >
+                <MenuItem value="USD">USD</MenuItem>
+                <MenuItem value="EUR">EUR</MenuItem>
+                <MenuItem value="INR">INR</MenuItem>
+              </Select>
+            </div>
+          </div>
+        </LayoutContainer>
       </div>
 
       {/* Main Navbar */}
-      <div className="flex justify-between items-center px-10 xl:px-20 py-4">
+      <LayoutContainer>
+      <div className="flex justify-between items-center py-4">
         <img src={logo} alt="PeariGem" onClick={handleLogout} />
 
         {/* Navigation Links */}
@@ -81,6 +86,7 @@ const Header: React.FC = () => {
 
         </div>
       </div>
+      </LayoutContainer>
     </header>
 
   );

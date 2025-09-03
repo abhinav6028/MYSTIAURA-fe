@@ -34,8 +34,8 @@ const data = [
 const ShopByShape = () => {
     return (
         <div className='pb-10'>
-            <h1 className="text-4xl mb-8">Shop By Shape</h1>
-            <div className="grid grid-cols-7 gap-3">
+            <h1 className="text-2xl md:text-4xl mb-8">Shop By Shape</h1>
+            <div className="grid grid-cols-4 md:grid-cols-7 gap-3">
                 {
                     data?.map((val, index) => {
                         return (

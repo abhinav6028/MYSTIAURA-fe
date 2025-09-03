@@ -74,6 +74,76 @@ import { FONT_FAMILY } from "../../utils";
 const testimonialsData = [
   {
     name: "Ralph Edwards",
+    image: "https://i.pravatar.cc/40?img=",
+    quote: "Luxury and elegance in every piece!",
+    description:
+      "The attention to detail in every piece is breathtaking—truly a work of art.",
+  },
+  {
+    name: "Eleanor Pena",
+    image: "https://i.pravatar.cc/40?img=",
+    quote: "Perfect gift for my loved ones!",
+    description:
+      "The intricate details and premium finish make every piece a memorable keepsake.",
+  },
+  {
+    name: "Ralph Edwards",
+    image: "",
+    quote: "Luxury and elegance in every piece!",
+    description:
+      "The attention to detail in every piece is breathtaking—truly a work of art.",
+  },
+  {
+    name: "Eleanor Pena",
+    image: "",
+    quote: "Perfect gift for my loved ones!",
+    description:
+      "The intricate details and premium finish make every piece a memorable keepsake.",
+  },
+  {
+    name: "Ralph Edwards",
+    image: "",
+    quote: "Luxury and elegance in every piece!",
+    description:
+      "The attention to detail in every piece is breathtaking—truly a work of art.",
+  },
+  {
+    name: "Eleanor Pena",
+    image: "",
+    quote: "Perfect gift for my loved ones!",
+    description:
+      "The intricate details and premium finish make every piece a memorable keepsake.",
+  },
+  {
+    name: "Ralph Edwards",
+    image: "",
+    quote: "Luxury and elegance in every piece!",
+    description:
+      "The attention to detail in every piece is breathtaking—truly a work of art.",
+  },
+  {
+    name: "Eleanor Pena",
+    image: "",
+    quote: "Perfect gift for my loved ones!",
+    description:
+      "The intricate details and premium finish make every piece a memorable keepsake.",
+  },
+  {
+    name: "Ralph Edwards",
+    image: "",
+    quote: "Luxury and elegance in every piece!",
+    description:
+      "The attention to detail in every piece is breathtaking—truly a work of art.",
+  },
+  {
+    name: "Eleanor Pena",
+    image: "",
+    quote: "Perfect gift for my loved ones!",
+    description:
+      "The intricate details and premium finish make every piece a memorable keepsake.",
+  },
+  {
+    name: "Ralph Edwards",
     image: "",
     quote: "Luxury and elegance in every piece!",
     description:
