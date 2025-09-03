@@ -1,29 +1,34 @@
 import { Dialog } from '@mui/material'
-import React from 'react'
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigate } from 'react-router-dom';
+import { useRegister } from '../../../services/api/auth/auth';
+import type { Sendotp, SendOtpFormProps } from '../../../types/authTypes';
+
 
 const schema = yup.object({
-    name: yup.string().required("Name is required"),
     email: yup.string().email("Invalid email").required("Email is required"),
 });
 
 
 type FormData = yup.InferType<typeof schema>;
 
-export default function SendOtpForm({ setShowForm }) {
+export default function SendOtpForm({ setShowForm }: SendOtpFormProps) {
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const registerMutation = useRegister();
 
     const { handleSubmit, control } = useForm<FormData>({
         resolver: yupResolver(schema),
     });
 
-    const onSubmit = (data: FormData) => {
-        console.log("Register Data:", data);
-        setShowForm(3)
+    const onSubmit = (data: Sendotp) => {
+        registerMutation.mutate(data, {
+            onSuccess: () => {
+                setShowForm(3);
+            },
+        });
     };
 
     return (
@@ -35,28 +40,6 @@ export default function SendOtpForm({ setShowForm }) {
                     <p className="text-gray-600 sm:text-lg md:mb-4 mb-2">Please Enter Details</p>
 
                     <form onSubmit={handleSubmit(onSubmit)} noValidate>
-                        {/* Email Field */}
-                        <div className="mb-3">
-                            <label className="block text-gray-700 mb-2">Name</label>
-                            <Controller
-                                name="name"
-                                control={control}
-                                render={({ field, fieldState }) => (
-                                    <>
-                                        <input
-                                            {...field}
-                                            type="name"
-                                            placeholder="Enter Name"
-                                            className={`w-full border px-4 py-2 focus:outline-none focus:ring-0 ${fieldState.error ? "border-red-500" : "border-gray-300"
-                                                }`}
-                                        />
-                                        {fieldState.error && (
-                                            <p className="text-red-500 text-sm mt-1">{fieldState.error.message}</p>
-                                        )}
-                                    </>
-                                )}
-                            />
-                        </div>
 
                         {/* Password Field */}
                         <div className="md:mb-4 mb-2">

@@ -1,10 +1,18 @@
-export type User = {
-  username: string;
-  roles: string[];
+export type Sendotp = {
+  email: string;
+}
+
+export type SendOtpFormProps = {
+  setShowForm: React.Dispatch<React.SetStateAction<number>>;
 };
 
-export type AuthState = {
-  user: User | null;
-  loading: boolean;
-  error: string | null;
-};
+export interface AuthState {
+  email: string | null;
+  token: string | null;
+  user: {
+    name?: string;
+    email: string;
+    role: string;
+  } | null;
+  isAuthenticated: boolean;
+}

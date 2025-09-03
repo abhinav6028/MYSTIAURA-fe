@@ -5,13 +5,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Eye, EyeOff } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useLogin } from '../../../services/api/auth/auth';
 
-export default function LoginForm({ setShowForm }) {
+export default function LoginForm() {
 
-
-    const navigate = useNavigate()
-
+    const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
+    const loginUser = useLogin();
 
     const schema = yup.object({
         email: yup.string().email("Invalid email").required("Email is required"),
@@ -23,14 +23,17 @@ export default function LoginForm({ setShowForm }) {
     const {
         handleSubmit,
         control,
-        formState: { errors }
     } = useForm<FormData>({
         resolver: yupResolver(schema),
     });
 
     // Handle Submit
     const onSubmit = (data: FormData) => {
-        console.log("Form Data:", data);
+        loginUser.mutate(data, {
+            onSuccess: () => {
+                navigate('/home');
+            },
+        })
     };
 
     return (
@@ -107,7 +110,7 @@ export default function LoginForm({ setShowForm }) {
                                 />
                                 <span className="ml-2">Remember Me</span>
                             </label>
-                            <p onClick={() => setShowPassword(2)} className="text-[#660033] cursor-pointer hover:underline text-sm">
+                            <p className="text-[#660033] cursor-pointer hover:underline text-sm">
                                 Forgot Password?
                             </p>
                         </div>
@@ -130,7 +133,6 @@ export default function LoginForm({ setShowForm }) {
                         </button>
 
                         <button
-                            onClick={() => refetch()}
                             type="button"
                             className="w-full border border-[PRIMARY_COLOUR] text-[#660033] font-semibold py-3 hover:border-[#51052b] cursor-pointer hover:text-[#51052b] transition"
                         >

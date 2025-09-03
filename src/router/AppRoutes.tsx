@@ -25,13 +25,12 @@ function AppRoutes() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
-        {/* Public Routes */}
-        <Route path="/" element={<Login />} />
+        {/* Public */}
         <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
         <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
 
-        {/* Private Routes */}
-        <Route path="/" element={<PrivateRoute roles={["admin"]}><Dashboard /></PrivateRoute>} >
+        {/* User Routes */}
+        <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>}>
           <Route index element={<HomePage />} />
           <Route path="home" element={<HomePage />} />
           <Route path="inventory" element={<ProductListingPage />} />
@@ -40,21 +39,23 @@ function AppRoutes() {
           <Route path="selectadress" element={<SelectAdress />} />
           <Route path="payment" element={<Payment />} />
           <Route path="revieworder" element={<ReviewOrder />} />
-
-
-          {/* <Route path="payment" element={<Payment />} /> */}
-
-
-          {/* ProductDetailPage */}
-          <Route path="admin/dashboard" element={<>ADMIN DASHBOARD</>} />
-          <Route path="admin/products" element={<Products />} />
-          <Route path="admin/products/create" element={<CreateProduct />} />
-          <Route path="admin/users" element={<UsersTable />} />
-          <Route path="admin/users/create" element={<>Create Users</>} />
-          <Route path="admin/orders" element={<Orders />} />
-          <Route path="admin/orders/create" element={<CreateOrders />} />
         </Route>
+
+        {/* Admin Routes */}
+        <Route path="/admin" element={<PrivateRoute roles={["admin"]}><Dashboard /></PrivateRoute>}>
+          <Route path="dashboard" element={<>ADMIN DASHBOARD</>} />
+          <Route path="products" element={<Products />} />
+          <Route path="products/create" element={<CreateProduct />} />
+          <Route path="users" element={<UsersTable />} />
+          <Route path="users/create" element={<>Create Users</>} />
+          <Route path="orders" element={<Orders />} />
+          <Route path="orders/create" element={<CreateOrders />} />
+        </Route>
+
+        {/* Unauthorized Page */}
+        <Route path="/unauthorized" element={<div>Unauthorized</div>} />
       </Routes>
+
     </Suspense>
   );
 }
