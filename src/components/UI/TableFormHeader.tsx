@@ -3,12 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 export default function TableHeader({ headerName, buttonName, componentType, onButtonClick }: { headerName?: string, routingPath?: string, buttonName?: string, componentType?: string, onButtonClick?: () => void }) {
 
-    const navigate = useNavigate()
-
-    const pathName = useLocation().pathname
-
-    console.log('pathName', pathName?.split('/').length);
-
+    const navigate = useNavigate();
+    const pathName = useLocation().pathname;
 
     return (
         <div className="w-full flex justify-between my-4 mt-6 items-center">

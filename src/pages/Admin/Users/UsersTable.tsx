@@ -1,5 +1,5 @@
 import React from 'react'
-import TableUi from '../../../Components/UI/TableUi'
+import TableUi from '../../../components/UI/TableUi'
 
 function UsersTable() {
     return (

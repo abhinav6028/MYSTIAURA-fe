@@ -1,5 +1,4 @@
-import React from 'react'
-import TableUi from '../../../Components/UI/TableUi'
+import TableUi from '../../../components/UI/TableUi'
 
 function Orders() {
     return (
@@ -7,6 +6,7 @@ function Orders() {
             <TableUi
                 headerName="Order list"
                 buttonName="Create Order"
+                routingPath="/admin/orders/create"
             />
         </div>
     )
