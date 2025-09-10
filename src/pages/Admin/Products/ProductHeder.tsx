@@ -15,7 +15,7 @@ const ProductHeader = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="p-4 bg-white shadow rounded-md space-y-4">
+        <div className="bg-white shadow rounded-md space-y-4">
             {/* Top Row: Title and Create Button */}
             <div className="flex justify-between items-center">
                 <h1 className="text-xl font-bold">Product List</h1>
@@ -25,7 +25,7 @@ const ProductHeader = () => {
             </div>
 
             {/* Filters Row */}
-            <div className="flex gap-4 items-end justify-between">
+            <div className="flex gap-4 items-end justify-between pb-4">
                 {/* Search Input */}
                 <TextField
                     label="Search"

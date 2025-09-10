@@ -34,6 +34,14 @@ const CommonDataGrid = <RowType extends { id: GridRowId }>({
                 disableRowSelectionOnClick
                 paginationModel={paginationModel}
                 onPaginationModelChange={setPaginationModel}
+                sx={{
+                  "& .MuiDataGrid-cell:focus": {
+                    outline: "none",
+                  },
+                  "& .MuiDataGrid-cell:focus-within": {
+                    outline: "none",
+                  },
+                }}
             />
         </div>
     );

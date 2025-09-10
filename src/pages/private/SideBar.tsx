@@ -1,9 +1,11 @@
 import { Home, ShoppingCart, BarChart3, User, LogOut } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useLogout } from "../../services/api/auth/auth";
+import { TbCategory } from "react-icons/tb";
 
 const menuItems = [
   { icon: Home, label: "Main Dashboard", path: "/admin/dashboard" },
+  { icon: TbCategory, label: "category", path: "/admin/category" },  
   { icon: ShoppingCart, label: "Products", path: "/admin/products" },
   { icon: BarChart3, label: "Users", path: "/admin/users" },
   { icon: User, label: "Orders", path: "/admin/orders" },
