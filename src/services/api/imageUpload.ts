@@ -26,3 +26,28 @@ export function useUploadImages() {
     },
   });
 }
+
+export function useDeleteImage() {
+  const notify = useNotify();
+
+  return useMutation({
+    mutationFn: async ({
+      productId,
+      imageId,
+    }: {
+      productId: string;
+      imageId: string;
+    }) => {
+      const res = await apiClient.delete(
+        `/api/image/delete/${productId}?image_id=${imageId}`
+      );
+      return res.data;
+    },
+    onSuccess: (res) => {
+      notify.success(res?.message || "Image deleted successfully");
+    },
+    onError: (error: any) => {
+      notify.error(error.response?.data?.message || "Image deletion failed");
+    },
+  });
+}

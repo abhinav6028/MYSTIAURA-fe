@@ -9,6 +9,8 @@ import type { IAdminFormInputs } from "../../../types/adminTypes";
 import { useCreateProduct, useUpdateProduct } from "../../../services/api/product/product";
 import AdminLayout from "../../../components/layout/AdminLayout";
 import { useCategories } from "../../../services/api/category/category";
+import { IoIosCloseCircleOutline } from "react-icons/io";
+import { useDeleteImage } from "../../../services/api/imageUpload";
 
 const schema = yup.object({
     name: yup.string().required("Product name is required"),
@@ -40,12 +42,14 @@ const CreateNewProducts = () => {
     const createProduct = useCreateProduct();
     const { data: category } = useCategories();
     const updateProduct = useUpdateProduct();
+    const deleteImage = useDeleteImage();
     const location = useLocation();
 
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const [previews, setPreviews] = useState<string[]>([]);
     const [selectedImage, setSelectedImage] = useState(0);
     const [files, setFiles] = useState<File[]>([]);
+    const [backendImages, setBackendImages] = useState<{ _id: string; secure_url: string }[]>([]);
 
     useEffect(() => {
         if (location.state?.row) {
@@ -61,13 +65,14 @@ const CreateNewProducts = () => {
         }
 
         if (location.state?.row?.imageContainer) {
+            setBackendImages(location.state.row.imageContainer);
             const existingImages = location.state.row.imageContainer.map(
-              (img: { secure_url: string }) => img.secure_url
+                (img: { secure_url: string }) => img.secure_url
             );
-            setPreviews(existingImages);  
-            setSelectedImage(0);          
-          }
-    }, [location]);
+            setPreviews(existingImages);
+            setSelectedImage(0);
+        }
+    }, [location.state]);
 
     const handleButtonClick = () => fileInputRef.current?.click();
 
@@ -94,17 +99,48 @@ const CreateNewProducts = () => {
     const onSubmit: SubmitHandler<IAdminFormInputs> = (data) => {
         const payload = {
             ...data,
-            images: files,
-        }
+            images: files, // new uploads (files)
+            imageContainer: location.state?.row?.imageContainer
+                ? location.state.row.imageContainer.map((img: { _id: string }) => img._id)
+                : [],
+        };
         if (location.state?.row) {
             updateProduct.mutate({
                 _id: location.state.row.id,
                 payload,
             });
             return;
-        }else{
+        } else {
             createProduct.mutate(payload);
         }
+    };
+
+    const handleDeleteImg = (image: string, index: number) => {
+        if (image.startsWith("blob:")) {
+            setSelectedImage(0);
+            const updatedFiles = [...files];
+            const updatedPreviews = [...previews];
+            updatedFiles.splice(index, 1);
+            updatedPreviews.splice(index, 1);
+            setFiles(updatedFiles);
+            setPreviews(updatedPreviews);
+            return;
+        }
+        // Backend image delete
+        const target = backendImages.find((img) => img.secure_url === image);
+        if (!target) return;
+
+        deleteImage.mutate(
+            { productId: location.state.row.id, imageId: target._id },
+            {
+                onSuccess: () => {
+                    const updated = backendImages.filter((img) => img._id !== target._id);
+                    setBackendImages(updated);
+                    setPreviews(updated.map((img) => img.secure_url));
+                    setSelectedImage(0);
+                },
+            }
+        );
     };
 
     return (
@@ -376,7 +412,7 @@ const CreateNewProducts = () => {
                                                         key={index}
                                                         type="button"
                                                         onClick={() => setSelectedImage(index)}
-                                                        className={`w-16 h-16 rounded-lg border-2 overflow-hidden transition-colors ${selectedImage === index ? "border-blue-300" : "border-gray-200 hover:border-gray-300"
+                                                        className={`w-16 h-16 relative rounded-lg border-2 transition-colors ${selectedImage === index ? "border-blue-300" : "border-gray-200 hover:border-gray-300"
                                                             }`}
                                                     >
                                                         <img
@@ -384,6 +420,7 @@ const CreateNewProducts = () => {
                                                             alt={`Thumbnail ${index + 1}`}
                                                             className="w-full h-full object-cover"
                                                         />
+                                                        <IoIosCloseCircleOutline size={20} color="red" onClick={() => handleDeleteImg(image, index)} className="absolute top-[-16px] right-[-10px] cursor-pointer" />
                                                     </button>
                                                 ))}
 

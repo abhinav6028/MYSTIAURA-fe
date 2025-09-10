@@ -21,7 +21,7 @@ export function useProduct(productId: string) {
   return useQuery<Product, Error>({
     queryKey: ["products", productId],
     queryFn: async () => {
-      const res = await apiClient.get(`/products/${productId}`);
+      const res = await apiClient.get(`api/product/${productId}`);
       return res.data.data;
     },
     enabled: !!productId,
@@ -73,13 +73,13 @@ export function useUpdateProduct() {
       let imageIds: string[] = [];
 
       // 1️⃣ Upload if images exist
-      if (payload.images) {
+      if (payload.images.length > 0) {
         const uploadRes = await uploadImages.mutateAsync(payload.images as File[]);
         imageIds = uploadRes?.data?.images || [];
       }
       const res = await apiClient.put(`api/product/${_id}`, {
         ...payload,
-        images: imageIds,
+        images: [...payload.imageContainer, ...imageIds],
       });
       return res.data;
     },
