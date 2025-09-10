@@ -35,15 +35,21 @@ function AppRoutes() {
         {/* Public */}
         <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
         <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
+        <Route path="/" element={<PublicRoute><Dashboard /></PublicRoute>} >
+          <Route index element={<HomePage />} />
+          <Route path="home" element={<HomePage />} />
+          <Route path="inventory" element={<ProductListingPage />} />
+          <Route path="productdetailPage" element={<ProductDetailPage />} />
+        </Route >
 
 
         {/* Private Routes */}
         <Route path="/" element={<PrivateRoute roles={["user"]}><Dashboard /></PrivateRoute>} >
           {/* User Routes */}
-          <Route index element={<HomePage />} />
-          <Route path="home" element={<HomePage />} />
+          {/* <Route index element={<HomePage />} /> */}
+          {/* <Route path="home" element={<HomePage />} /> */}
           <Route path="inventory" element={<ProductListingPage />} />
-          <Route path="productdetailPage" element={<ProductDetailPage />} />
+          {/* <Route path="productdetailPage" element={<ProductDetailPage />} /> */}
           <Route path="mycart" element={<MyCart />} />
           <Route path="selectadress" element={<SelectAdress />} />
           <Route path="payment" element={<Payment />} />
