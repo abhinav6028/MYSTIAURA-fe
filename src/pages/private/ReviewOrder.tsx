@@ -101,7 +101,7 @@ const steps: Step[] = [
 
 export default function ReviewOrder() {
 
-    const [cart, setCart] = useState<CartItem[]>(initialCart);
+    const [cart] = useState<CartItem[]>(initialCart);
 
     const subtotal = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
     const taxes = 25;

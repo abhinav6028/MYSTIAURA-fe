@@ -5,7 +5,6 @@ import {
     Typography,
     Button,
     Divider,
-    TextField,
     Checkbox,
     Select,
     MenuItem,
@@ -14,7 +13,7 @@ import bestSeller from "../../assets/homepage/bestseller2 (1).png";
 import bestSeller2 from "../../assets/homepage/bestseller2 (4).png";
 import LayoutContainer from "../../components/layout/LayoutContainer";
 import { Trash, X } from "lucide-react";
-import { FONT_FAMILY, PRIMARY_COLOUR } from "../../utils";
+import { PRIMARY_COLOUR } from "../../utils";
 import { useNavigate } from "react-router-dom";
 // import { LiaShippingFastSolid } from "react-icons/lia";
 // import { IoMdClose } from "react-icons/io";
@@ -59,7 +58,6 @@ const initialCart: CartItem[] = [
 
 const MyCart = () => {
     const [cart, setCart] = useState<CartItem[]>(initialCart);
-    const [discountCode, setDiscountCode] = useState("OFFER50");
 
     const subtotal = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
     const taxes = 25;
@@ -72,9 +70,9 @@ const MyCart = () => {
         );
     };
 
-    const handleRemove = (id: number) => {
-        setCart((prev) => prev.filter((item) => item.id !== id));
-    };
+    // const handleRemove = (id: number) => {
+    //     setCart((prev) => prev.filter((item) => item.id !== id));
+    // };
 
     const navigate = useNavigate()
 

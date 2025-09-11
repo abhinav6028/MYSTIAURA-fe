@@ -1,6 +1,5 @@
 import React from "react";
-import { Card, CardMedia, CardContent, Typography, Button, IconButton } from "@mui/material";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { Card, CardMedia, CardContent, Typography } from "@mui/material";
 
 interface ProductCardProps {
     image: string;

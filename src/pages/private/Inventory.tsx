@@ -1,18 +1,13 @@
 import React, { useState } from "react";
-import { Button, MenuItem, Select } from "@mui/material";
+import { MenuItem, Select } from "@mui/material";
 import SidebarFilters from "../../components/inventory/InventorySideFilter";
 import ProductGrid from "../../components/inventory/ProductGrid";
 import { PRIMARY_COLOUR } from "../../utils";
 import { ListFilter } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 
 const ProductListingPage: React.FC = () => {
 
   const [lang, setLang] = useState("EN");
-
-  const navigate = useNavigate()
-
-  // ProductdetailPage
 
   return (
     <div className="flex">

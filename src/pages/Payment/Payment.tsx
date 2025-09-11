@@ -7,19 +7,9 @@ import { useState } from "react";
 import {
     Card,
     CardContent,
-    Typography,
-    Button,
     Divider,
-    TextField,
-    Checkbox,
-    Select,
-    MenuItem,
 } from "@mui/material";
-import { MapPin, MoreHorizontal, Phone, Plus, Trash, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import AddNewAddressModal from '../../components/AddressSection/AddNewAddressModal';
-
-
 
 type CartItem = {
     id: number;
@@ -111,58 +101,14 @@ const steps: Step[] = [
 
 export default function Payment() {
 
-    const [cart, setCart] = useState<CartItem[]>(initialCart);
-    const [discountCode, setDiscountCode] = useState("OFFER50");
-
+    const [cart] = useState<CartItem[]>(initialCart);
     const subtotal = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
     const taxes = 25;
     const deliveryFee = 0;
     const grandTotal = subtotal + taxes + deliveryFee;
 
-    const handleQtyChange = (id: number, qty: number) => {
-        setCart((prev) =>
-            prev.map((item) => (item.id === id ? { ...item, qty } : item))
-        );
-    };
-
-    const handleRemove = (id: number) => {
-        setCart((prev) => prev.filter((item) => item.id !== id));
-    };
-
     const navigate = useNavigate()
     const currentStep = 1// Address step is active
-
-    const contacts = [
-        {
-            id: 1,
-            name: "Alexa Williams",
-            address: "1901 Thornridge Cir, Shiloh, Hawaii 81063",
-            phone: "(603) 555-0123",
-        },
-    ]
-
-
-    const contacts2 = [
-        {
-            id: 1,
-            name: "Alexa Williams",
-            address: "1901 Thornridge Cir, Shiloh, Hawaii 81063",
-            phone: "(603) 555-0123",
-        },
-        {
-            id: 1,
-            name: "Alexa Williams",
-            address: "1901 Thornridge Cir, Shiloh, Hawaii 81063",
-            phone: "(603) 555-0123",
-        },
-        {
-            id: 1,
-            name: "Alexa Williams",
-            address: "1901 Thornridge Cir, Shiloh, Hawaii 81063",
-            phone: "(603) 555-0123",
-        },
-    ]
-
 
     return (
         <LayoutContainer>

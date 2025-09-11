@@ -17,10 +17,7 @@ const Register = lazy(() => import("../pages/public/Register"));
 const Dashboard = lazy(() => import("../pages/private/Dashboard"));
 const ProductListingPage = lazy(() => import("../pages/private/Inventory"));
 const HomePage = lazy(() => import("../pages/private/HomePage"));
-const SingleProductDetails = lazy(() => import("../pages/private/ProductDetails"));
 const MyCart = lazy(() => import("../pages/private/MyCart"));
-const Checkout = lazy(() => import("../pages/private/Checkout"));
-const Profile = lazy(() => import("../pages/private/Profile"));
 const ReviewOrder = lazy(() => import("../pages/private/ReviewOrder"));
 const CreateNewProducts = lazy(() => import("../pages/Admin/Products/CreateNewProduct"));
 const Category = lazy(() => import("../pages/Admin/category/Category"));
@@ -40,6 +37,7 @@ function AppRoutes() {
           <Route path="home" element={<HomePage />} />
           <Route path="inventory" element={<ProductListingPage />} />
           <Route path="productdetailPage" element={<ProductDetailPage />} />
+          <Route path="selectadress" element={<SelectAdress />} />
         </Route >
 
 
@@ -51,7 +49,7 @@ function AppRoutes() {
           <Route path="inventory" element={<ProductListingPage />} />
           {/* <Route path="productdetailPage" element={<ProductDetailPage />} /> */}
           <Route path="mycart" element={<MyCart />} />
-          <Route path="selectadress" element={<SelectAdress />} />
+          {/* <Route path="selectadress" element={<SelectAdress />} /> */}
           <Route path="payment" element={<Payment />} />
           <Route path="revieworder" element={<ReviewOrder />} />
         </Route>
