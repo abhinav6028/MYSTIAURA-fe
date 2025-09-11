@@ -1,16 +1,17 @@
 import { Autocomplete, Button, TextField } from "@mui/material";
 import { ArrowLeft } from "lucide-react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useForm, Controller, type SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useEffect, useRef, useState } from "react";
 import type { IAdminFormInputs } from "../../../types/adminTypes";
-import { useCreateProduct, useUpdateProduct } from "../../../services/api/product/product";
+import { useCreateProduct, useProductWithId, useUpdateProduct } from "../../../services/api/product/product";
 import AdminLayout from "../../../components/layout/AdminLayout";
 import { useCategories } from "../../../services/api/category/category";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { useDeleteImage } from "../../../services/api/imageUpload";
+import { useQueryClient } from "@tanstack/react-query";
 
 const schema = yup.object({
     name: yup.string().required("Product name is required"),
@@ -43,36 +44,34 @@ const CreateNewProducts = () => {
     const { data: category } = useCategories();
     const updateProduct = useUpdateProduct();
     const deleteImage = useDeleteImage();
-    const location = useLocation();
+    const { id: productId } = useParams();
+    const { data: singleProduct } = useProductWithId(productId || "");
 
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const [previews, setPreviews] = useState<string[]>([]);
     const [selectedImage, setSelectedImage] = useState(0);
     const [files, setFiles] = useState<File[]>([]);
     const [backendImages, setBackendImages] = useState<{ _id: string; secure_url: string }[]>([]);
+    const queryClient = useQueryClient();
 
     useEffect(() => {
-        if (location.state?.row) {
-            const row = location.state.row;
-            setValue("name", row.name);
-            setValue("material", row.material);
-            setValue("description", row.description);
-            setValue("price", row.price);
-            setValue("discountPrice", row.discountPrice);
-            setValue("stock", row.stock);
-            setValue("discountType", row.discountType);
-            setValue("category", row.categoryDetails);
+        if (singleProduct) {
+            setValue("name", singleProduct.name);
+            setValue("material", singleProduct.material || "");
+            setValue("description", singleProduct.description || "");
+            setValue("price", singleProduct.price || 0);
+            setValue("discountPrice", singleProduct.discountPrice || 0);
+            setValue("stock", singleProduct.stock || 0);
+            setValue("discountType", singleProduct.discountType || "chinese-new-year");
+            setValue("category", singleProduct.category?._id || "jacket");
         }
 
-        if (location.state?.row?.imageContainer) {
-            setBackendImages(location.state.row.imageContainer);
-            const existingImages = location.state.row.imageContainer.map(
-                (img: { secure_url: string }) => img.secure_url
-            );
-            setPreviews(existingImages);
-            setSelectedImage(0);
+        if (singleProduct?.images) {
+            const imageIds = singleProduct.images.map((img: { secure_url: string }) => img.secure_url);
+            setPreviews(imageIds);
         }
-    }, [location.state]);
+
+    }, [singleProduct]);
 
     const handleButtonClick = () => fileInputRef.current?.click();
 
@@ -99,14 +98,14 @@ const CreateNewProducts = () => {
     const onSubmit: SubmitHandler<IAdminFormInputs> = (data) => {
         const payload = {
             ...data,
-            images: files, // new uploads (files)
-            imageContainer: location.state?.row?.imageContainer
-                ? location.state.row.imageContainer.map((img: { _id: string }) => img._id)
+            images: files,
+            imageContainer: singleProduct?.images
+                ? singleProduct.images.map((img: { _id: string }) => img._id)
                 : [],
         };
-        if (location.state?.row) {
+        if (singleProduct) {
             updateProduct.mutate({
-                _id: location.state.row.id,
+                _id: singleProduct._id,
                 payload,
             });
             return;
@@ -116,32 +115,48 @@ const CreateNewProducts = () => {
     };
 
     const handleDeleteImg = (image: string, index: number) => {
+
+        // If it's a newly uploaded blob (local preview)
         if (image.startsWith("blob:")) {
             setSelectedImage(0);
+
             const updatedFiles = [...files];
             const updatedPreviews = [...previews];
+
             updatedFiles.splice(index, 1);
             updatedPreviews.splice(index, 1);
+
             setFiles(updatedFiles);
             setPreviews(updatedPreviews);
+
             return;
         }
-        // Backend image delete
-        const target = backendImages.find((img) => img.secure_url === image);
+
+        const target = singleProduct?.images?.find((img) => img.secure_url === image);
         if (!target) return;
 
+        // Call API to delete the image
         deleteImage.mutate(
-            { productId: location.state.row.id, imageId: target._id },
+            { productId: singleProduct?._id || "", imageId: target._id },
             {
                 onSuccess: () => {
+
                     const updated = backendImages.filter((img) => img._id !== target._id);
+
                     setBackendImages(updated);
                     setPreviews(updated.map((img) => img.secure_url));
                     setSelectedImage(0);
+                    queryClient.invalidateQueries({
+                        queryKey: ["products", productId], // match your useProductWithId key
+                    });
+                },
+                onError: (err) => {
+                    console.error("Failed to delete image:", err);
                 },
             }
         );
     };
+
 
     return (
         <AdminLayout>
@@ -152,10 +167,10 @@ const CreateNewProducts = () => {
                         onClick={() => navigate(-1)}
                     >
                         <ArrowLeft size={20} />
-                        <h1 className="text-xl font-bold">{location.state?.row ? "Update Product" : "Add New Product"}</h1>
+                        <h1 className="text-xl font-bold">{singleProduct ? "Update Product" : "Add New Product"}</h1>
                     </div>
                     <Button variant="contained" color="primary" onClick={handleSubmit(onSubmit)}>
-                        {location.state?.row ? "Update Product" : "Create Product"}
+                        {singleProduct ? "Update Product" : "Create Product"}
                     </Button>
                 </div>
                 <div>

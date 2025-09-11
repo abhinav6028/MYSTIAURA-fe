@@ -30,11 +30,25 @@ export interface IAdminFormInputs {
   images?: File[];
 }
 
+ export interface CategoryImage {
+  _id: string;
+  public_id: string;
+  secure_url: string;
+  format: string;
+  resource_type: string;
+  size: number;
+  folder: string;
+  created_at: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
 export interface Category {
   _id: string;
   name: string;
   description?: string;
-  image?: string;
+  image?: CategoryImage;
   createdAt?: string;
   updatedAt?: string;
 }

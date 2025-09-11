@@ -1,20 +1,23 @@
 import AdminLayout from "../../../components/layout/AdminLayout";
 import { ArrowLeft } from "lucide-react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button, TextField } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useEffect, useRef, useState } from "react";
-import { useCreateCategory, useUpdateCategory } from "../../../services/api/category/category";
+import { useCategoryWithId, useCreateCategory, useUpdateCategory } from "../../../services/api/category/category";
 
 const categorySchema = yup.object().shape({
     name: yup.string().required("Name is required"),
     description: yup.string().optional(),
     image: yup
-        .mixed<FileList>()
+        .mixed<FileList | string>()
         .test("fileRequired", "Image is required", (value) => {
-            return value && value.length > 0;
+            if (typeof value === "string") {
+                return value.length > 0;
+            }
+            return value instanceof FileList && value.length > 0;
         }),
 });
 
@@ -27,34 +30,40 @@ const CategoryForm = () => {
         handleSubmit,
         formState: { errors },
         setValue,
-        getValues,
+        reset,
+        watch,
     } = useForm<CategoryFormValues>({
         resolver: yupResolver(categorySchema) as any,
+        defaultValues: { name: "", description: "", image: "" },
     });
-    const { state } = useLocation();
     const createCategory = useCreateCategory();
     const updateCategory = useUpdateCategory();
     const [preview, setPreview] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const navigate = useNavigate();
+    const { id: categoryId } = useParams();
+    const { data: singleCategory } = useCategoryWithId(categoryId || "");
+    const imageValue = watch("image");
 
     useEffect(() => {
-        if (state?.row) {
-            setValue("name", state.row.name);
-            setValue("description", state.row.description);
-            setValue("image", state.row.image?.secure_url);
+        if (singleCategory) {
+            reset({
+                name: singleCategory.name,
+                description: singleCategory.description,
+                image: singleCategory.image?.secure_url || "",
+              });
         }
-    }, [state]);
+    }, [singleCategory, reset]);
 
     useEffect(() => {
-        const imageValue = getValues("image"); // FileList | string | undefined
-      
         if (imageValue instanceof FileList && imageValue.length > 0) {
-          setPreview(URL.createObjectURL(imageValue[0]));
+            setPreview(URL.createObjectURL(imageValue[0]));
         } else if (typeof imageValue === "string") {
-          setPreview(imageValue);
+            setPreview(imageValue);
+        } else {
+            setPreview(null);
         }
-      }, [getValues("image")]);
+    }, [imageValue]);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -71,10 +80,14 @@ const CategoryForm = () => {
     const onSubmit = (data: CategoryFormValues) => {
         const payload = {
             ...data,
-            image: data.image ? Array.from(data.image) : undefined,
+            image: typeof data.image === "string"
+                ? singleCategory?.image?._id
+                :   data.image && data.image.length > 0
+                    ? Array.from(data.image) // new upload
+                    : undefined,
         }
-        if (state?.row) {
-            updateCategory.mutate({ _id: state.row.id, payload });
+        if (categoryId) {
+            updateCategory.mutate({ _id: categoryId, payload });
         } else {
             createCategory.mutate(payload);
         }
@@ -83,8 +96,8 @@ const CategoryForm = () => {
     return (
         <AdminLayout>
             <div className="flex items-center justify-between">
-                <h1 className="text-2xl font-bold flex items-center gap-2"><ArrowLeft size={20} onClick={() => navigate(-1)} cursor="pointer" />{state?.row ? "Update Category" : "Add Category"}</h1>
-                <Button variant="contained" onClick={handleSubmit(onSubmit)}>{state?.row ? "Update Category" : "Create Category"}</Button>
+                <h1 className="text-2xl font-bold flex items-center gap-2"><ArrowLeft size={20} onClick={() => navigate(-1)} cursor="pointer" />{categoryId ? "Update Category" : "Add Category"}</h1>
+                <Button variant="contained" onClick={handleSubmit(onSubmit)}>{categoryId ? "Update Category" : "Create Category"}</Button>
             </div>
             <div className="mt-5">
                 <form className="space-y-6">

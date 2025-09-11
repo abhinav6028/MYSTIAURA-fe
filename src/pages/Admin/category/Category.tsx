@@ -45,7 +45,7 @@ const Category = () => {
                     <IconButton
                         color="primary"
                         size="small"
-                        onClick={() => navigate(`/admin/category/update`,{state:{row: params.row}})}
+                        onClick={() => navigate(`/admin/category/${params.row._id}`)}
                     >
                         <Edit />
                     </IconButton>

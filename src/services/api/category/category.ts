@@ -24,12 +24,12 @@ export function useCategories(params?: {
 }
 
 // 🔹 Get category by ID
-export function useCategory(categoryId: string) {
+export function useCategoryWithId(categoryId: string) {
   return useQuery<Category, Error>({
     queryKey: ["categories", categoryId],
     queryFn: async () => {
       const res = await apiClient.get(`/api/category/${categoryId}`);
-      return res.data.data;
+      return res.data.category;
     },
     enabled: !!categoryId,
   });
@@ -81,12 +81,19 @@ export function useUpdateCategory() {
 
   return useMutation({
     mutationFn: async ({ _id, payload }: { _id: string; payload: CategoryInput }) => {
-      let imageIds: string[] = [];
+      let imageIds: string[] | string = [];
+      console.log(payload);
 
       // 1️⃣ Upload if images exist
-      if (payload.image) {
-        const uploadRes = await uploadImages.mutateAsync(payload.image as File[]);
-        imageIds = uploadRes?.data?.images?.[0] || [];
+      if (payload.image instanceof FileList) {
+        const uploadRes = await uploadImages.mutateAsync(Array.from(payload.image));
+        imageIds = uploadRes?.data?.images || [];
+      } else if (Array.isArray(payload.image) && payload.image[0] instanceof File) {
+        const uploadRes = await uploadImages.mutateAsync(payload.image);
+        imageIds = uploadRes?.data?.images || [];
+      } else if (typeof payload.image === "string") {
+        // It’s an existing image URL from Cloudinary → skip upload
+        imageIds = payload.image;
       }
 
       const res = await apiClient.patch(`/api/category/${_id}`, {

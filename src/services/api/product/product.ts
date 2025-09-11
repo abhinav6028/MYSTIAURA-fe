@@ -17,7 +17,7 @@ export function useProducts() {
 }
 
 // 🔹 Get product by ID
-export function useProduct(productId: string) {
+export function useProductWithId(productId: string) {
   return useQuery<Product, Error>({
     queryKey: ["products", productId],
     queryFn: async () => {
@@ -83,8 +83,8 @@ export function useUpdateProduct() {
       });
       return res.data;
     },
-    onSuccess: () => {
-      notify.success("Product updated ✨");
+    onSuccess: (res) => {
+      notify.success(res?.message || "Product updated");
       queryClient.invalidateQueries({ queryKey: ["products"] });
       navigate(-1);
     },

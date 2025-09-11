@@ -46,7 +46,7 @@ function Products() {
                     <IconButton
                         color="primary"
                         size="small"
-                        onClick={() => navigate(`/admin/products/update`, { state: { row: params.row } })}
+                        onClick={() => navigate(`/admin/products/${params.row.id}`)}
                     >
                         <Edit />
                     </IconButton>

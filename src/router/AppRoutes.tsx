@@ -61,10 +61,10 @@ function AppRoutes() {
           <Route path="dashboard" element={<>ADMIN DASHBOARD</>} />
           <Route path="category" element={<Category />} />
           <Route path="category/create" element={<CategoryForm />} />
-          <Route path="category/update" element={<CategoryForm />} />
+          <Route path="category/:id" element={<CategoryForm />} />
           <Route path="products" element={<Products />} />
           <Route path="products/create" element={<CreateNewProducts />} />
-          <Route path="products/update" element={<CreateNewProducts />} />
+          <Route path="products/:id" element={<CreateNewProducts />} />
           <Route path="users" element={<UsersTable />} />
           <Route path="users/create" element={<CreateUser />} />
           <Route path="users/update" element={<CreateUser />} />
