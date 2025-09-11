@@ -15,8 +15,7 @@ export default function VerifyOtpForm({ setShowForm }: { setShowForm: (form: num
         resolver: yupResolver(schema),
     });
 
-    const onSubmit = (data: FormData) => {
-        console.log("Register Data:", data);
+    const onSubmit = () => {
         setShowForm(3)
     };
 
