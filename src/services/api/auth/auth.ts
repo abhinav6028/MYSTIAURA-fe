@@ -12,7 +12,7 @@ export function useRegister() {
 
     return useMutation({
         mutationFn: async (payload: Sendotp) => {
-            const res = await apiClient.post("/auth/register", payload);
+            const res = await apiClient.post("api/auth/register", payload);
             return res.data;
         },
         onSuccess: (data) => {
@@ -31,7 +31,7 @@ export function useVerifyOtp() {
 
     return useMutation({
         mutationFn: async (payload: { email: string; otp: string; password: string; cpassword: string }) => {
-            const res = await apiClient.post("/auth/verify", payload);
+            const res = await apiClient.post("api/auth/verify", payload);
             return res.data;
         },
         onSuccess: () => {
@@ -50,7 +50,7 @@ export function useLogin() {
   
     return useMutation({
       mutationFn: async (payload: { email: string; password: string }) => {
-        const res = await apiClient.post("/auth/login", payload);
+        const res = await apiClient.post("api/auth/login", payload);
         return res.data;
       },
       onSuccess: (data) => {
@@ -66,10 +66,10 @@ export function useLogin() {
             })
           );
         }
-        notify.success(data?.message || "Login successful 🎉");
+        notify.success(data?.message || "Login successful");
       },
       onError: (error: any) => {
-        notify.error(error.response?.data?.message || "Login failed ❌");
+        notify.error(error.response?.data?.message || "Login failed");
       },
     });
   }
