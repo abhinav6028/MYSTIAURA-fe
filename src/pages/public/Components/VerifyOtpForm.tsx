@@ -2,7 +2,6 @@ import { Dialog } from '@mui/material'
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useNavigate } from 'react-router-dom';
 
 const schema = yup.object({
     otp: yup.string().required("Pls enter OTP"),
@@ -10,14 +9,13 @@ const schema = yup.object({
 
 type FormData = yup.InferType<typeof schema>;
 
-export default function VerifyOtpForm({ setShowForm }) {
+export default function VerifyOtpForm({ setShowForm }: { setShowForm: (form: number) => void }) {
 
     const { handleSubmit, control } = useForm<FormData>({
         resolver: yupResolver(schema),
     });
 
-    const onSubmit = (data: FormData) => {
-        console.log("Register Data:", data);
+    const onSubmit = () => {
         setShowForm(3)
     };
 
