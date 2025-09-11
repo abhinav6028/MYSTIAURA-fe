@@ -1,4 +1,4 @@
-import { ArrowUpRight, Heart, MoveUpRight } from "lucide-react";
+import { ArrowUpRight, Heart } from "lucide-react";
 import bestSeller1 from "../../assets/homepage/bestseller1.png";
 import bestSeller2 from "../../assets/homepage/bestseller2 (1).png";
 import bestSeller3 from "../../assets/homepage/bestseller2 (2).png";

@@ -10,7 +10,6 @@ import CreateOrders from "../pages/Admin/Orders/CreateOrders";
 import ProductDetailPage from "../pages/ProductDetailPage/ProductDetailPage";
 import SelectAdress from "../pages/SelectAdress/SelectAdress";
 import Payment from "../pages/Payment/Payment";
-import CreateNewProducts from "../pages/Admin/Products/CreateNewProduct";
 
 
 const Login = lazy(() => import("../pages/public/Login"));
@@ -18,11 +17,12 @@ const Register = lazy(() => import("../pages/public/Register"));
 const Dashboard = lazy(() => import("../pages/private/Dashboard"));
 const ProductListingPage = lazy(() => import("../pages/private/Inventory"));
 const HomePage = lazy(() => import("../pages/private/HomePage"));
-const SingleProductDetails = lazy(() => import("../pages/private/ProductDetails"));
 const MyCart = lazy(() => import("../pages/private/MyCart"));
-const Checkout = lazy(() => import("../pages/private/Checkout"));
-const Profile = lazy(() => import("../pages/private/Profile"));
 const ReviewOrder = lazy(() => import("../pages/private/ReviewOrder"));
+const CreateNewProducts = lazy(() => import("../pages/Admin/Products/CreateNewProduct"));
+const Category = lazy(() => import("../pages/Admin/category/Category"));
+const CategoryForm = lazy(() => import("../pages/Admin/category/CategoryForm"));
+const CreateUser = lazy(() => import("../pages/Admin/Users/CreateUser"));
 
 function AppRoutes() {
 
@@ -32,25 +32,24 @@ function AppRoutes() {
         {/* Public */}
         <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
         <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
-
-        {/* test */}
-        <Route path="dashboard" element={<>ADMIN DASHBOARD</>} />
-          <Route path="admin/products" element={<PublicRoute><Products /></PublicRoute>} />
-          <Route path="admin/products/create" element={<CreateNewProducts />} />
-          <Route path="admin/users" element={<UsersTable />} />
-          <Route path="admin/users/create" element={<>Create Users</>} />
-          <Route path="admin/orders" element={<Orders />} />
-          <Route path="admin/orders/create" element={<CreateOrders />} />
-
-        {/* Private Routes */}
-        <Route path="/" element={<PrivateRoute roles={["user"]}><Dashboard /></PrivateRoute>} >
-          {/* User Routes */}
+        <Route path="/" element={<PublicRoute><Dashboard /></PublicRoute>} >
           <Route index element={<HomePage />} />
           <Route path="home" element={<HomePage />} />
           <Route path="inventory" element={<ProductListingPage />} />
           <Route path="productdetailPage" element={<ProductDetailPage />} />
-          <Route path="mycart" element={<MyCart />} />
           <Route path="selectadress" element={<SelectAdress />} />
+        </Route >
+
+
+        {/* Private Routes */}
+        <Route path="/" element={<PrivateRoute roles={["user"]}><Dashboard /></PrivateRoute>} >
+          {/* User Routes */}
+          {/* <Route index element={<HomePage />} /> */}
+          {/* <Route path="home" element={<HomePage />} /> */}
+          <Route path="inventory" element={<ProductListingPage />} />
+          {/* <Route path="productdetailPage" element={<ProductDetailPage />} /> */}
+          <Route path="mycart" element={<MyCart />} />
+          {/* <Route path="selectadress" element={<SelectAdress />} /> */}
           <Route path="payment" element={<Payment />} />
           <Route path="revieworder" element={<ReviewOrder />} />
         </Route>
@@ -58,10 +57,15 @@ function AppRoutes() {
         {/* Admin Routes */}
         <Route path="/admin" element={<PrivateRoute roles={["admin"]}><Dashboard /></PrivateRoute>}>
           <Route path="dashboard" element={<>ADMIN DASHBOARD</>} />
+          <Route path="category" element={<Category />} />
+          <Route path="category/create" element={<CategoryForm />} />
+          <Route path="category/:id" element={<CategoryForm />} />
           <Route path="products" element={<Products />} />
-          {/* <Route path="products/create" element={<CreateProduct />} /> */}
+          <Route path="products/create" element={<CreateNewProducts />} />
+          <Route path="products/:id" element={<CreateNewProducts />} />
           <Route path="users" element={<UsersTable />} />
-          <Route path="users/create" element={<>Create Users</>} />
+          <Route path="users/create" element={<CreateUser />} />
+          <Route path="users/update" element={<CreateUser />} />
           <Route path="orders" element={<Orders />} />
           <Route path="orders/create" element={<CreateOrders />} />
         </Route>

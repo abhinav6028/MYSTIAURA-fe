@@ -3,8 +3,6 @@ import TableHeader from '../../../components/UI/TableFormHeader';
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useCreateProduct } from '../../../services/api/product/product';
-import CreateNewProducts from './CreateNewProduct';
 
 interface FormValues {
     productName: string;
@@ -45,7 +43,6 @@ function CreateProduct() {
     const [selectedImage, setSelectedImage] = useState(0)
     const [previews, setPreviews] = useState<string[]>([]);
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const createProduct = useCreateProduct();
 
     const handleButtonClick = () => {
         fileInputRef.current!.click();
@@ -57,7 +54,7 @@ function CreateProduct() {
 
         setPreviews((prev) => [...prev, ...imageUrls]);
     };
-    const { register, handleSubmit, control, formState: { errors } } = useForm<FormValues>({
+    const { handleSubmit, control, formState: { errors } } = useForm<FormValues>({
         resolver: yupResolver(schema), // connect Yup validation
         mode: "onBlur" // validate on blur
     });
@@ -120,7 +117,7 @@ function CreateProduct() {
                                                     <Controller
                                                         name="productName"
                                                         control={control}
-                                                        render={({ field, fieldState }) => (
+                                                        render={({ field }) => (
                                                             <input
                                                                 id='productName'
                                                                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-transparent"
@@ -138,7 +135,7 @@ function CreateProduct() {
                                                     <Controller
                                                         name="material"
                                                         control={control}
-                                                        render={({ field, fieldState }) => (
+                                                        render={({ field }) => (
                                                             <input
                                                                 id="material"
                                                                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-transparent"
@@ -157,7 +154,7 @@ function CreateProduct() {
                                                     <Controller
                                                         name="description"
                                                         control={control}
-                                                        render={({ field, fieldState }) => (
+                                                        render={({ field }) => (
                                                             <textarea
                                                                 {...field}
                                                                 id="description"
@@ -186,7 +183,7 @@ function CreateProduct() {
                                                         <Controller
                                                             name="actualPrice"
                                                             control={control}
-                                                            render={({ field, fieldState }) => (
+                                                            render={({ field }) => (
                                                                 <input
                                                                     {...field}
                                                                     id="actualPrice"
@@ -203,7 +200,7 @@ function CreateProduct() {
                                                         <Controller
                                                             name="discountPrice"
                                                             control={control}
-                                                            render={({ field, fieldState }) => (
+                                                            render={({ field }) => (
                                                                 <input
                                                                     {...field}
                                                                     id="discountPrice"
@@ -222,7 +219,7 @@ function CreateProduct() {
                                                         <Controller
                                                             name="stock"
                                                             control={control}
-                                                            render={({ field, fieldState }) => (
+                                                            render={({ field }) => (
                                                                 <input
                                                                     {...field}
                                                                     id="stock"
@@ -238,7 +235,7 @@ function CreateProduct() {
                                                         <Controller
                                                             name="discountType"
                                                             control={control}
-                                                            render={({ field, fieldState }) => (
+                                                            render={({ field }) => (
                                                                 <select
                                                                     {...field}
                                                                     id="discountType"
@@ -274,7 +271,7 @@ function CreateProduct() {
                                                     <Controller
                                                         name="productCategory"
                                                         control={control}
-                                                        render={({ field, fieldState }) => (
+                                                        render={({ field }) => (
                                                             <select
                                                                 {...field}
                                                                 id="productCategory"

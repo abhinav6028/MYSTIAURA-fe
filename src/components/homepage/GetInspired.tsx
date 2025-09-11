@@ -1,4 +1,3 @@
-import getInspiredImg from "../../assets/homepage/sectionlast.jpg";
 import { FONT_FAMILY } from "../../utils";
 
 const GetInspired = () => {
@@ -45,7 +44,7 @@ const GetInspired = () => {
 
             </div>
 
-            <style jsx>{`
+            <style>{`
     /* Hide scrollbar for Webkit browsers (Chrome, Safari) */
     div::-webkit-scrollbar {
       display: none;

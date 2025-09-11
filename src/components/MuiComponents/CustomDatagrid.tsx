@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { DataGrid, type GridColDef, type GridRowId } from "@mui/x-data-grid";
 
 interface CommonDataGridProps<RowType = any> {
@@ -34,6 +34,14 @@ const CommonDataGrid = <RowType extends { id: GridRowId }>({
                 disableRowSelectionOnClick
                 paginationModel={paginationModel}
                 onPaginationModelChange={setPaginationModel}
+                sx={{
+                  "& .MuiDataGrid-cell:focus": {
+                    outline: "none",
+                  },
+                  "& .MuiDataGrid-cell:focus-within": {
+                    outline: "none",
+                  },
+                }}
             />
         </div>
     );

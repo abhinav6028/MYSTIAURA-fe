@@ -68,7 +68,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
-import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react"; // you can use any icon
+import { ArrowLeft, ArrowRight } from "lucide-react"; // you can use any icon
 import { FONT_FAMILY } from "../../utils";
 
 const testimonialsData = [
@@ -263,9 +263,10 @@ const Testimonial: React.FC = () => {
         navigation={{ prevEl: prevRef.current, nextEl: nextRef.current }}
         onBeforeInit={(swiper) => {
           // Assign the refs before Swiper initializes
-          if (typeof swiper.params.navigation !== "boolean") {
-            swiper.params.navigation.prevEl = prevRef.current;
-            swiper.params.navigation.nextEl = nextRef.current;
+          const nav = swiper.params.navigation;
+          if (nav && typeof nav !== "boolean") {
+            nav.prevEl = prevRef.current;
+            nav.nextEl = nextRef.current;
           }
         }}
         breakpoints={{

@@ -5,11 +5,7 @@ import {
     Avatar,
     Rating,
 } from "@mui/material";
-import goldLotus from "../../assets/homepage/bestseller2 (4).png"
-import engagement from "../../assets/homepage/bestseller2 (3).png"
-import earings from "../../assets/homepage/bestseller2 (2).png"
-import ring from "../../assets/homepage/bestseller2 (5).png"
-import { FONT_FAMILY, PRIMARY_COLOUR } from "../../utils";
+import { FONT_FAMILY } from "../../utils";
 import ProductGrid from "../inventory/ProductGrid";
 import ReviewDialog from "./ReviewModal";
 // import ReviewDialog from "./ReviewModal";
@@ -32,33 +28,6 @@ const reviews = [
         rating: 5,
         date: "Feb 25, 2025",
         company: "PearlGem",
-    },
-];
-
-const similarProducts = [
-    {
-        title: "Rose Gold Lotus Necklace",
-        price: "$200.00",
-        oldPrice: "$220.00",
-        img: goldLotus,
-    },
-    {
-        title: "Diamond Engagement Ring",
-        price: "$240.00",
-        oldPrice: "$250.00",
-        img: engagement,
-    },
-    {
-        title: "Prestige Diamond Earrings",
-        price: "$140.00",
-        oldPrice: "$150.00",
-        img: earings,
-    },
-    {
-        title: "Rose Gold Diamond Ring",
-        price: "$280.00",
-        oldPrice: "$300.00",
-        img: ring,
     },
 ];
 

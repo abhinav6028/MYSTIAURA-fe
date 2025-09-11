@@ -17,21 +17,20 @@ import { Plus } from "lucide-react";
 
 // Validation schema
 const schema = yup.object().shape({
-    rating: yup.number().required("Rating is required").min(1, "Select a rating"),
     name: yup.string().required("Name is required"),
-    email: yup.string().required("Email is required").email("Invalid email"),
-    review: yup
-        .string()
-        .required("Review is required")
-        .max(100, "Maximum 100 characters"),
+    phone: yup.string().required("Phone is required"),
+    address: yup.string().required("Address is required"),
+    city: yup.string().required("City is required"),
+    country: yup.string().required("Country is required"),
 });
 
 type ReviewFormData = {
-    rating: number;
     name: string;
-    email: string;
-    review: string;
-};
+    phone: string;
+    address: string;
+    city: string;
+    country: string;
+    };
 
 const AddNewAddressModal = () => {
     const [open, setOpen] = useState(false);
@@ -44,10 +43,11 @@ const AddNewAddressModal = () => {
     } = useForm<ReviewFormData>({
         resolver: yupResolver(schema),
         defaultValues: {
-            rating: 0,
             name: "",
-            email: "",
-            review: "",
+            phone: "",
+            address: "",
+            city: "",
+            country: "",
         },
     });
 
@@ -122,8 +122,8 @@ const AddNewAddressModal = () => {
                                     size="small"
                                     fullWidth
                                     margin="dense"
-                                    error={!!errors.email}
-                                    helperText={errors.email?.message}
+                                    error={!!errors.phone}
+                                    helperText={errors.phone?.message}
                                     variant="outlined" // make sure variant is outlined
                                     sx={{
                                         "& .MuiOutlinedInput-root": {
@@ -136,7 +136,7 @@ const AddNewAddressModal = () => {
 
                         {/* Review */}
                         <Controller
-                            name="adress"
+                            name="address"
                             control={control}
                             render={({ field }) => (
                                 <TextField
@@ -146,8 +146,8 @@ const AddNewAddressModal = () => {
                                     fullWidth
                                     margin="dense"
                                     inputProps={{ maxLength: 100 }}
-                                    error={!!errors.review}
-                                    helperText={errors.email?.message}
+                                    error={!!errors.address}
+                                    helperText={errors.address?.message}
                                     variant="outlined"
                                     sx={{
                                         "& .MuiOutlinedInput-root": {
@@ -168,8 +168,8 @@ const AddNewAddressModal = () => {
                                     size="small"
                                     fullWidth
                                     margin="dense"
-                                    error={!!errors.name}
-                                    helperText={errors.name?.message}
+                                    error={!!errors.city}
+                                    helperText={errors.city?.message}
                                     variant="outlined" // make sure variant is outlined
                                     sx={{
                                         "& .MuiOutlinedInput-root": {
@@ -190,8 +190,8 @@ const AddNewAddressModal = () => {
                                     size="small"
                                     fullWidth
                                     margin="dense"
-                                    error={!!errors.name}
-                                    helperText={errors.name?.message}
+                                    error={!!errors.country}
+                                    helperText={errors.country?.message}
                                     variant="outlined"
                                     sx={{
                                         "& .MuiOutlinedInput-root": {

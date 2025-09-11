@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { Calendar, ChevronDown, Pencil, Plus } from "lucide-react";
-import DatePicker from "react-datepicker";
+import React, { useCallback, useState } from 'react';
+import { ChevronDown, Plus } from "lucide-react";
+// import DatePicker from "react-datepicker";
 import { TablePagination } from "@mui/material";
 import { useLocation, useNavigate } from 'react-router-dom';
 
-function TableContent({ arrays }: { arrays?: Array }) {
+function TableContent({ arrays }: { arrays?: any }) {
 
-    const [startDate, setStartDate] = useState<Date | undefined>(undefined);
-    const [endDate, setEndDate] = useState<Date | undefined>(undefined)
+    // const [startDate, setStartDate] = useState<Date | undefined>(undefined);
+    // const [endDate, setEndDate] = useState<Date | undefined>(undefined)
 
     const [isOpen, setIsOpen] = useState(false);
     const [selected, setSelected] = useState("Status");
@@ -17,12 +17,12 @@ function TableContent({ arrays }: { arrays?: Array }) {
     const [page, setPage] = useState(2);
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
-    const handleChangePage = (
-        event: React.MouseEvent<HTMLButtonElement> | null,
-        newPage: number,
-    ) => {
-        setPage(newPage);
-    };
+    const handleChangePage = useCallback(
+        (_: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+          setPage(newPage);
+        },
+        []
+      );
 
     const handleChangeRowsPerPage = (
         event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -46,12 +46,12 @@ function TableContent({ arrays }: { arrays?: Array }) {
                 />
 
                 <div className="flex gap-2 items-center">
-                    <div className="flex items-center gap-2 border border-gray-300 rounded-sm px-4 h-8 cursor-pointer">
+                    {/* <div className="flex items-center gap-2 border border-gray-300 rounded-sm px-4 h-8 cursor-pointer">
                         <Calendar size={16} className="text-gray-500" />
                         <DatePicker
                             placeholderText="select Date Range"
                             selected={startDate}
-                            onChange={(dates) => {
+                            onChange={(dates: [Date | null, Date | null]) => {
                                 const [start, end] = dates;
                                 setStartDate(start);
                                 setEndDate(end);
@@ -63,7 +63,7 @@ function TableContent({ arrays }: { arrays?: Array }) {
                             className="bg-transparent text-gray-700 font-medium w-fit focus:outline-none h-full text-bold"
                         />
                         <ChevronDown size={16} className="text-gray-500" />
-                    </div>
+                    </div> */}
 
                     <div className="relative inline-block ">
 
@@ -132,7 +132,7 @@ function TableContent({ arrays }: { arrays?: Array }) {
                         </thead>
 
                         <tbody>
-                            {arrays.map((items, index) => (
+                            {arrays.map((items: any) => (
                                 <tr key={items.id} className="border-b border-gray-300 hover:bg-gray-50">
                                     <td className="p-4">
                                         <input type="checkbox" />
