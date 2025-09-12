@@ -13,6 +13,10 @@ export interface Product {
   discountPrice?: number;
   discountType?: string;
   material?: string;
+  ratings?: {
+    average: number;
+    count: number;
+  };
 }
 
 export type ProductInput = Omit<Product, "_id" | "createdAt" | "updatedAt">;

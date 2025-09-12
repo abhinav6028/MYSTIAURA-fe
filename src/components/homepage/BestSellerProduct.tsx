@@ -38,7 +38,7 @@ const BestSellerProduct = () => {
 
                     <div
                         key={index}
-                        onClick={() => navigate('/productdetailPage')}
+                        onClick={() => navigate('/user/productdetailPage/' + val._id)}
                         className="bg-[#f9f9f9] flex flex-col items-center relative cursor-pointer"
                     >
                         {/* Heart Icon for small screens */}
@@ -73,8 +73,8 @@ const BestSellerProduct = () => {
                             </h2>
 
                             <div className="flex items-baseline space-x-3">
-                                <span className="text-lg font-semibold text-[#a37557]">₹ {finalPrice(val.price, val.discountPrice) || 0}</span>
-                                <span className="text-md text-gray-400 line-through">₹ {val.price || 0}</span>
+                                <span className="text-lg font-semibold text-[#a37557]">₹ {finalPrice(val.price, val.discountPrice).toFixed(2) || 0}</span>
+                                <span className="text-md text-gray-400 line-through">₹ {val.price.toFixed(2) || 0}</span>
                             </div>
                         </div>
                     </div>

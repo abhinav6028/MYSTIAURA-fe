@@ -36,7 +36,7 @@ function AppRoutes() {
           <Route index element={<HomePage />} />
           <Route path="home" element={<HomePage />} />
           <Route path="inventory" element={<ProductListingPage />} />
-          <Route path="productdetailPage" element={<ProductDetailPage />} />
+          <Route path="productdetailPage/:id" element={<ProductDetailPage />} />
           <Route path="selectadress" element={<SelectAdress />} />
         </Route >
 
@@ -47,7 +47,7 @@ function AppRoutes() {
           <Route index element={<HomePage />} />
           <Route path="home" element={<HomePage />} />
           <Route path="inventory" element={<ProductListingPage />} />
-          {/* <Route path="productdetailPage" element={<ProductDetailPage />} /> */}
+          <Route path="productdetailPage/:id" element={<ProductDetailPage />} />
           <Route path="mycart" element={<MyCart />} />
           {/* <Route path="selectadress" element={<SelectAdress />} /> */}
           <Route path="payment" element={<Payment />} />
