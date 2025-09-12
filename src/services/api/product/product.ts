@@ -43,8 +43,6 @@ export function useProductList(page: number, limit: number) {
   return query;
 }
 
-
-
 // 🔹 Get product by ID
 export function useProductWithId(productId: string) {
   return useQuery<Product, Error>({

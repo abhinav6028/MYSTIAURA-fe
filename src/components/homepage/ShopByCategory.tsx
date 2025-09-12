@@ -11,9 +11,6 @@ const categories = [
 ]
 const ShopByCategory = () => {
 
-
-    console.log("FONT_FAMILY", FONT_FAMILY);
-
     return (
         <div className="py-10">
             <h1 style={{ fontFamily: FONT_FAMILY }} className="text-4xl mb-8">Shop By Category</h1>

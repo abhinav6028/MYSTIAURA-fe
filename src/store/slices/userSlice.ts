@@ -10,7 +10,6 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setSellerProducts: (state, action: PayloadAction<BestSellerProduct[]>) => {
-        console.log(action.payload);
       state.bestSellerProducts = action.payload;
     },
   },

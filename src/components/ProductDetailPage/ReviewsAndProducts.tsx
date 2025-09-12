@@ -33,7 +33,7 @@ const reviews = [
 
 function ReviewsAndProducts() {
     return (
-        <div className="py-4 px-4 md:px-10 lg:px-10">
+        <div className="py-8">
             {/* Reviews Section */}
             <div className="flex justify-between items-center mb-4 w-full">
                 <h1
