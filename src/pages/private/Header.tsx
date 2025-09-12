@@ -82,7 +82,7 @@ const Header: React.FC = () => {
           <Search className="cursor-pointer" size={25} strokeWidth={1} />
           <Heart className="cursor-pointer" size={25} strokeWidth={1} />
           <CircleUser className="cursor-pointer" size={25} strokeWidth={1} />
-          <ShoppingCart onClick={() => navigate('/mycart')} className="cursor-pointer" size={25} strokeWidth={1} />
+          <ShoppingCart onClick={() => navigate('/user/mycart')} className="cursor-pointer" size={25} strokeWidth={1} />
 
         </div>
       </div>
