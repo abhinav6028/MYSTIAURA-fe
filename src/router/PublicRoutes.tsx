@@ -7,10 +7,15 @@ interface PublicRouteProps {
 }
 
 const PublicRoute: React.FC<PublicRouteProps> = ({ children }) => {
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const { isAuthenticated, user } = useAppSelector((state) => state.auth);
 
   if (isAuthenticated) {
-    return <Navigate to="/home" replace />; // redirect logged-in users
+    if (user?.role === "admin") {
+      return <Navigate to="/admin/dashboard" replace />;
+    }else if(user?.role === "user"){
+      return <Navigate to="/user/home" replace />;
+    }
+    return <Navigate to="/home" replace />;
   }
 
   return <>{children}</>;

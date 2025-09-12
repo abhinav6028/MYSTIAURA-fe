@@ -21,6 +21,10 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children, roles }) => {
     return <Navigate to="/admin/dashboard" replace />;
   }
 
+  if (user?.role === "user" && !location.pathname.startsWith("/user")) {
+    return <Navigate to="user/home" replace />;
+  }
+
   // 🔹 Role check (if roles are provided)
   if (roles && roles.length > 0 && (!user || !roles.includes(user.role))) {
     return <Navigate to="/unauthorized" replace />;
