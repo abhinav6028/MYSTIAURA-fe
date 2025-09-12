@@ -9,6 +9,7 @@ import { RatingStars } from "../../utilsComp/RatingsComp";
 import { LiaShippingFastSolid } from "react-icons/lia";
 import { CiStar } from "react-icons/ci";
 import { MdOutlinePrivacyTip } from "react-icons/md";
+import { useAddToCartProduct } from "../../services/api/cart/cart";
 const fallback = "../assets/fallback.png";
 
 // const RING_SIZES = Array.from({ length: (8 - 4) / 0.5 + 1 }, (_, i) => 4 + i * 0.5);
@@ -18,11 +19,11 @@ const ProductDetailsMain = () => {
     // const [stoneShape] = useState("Round");
     // const [ringSize, setRingSize] = useState<number>(6.0);
     const [quantity, setQuantity] = useState<number>(1);
-    const navigaet = useNavigate();
+    const navigate = useNavigate();
     const { id } = useParams();
 
     const { data: singleProduct } = useProductWithId(id as string);
-    console.log(singleProduct);
+    const createAddToCart = useAddToCartProduct();
 
     // const handleChange = (e: any) => {
     //     setRingSize(e.target.value as number);
@@ -129,14 +130,14 @@ const ProductDetailsMain = () => {
                                 <Plus size={20} strokeWidth={2} />
                             </button>
                         </span>
-                        <Button sx={{ height: "42px", borderRadius: 0, fontFamily: "sans-serif", bgcolor: PRIMARY_COLOUR }}>Add To Cart</Button>
+                        <Button sx={{ height: "42px", borderRadius: 0, fontFamily: "sans-serif", bgcolor: PRIMARY_COLOUR }} onClick={()=> createAddToCart.mutate({product: id || "", quantity})}>Add To Cart</Button>
                         <span style={{ borderColor: PRIMARY_COLOUR, color: PRIMARY_COLOUR }} className="border border-gray-300 flex items-center justify-center p-2">
                             <Heart size={25} strokeWidth={0.75} />
                         </span>
                     </div>
 
                     <Button
-                        onClick={() => navigaet('/selectadress')}
+                        onClick={() => navigate('/selectadress')}
                         variant="outlined"
                         sx={{ width: "100%", height: "42px", fontFamily: "sans-serif", borderRadius: 0, borderColor: PRIMARY_COLOUR, color: PRIMARY_COLOUR }}
                     >

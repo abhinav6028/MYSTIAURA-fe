@@ -17,6 +17,7 @@ export function useProducts() {
       const res = await apiClient.get("api/product/all");
       return res.data.products;
     },
+    retry: false,
   });
 }
 
@@ -51,6 +52,7 @@ export function useProductWithId(productId: string) {
       const res = await apiClient.get(`api/product/${productId}`);
       return res.data.data;
     },
+    retry: false,
     enabled: !!productId,
   });
 }
