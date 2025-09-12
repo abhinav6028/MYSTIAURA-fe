@@ -4,6 +4,10 @@ import { useNotify } from "../../../utilsComp/useNotify";
 import type { IAdminFormInputs, Product } from "../../../types/adminTypes";
 import { useUploadImages } from "../imageUpload";
 import { useNavigate } from "react-router-dom";
+import { setSellerProducts } from "../../../store/slices/userSlice";
+import { useDispatch } from "react-redux";
+import type { BestSellerProduct } from "../../../types/userTypes";
+import { useEffect } from "react";
 
 // 🔹 Get all products
 export function useProducts() {
@@ -15,6 +19,31 @@ export function useProducts() {
     },
   });
 }
+
+// Product list with pagination
+export function useProductList(page: number, limit: number) {
+  const dispatch = useDispatch();
+
+  const query = useQuery<BestSellerProduct, Error>({
+    queryKey: ["products", page, limit],
+    queryFn: async () => {
+      const res = await apiClient.get("api/product/trending-products", {
+        params: { isFeatured: true, page, limit },
+      });
+      return res.data.products as BestSellerProduct; // ✅ return the full object
+    },
+  });
+
+  useEffect(() => {
+    if (query.data) {
+      dispatch(setSellerProducts(query.data as any)); // ✅ already BestSellerProduct
+    }
+  }, [query.data, dispatch]);
+
+  return query;
+}
+
+
 
 // 🔹 Get product by ID
 export function useProductWithId(productId: string) {
