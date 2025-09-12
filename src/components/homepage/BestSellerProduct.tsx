@@ -3,11 +3,12 @@ import subbanner from "../../assets/homepage/subbanner.png";
 import { finalPrice, FONT_FAMILY, PRIMARY_COLOUR } from "../../utils";
 import { useNavigate } from "react-router-dom";
 import { useProductList } from "../../services/api/product/product";
+import { useAddToCartProduct } from "../../services/api/cart/cart";
 
 const BestSellerProduct = () => {
 
     const { data } = useProductList(1, 8);
-
+    const createAddToCart = useAddToCartProduct();
     const navigate = useNavigate();
 
     return (
@@ -38,7 +39,6 @@ const BestSellerProduct = () => {
 
                     <div
                         key={index}
-                        onClick={() => navigate('/user/productdetailPage/' + val._id)}
                         className="bg-[#f9f9f9] flex flex-col items-center relative cursor-pointer"
                     >
                         {/* Heart Icon for small screens */}
@@ -52,6 +52,7 @@ const BestSellerProduct = () => {
                                 src={val.images[0].secure_url}
                                 alt="Ring"
                                 className="w-full h-auto object-cover"
+                                onClick={() => navigate('/user/productdetailPage/' + val._id)}
                             />
                         </div>
 
@@ -61,7 +62,9 @@ const BestSellerProduct = () => {
                             </div>
 
                             {/* Add to Cart Button */}
-                            <button className="flex-1 bg-[#660033] text-white font-semibold md:py-3 py-2 text-sm sm:text-md hover:bg-[#51052b] transition-colors w-full sm:w-auto">
+                            <button className="flex-1 bg-[#660033] text-white font-semibold md:py-3 py-2 text-sm sm:text-md hover:bg-[#51052b] transition-colors w-full sm:w-auto"
+                            onClick={()=>createAddToCart.mutate({product: val._id, quantity: 1})}
+                            >
                                 ADD TO CART
                             </button>
                         </div>
