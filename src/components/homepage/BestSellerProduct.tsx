@@ -10,6 +10,7 @@ import bestSeller8 from "../../assets/homepage/bestseller2 (7).png";
 import subbanner from "../../assets/homepage/subbanner.png";
 import { FONT_FAMILY, PRIMARY_COLOUR } from "../../utils";
 import { useNavigate } from "react-router-dom";
+import { useProductList } from "../../services/api/product/product";
 
 const bestSellerData = [
     {
@@ -38,6 +39,9 @@ const bestSellerData = [
     }
 ]
 const BestSellerProduct = () => {
+
+    const { data } = useProductList(1, 8);
+    console.log(data);
 
     const navigate = useNavigate()
 
