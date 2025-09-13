@@ -19,6 +19,12 @@ const Header: React.FC = () => {
     navigate("/login");
   }
 
+  const persistedRoot = localStorage.getItem("persist:root");
+  const token =
+    persistedRoot &&
+    JSON.parse(persistedRoot).token &&
+    JSON.parse(JSON.parse(persistedRoot).token as string);
+
   return (
     <header className="w-full">
       {/* Top Bar */}
@@ -34,6 +40,15 @@ const Header: React.FC = () => {
             </span>
             <div className="flex items-center gap-4">
               {/* Language Dropdown */}
+
+              {
+                !token &&
+                <button onClick={() => navigate('/login')} className="flex-1 bg-[#660033] text-white font-semibold md:py-2 py-2 md:px-4 cursor-pointer px-2 text-sm sm:text-md hover:bg-[#51052b] transition-colors w-full sm:w-auto">
+                  LOG IN
+                </button>
+
+              }
+
               <Select
                 value={lang}
                 onChange={(e) => setLang(e.target.value)}
@@ -65,27 +80,30 @@ const Header: React.FC = () => {
 
       {/* Main Navbar */}
       <LayoutContainer>
-      <div className="flex justify-between items-center py-4">
-        <img src={logo} alt="PeariGem" onClick={handleLogout} />
+        <div className="flex justify-between items-center py-4">
+          <img src={logo} alt="PeariGem" onClick={handleLogout} />
 
-        {/* Navigation Links */}
-        <nav className="flex gap-8 font-medium text-sm ">
-          <a href="#" className="hover:text-gray-600">RINGS</a>
-          <a href="#" className="hover:text-gray-600">EARRINGS</a>
-          <a href="#" className="hover:text-gray-600">BRACELETS</a>
-          <a href="#" className="hover:text-gray-600">PENDENTS</a>
-          <a href="#" className="hover:text-gray-600">NECKLACES</a>
-        </nav>
+          {/* Navigation Links */}
+          <nav className="flex gap-8 font-medium text-sm ">
+            <a href="#" className="hover:text-gray-600">RINGS</a>
+            <a href="#" className="hover:text-gray-600">EARRINGS</a>
+            <a href="#" className="hover:text-gray-600">BRACELETS</a>
+            <a href="#" className="hover:text-gray-600">PENDENTS</a>
+            <a href="#" className="hover:text-gray-600">NECKLACES</a>
+          </nav>
 
-        {/* Icons */}
-        <div className="flex gap-4 items-center">
-          <Search className="cursor-pointer" size={25} strokeWidth={1} />
-          <Heart className="cursor-pointer" size={25} strokeWidth={1} />
-          <CircleUser className="cursor-pointer" size={25} strokeWidth={1} />
-          <ShoppingCart onClick={() => navigate('/user/mycart')} className="cursor-pointer" size={25} strokeWidth={1} />
+          {/* Icons */}
+          <div className="flex gap-4 items-center">
+            <Search className="cursor-pointer" size={25} strokeWidth={1} />
+            <Heart className="cursor-pointer" size={25} strokeWidth={1} />
+            {
 
+              token && <CircleUser className="cursor-pointer" size={25} strokeWidth={1} />
+            }
+            <ShoppingCart onClick={() => navigate('/user/mycart')} className="cursor-pointer" size={25} strokeWidth={1} />
+
+          </div>
         </div>
-      </div>
       </LayoutContainer>
     </header>
 
@@ -93,4 +111,3 @@ const Header: React.FC = () => {
 };
 
 export default Header;
-
