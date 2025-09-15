@@ -5,7 +5,7 @@ import arrowSvg from "../../assets/homepage/arrow.svg";
 const HeroBannerSection = () => {
     return (
         <div style={{
-            backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${homepageBanner})`,
+            backgroundImage: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(${homepageBanner})`,
             backgroundPosition: "center",
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat"
