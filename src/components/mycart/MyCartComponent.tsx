@@ -72,7 +72,7 @@ const MyCart = () => {
                                 <img
                                     src={item?.product?.images?.[0]?.secure_url}
                                     alt={item?.product.name}
-                                    className=" w-32 h-38 md:w-32 lg:w-48 md:h-40 lg:h-48 object-cover bg-[#f9f9f9] rounded-md"
+                                    className=" w-32 h-38 md:w-32 lg:w-40 md:h-40 lg:h-40 object-cover bg-[#f9f9f9]"
                                 />
 
                                 {/* Details */}

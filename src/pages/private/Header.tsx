@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { MenuItem, Select } from "@mui/material";
+import React, { useEffect, useRef, useState } from "react";
+import { Badge, MenuItem, Select } from "@mui/material";
 import logo from "../../assets/logo.svg"
 import phone from "../../assets/phone.svg"
-import { CircleUser, Heart, Search, ShoppingCart, Menu } from "lucide-react";
+import { CircleUser, Heart, Search, ShoppingCart, Menu, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useLogout } from "../../services/api/auth/auth";
 import LayoutContainer from "../../components/layout/LayoutContainer";
@@ -22,8 +22,6 @@ const Header = () => {
     logoutuser();
     navigate("/login");
   }
-
-  // <Menu />
 
   const { isAuthenticated } = useAppSelector((state) => state.auth);
 
@@ -49,9 +47,22 @@ const Header = () => {
   };
 
   const handleItemClick = () => {
-    // setActiveItem(itemName);
     setIsMenuOpen(false);
   };
+
+  const [open, setOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <>
@@ -116,27 +127,54 @@ const Header = () => {
             <nav className="hidden lg:flex gap-8 font-medium text-sm">
               {
                 navItems?.map((data, index) =>
-                  <a key={index} onClick={() => navigate(`categories/${data?.href}`)} className="hover:text-gray-600">{data?.name}</a>
+                  <a key={index} onClick={() => navigate(`categories/${data?.href}`)} className="hover:text-gray-600 cursor-pointer">{data?.name}</a>
                 )
               }
 
-              {/* <a href="#" className="hover:text-gray-600">EARRINGS</a>
-              <a href="#" className="hover:text-gray-600">BRACELETS</a>
-              <a href="#" className="hover:text-gray-600">PENDENTS</a>
-              <a href="#" className="hover:text-gray-600">NECKLACES</a> */}
             </nav>
 
             {/* Icons */}
-            <div className="flex sm:gap-2 gap-4 items-center">
+            <div className="flex sm:gap-2 gap-2 md:gap-4 items-center">
               <Search className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
 
-              <Heart onClick={() => navigate('/user/wishlist')} className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
+              <Badge badgeContent={4} color="primary">
+
+                <Heart onClick={() => navigate('/user/wishlist')} className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
+
+              </Badge>
+
+
+
               {
                 isAuthenticated &&
-                <CircleUser className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
+                <div className="relative" ref={menuRef}>
+                  <CircleUser
+                    className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7"
+                    strokeWidth={1}
+                    onClick={() => setOpen((prev) => !prev)}
+                  />
+
+                  {open && (
+                    <div className="absolute right-0 mt-2 w-40 bg-white shadow-lg py-2 z-50">
+                      <button className="w-full px-4 py-2 text-md font-medium text-gray-700 hover:bg-gray-100 text-left cursor-pointer">
+                        Profile
+                      </button>
+                      <button className="w-full px-4 py-2 text-md font-medium text-gray-700 hover:bg-gray-100 text-left cursor-pointer">
+                        Settings
+                      </button>
+                      <button className="w-full px-4 py-2 text-md font-medium text-[#660033] hover:bg-gray-100 text-left cursor-pointer">
+                        Logout
+                      </button>
+                    </div>
+                  )}
+                </div>
               }
 
-              <ShoppingCart onClick={() => navigate('/user/mycart')} className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
+              <Badge badgeContent={4} color="primary">
+
+                <ShoppingCart onClick={() => navigate('/user/mycart')} className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
+              </Badge>
+
 
               {/* Mobile Menu Button */}
               <button
@@ -147,9 +185,10 @@ const Header = () => {
                   }`}
               >
                 <div className="relative w-6 h-6">
-                  <Menu className={`absolute inset-0 w-6 h-6 transition-all duration-300 ${isMenuOpen ? 'opacity-0 rotate-180' : 'opacity-100 rotate-0'
+                  <Menu strokeWidth={1} className={`absolute inset-0 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7 transition-all duration-300 ${isMenuOpen ? 'opacity-0 rotate-180' : 'opacity-100 rotate-0'
                     }`} />
-                  <CircleUser className={`absolute inset-0 w-6 h-6 transition-all duration-300 ${isMenuOpen ? 'opacity-100 rotate-0' : 'opacity-0 -rotate-180'
+                  {/* <X /> */}
+                  <X strokeWidth={1} className={`absolute inset-0 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7 transition-all duration-300 ${isMenuOpen ? 'opacity-100 rotate-0' : 'opacity-0 -rotate-180'
                     }`} />
                 </div>
               </button>
@@ -204,10 +243,6 @@ const Header = () => {
 
           </div>
 
-          {/* Mobile CTA */}
-
-
-          {/* Social Links */}
           <div className={`px-6 pb-6 border-t border-gray-200 pt-6 transition-all duration-500 ${isMenuOpen
             ? 'opacity-100 translate-y-0'
             : 'opacity-0 translate-y-4'
@@ -229,9 +264,6 @@ const Header = () => {
           </div>
         </div>
       </div>
-
-      {/* Demo Content */}
-
 
       {/* Custom Styles */}
       <style>{`
@@ -288,4 +320,5 @@ const Header = () => {
 };
 
 export default Header;
+
 

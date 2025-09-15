@@ -114,7 +114,7 @@ const ProductDetailsMain = () => {
                     <div className="grid grid-cols-[25%_60%_15%] gap-2 items-center">
                         <span
                             style={{ borderColor: PRIMARY_COLOUR }}
-                            className="flex items-center justify-between gap-2 border rounded-md"
+                            className="flex items-center justify-between gap-2 border"
                         >
                             <button
                                 onClick={() => setQuantity((q) => Math.max(1, q - 1))}
@@ -154,7 +154,7 @@ const ProductDetailsMain = () => {
 
                         <span
                             style={{ borderColor: PRIMARY_COLOUR, color: PRIMARY_COLOUR }}
-                            className="border flex items-center justify-center p-2 rounded-md"
+                            className="border flex items-center justify-center p-2 "
                         >
                             <Heart size={22} strokeWidth={1} />
                         </span>
