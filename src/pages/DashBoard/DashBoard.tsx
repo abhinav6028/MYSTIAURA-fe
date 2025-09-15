@@ -138,7 +138,6 @@ export default function DashBoard() {
                 ))}
             </div>
 
-
             <div className="grid gap-6 md:grid-cols-2 p-4">
                 {/* Sales Statistics */}
                 <div className="bg-white rounded-sm shadow-sm p-5">
