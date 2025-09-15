@@ -82,6 +82,6 @@ export function useLogout() {
     return () => {
         dispatch(logout());
         queryClient.clear(); // clears cached queries
-        localStorage.removeItem("token"); // optional
+        localStorage.removeItem("persist:root"); // optional
     };
 }
