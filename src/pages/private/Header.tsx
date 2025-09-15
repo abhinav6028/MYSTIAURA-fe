@@ -1,16 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
 import React, { useEffect, useState } from "react";
 import { MenuItem, Select } from "@mui/material";
 import logo from "../../assets/logo.svg"
@@ -28,7 +15,6 @@ import { useAppSelector } from "../../store/hooks";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeItem, setActiveItem] = useState('Home');
   const [scrolled, setScrolled] = useState(false);
 
   const [lang, setLang] = React.useState("EN");
@@ -68,8 +54,8 @@ const Header = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleItemClick = (itemName) => {
-    setActiveItem(itemName);
+  const handleItemClick = () => {
+    // setActiveItem(itemName);
     setIsMenuOpen(false);
   };
 
@@ -152,7 +138,7 @@ const Header = () => {
               }
 
               <ShoppingCart onClick={() => navigate('/user/mycart')} className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
-M
+              M
 
               {/* Mobile Menu Button */}
               <button
@@ -201,12 +187,12 @@ M
           {/* Navigation Items */}
           <div className="px-6 py-8 space-y-2">
             {navItems.map((item, index) => {
-              const Icon = item.icon;
+              // const Icon = item.icon;
               return (
                 <a
                   key={item.name}
                   href={item.href}
-                  onClick={() => handleItemClick(item.name)}
+                  onClick={() => handleItemClick()}
                   className={`flex items-center space-x-4 px-4 py-2 rounded-xl text-lg transition-all duration-300 group relative overflow-hidden`}
                   style={{
                     transitionDelay: isMenuOpen ? `${index * 100}ms` : '0ms'
@@ -237,7 +223,7 @@ M
           >
             <p className="text-sm text-gray-500 mb-4">Connect with us</p>
             <div className="flex space-x-4">
-              {['Twitter', 'LinkedIn', 'GitHub'].map((social, index) => (
+              {['Twitter', 'LinkedIn', 'GitHub'].map((social) => (
                 <div
                   key={social}
                   className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-blue-100 hover:text-blue-600 transition-all duration-300 cursor-pointer transform hover:scale-110"
@@ -255,7 +241,7 @@ M
 
 
       {/* Custom Styles */}
-      <style jsx>{`
+      <style>{`
         @keyframes slideInFromLeft {
           from {
             transform: translateX(-100%);

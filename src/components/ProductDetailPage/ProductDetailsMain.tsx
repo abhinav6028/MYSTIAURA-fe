@@ -36,7 +36,7 @@ const ProductDetailsMain = () => {
 
                     {/* Thumbnails */}
                     <div className="mt-3 flex w-15 h-15 md:w-17 md:h-17 lg:w-20 lg:h-20 gap-3">
-                        {[1, 2, 3, 4].map((thumb, idx) => (
+                        {[1, 2, 3, 4].map((idx) => (
                             <img
                                 key={idx}
                                 src={singleProduct?.images?.[0]?.secure_url || fallback}

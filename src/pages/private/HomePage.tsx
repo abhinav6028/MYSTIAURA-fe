@@ -9,7 +9,7 @@ import LayoutContainer from "../../components/layout/LayoutContainer"
 
 const HomePage = () => {
     return (
-        <div className="">
+        <div>
             <LayoutContainer>
                 <HeroBannerSection />
                 <ShopByCategory />
