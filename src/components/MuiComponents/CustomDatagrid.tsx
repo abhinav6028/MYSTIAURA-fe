@@ -35,12 +35,14 @@ const CommonDataGrid = <RowType extends { id: GridRowId }>({
                 paginationModel={paginationModel}
                 onPaginationModelChange={setPaginationModel}
                 sx={{
-                  "& .MuiDataGrid-cell:focus": {
-                    outline: "none",
-                  },
-                  "& .MuiDataGrid-cell:focus-within": {
-                    outline: "none",
-                  },
+                    border: 0,
+                    '& .MuiDataGrid-cell': {
+                        fontFamily: 'Poppins, sans-serif',
+                    },
+                    '& .MuiDataGrid-columnHeaders': {
+                        fontFamily: 'Poppins, sans-serif',
+                        fontWeight: 600,
+                    },
                 }}
             />
         </div>

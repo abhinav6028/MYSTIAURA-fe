@@ -15,7 +15,7 @@ const Dashboard = () => {
             }
 
             <div
-                className={`flex-1 md:mt-35 mt-30 lg:mt-35 ${pathName?.pathname?.split('/').includes('admin') ? 'bg-[#F6F6F6]' : ''}`}
+                className={`flex-1  ${pathName?.pathname?.split('/').includes('admin') ? 'bg-[#F6F6F6]' : 'md:mt-35 mt-30 lg:mt-35'}`}
             >
                 <Outlet />
             </div>
