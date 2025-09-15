@@ -152,7 +152,7 @@ const Header = () => {
               }
 
               <ShoppingCart onClick={() => navigate('/user/mycart')} className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
-
+M
 
               {/* Mobile Menu Button */}
               <button
