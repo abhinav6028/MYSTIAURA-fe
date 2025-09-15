@@ -7,11 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { useLogout } from "../../services/api/auth/auth";
 import LayoutContainer from "../../components/layout/LayoutContainer";
 import { useAppSelector } from "../../store/hooks";
-// import LayoutContainer from "../../components/layout/LayoutContainer";
-
-// import LandingPage from '../LandingPage/LandingPage';
-// import JewelryCategories from '../Categories/Categories';
-// import NewArrivals from '../NewArrivals/NewArrivals';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -33,12 +28,11 @@ const Header = () => {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   const navItems = [
-    { name: 'Home', icon: "Home", href: '#home' },
-    { name: 'About', icon: "Info", href: '#about' },
-    { name: 'Services', icon: "Star", href: '#services' },
-    { name: 'Portfolio', icon: "Briefcase", href: '#portfolio' },
-    { name: 'Team', icon: "User", href: '#team' },
-    { name: 'Contact', icon: "Mail", href: '#contact' }
+    { name: 'RINGS', href: 'RINGS' },
+    { name: 'EARRINGS', href: 'EARRINGS' },
+    { name: 'BRACELETS', href: 'BRACELETS' },
+    { name: 'PENDENTS', href: 'PENDENTS' },
+    { name: 'NECKLACES', href: 'NECKLACES' },
   ];
 
   useEffect(() => {
@@ -120,11 +114,16 @@ const Header = () => {
 
             {/* Navigation Links */}
             <nav className="hidden lg:flex gap-8 font-medium text-sm">
-              <a href="#" className="hover:text-gray-600">RINGS</a>
-              <a href="#" className="hover:text-gray-600">EARRINGS</a>
+              {
+                navItems?.map((data, index) =>
+                  <a key={index} onClick={() => navigate(`categories/${data?.href}`)} className="hover:text-gray-600">{data?.name}</a>
+                )
+              }
+
+              {/* <a href="#" className="hover:text-gray-600">EARRINGS</a>
               <a href="#" className="hover:text-gray-600">BRACELETS</a>
               <a href="#" className="hover:text-gray-600">PENDENTS</a>
-              <a href="#" className="hover:text-gray-600">NECKLACES</a>
+              <a href="#" className="hover:text-gray-600">NECKLACES</a> */}
             </nav>
 
             {/* Icons */}
@@ -138,7 +137,6 @@ const Header = () => {
               }
 
               <ShoppingCart onClick={() => navigate('/user/mycart')} className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
-              M
 
               {/* Mobile Menu Button */}
               <button
@@ -203,11 +201,6 @@ const Header = () => {
                 </a>
               );
             })}
-
-
-
-
-
 
           </div>
 
