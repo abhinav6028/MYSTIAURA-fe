@@ -12,6 +12,7 @@ import SelectAdress from "../pages/SelectAdress/SelectAdress";
 import Payment from "../pages/Payment/Payment";
 import WishList from "../pages/WishList/WishList";
 import CategoryPage from "../pages/CategoryPage/CategoryPage";
+import DashBoard from "../pages/DashBoard/DashBoard";
 
 
 const Login = lazy(() => import("../pages/public/Login"));
@@ -61,7 +62,7 @@ function AppRoutes() {
 
         {/* Admin Routes */}
         <Route path="/admin" element={<PrivateRoute roles={["admin"]}><Dashboard /></PrivateRoute>}>
-          <Route path="dashboard" element={<>ADMIN DASHBOARD</>} />
+          <Route path="dashboard" element={<DashBoard />} />
           <Route path="category" element={<Category />} />
           <Route path="category/create" element={<CategoryForm />} />
           <Route path="category/:id" element={<CategoryForm />} />
