@@ -44,7 +44,6 @@ function AppRoutes() {
           <Route path="productdetailPage/:id" element={<ProductDetailPage />} />
         </Route >
 
-
         {/* Private Routes */}
         <Route path="/user" element={<PrivateRoute roles={["user"]}><Dashboard /></PrivateRoute>} >
           {/* User Routes */}
