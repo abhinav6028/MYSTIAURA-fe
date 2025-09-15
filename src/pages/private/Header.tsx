@@ -1,13 +1,36 @@
-import React from "react";
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { useEffect, useState } from "react";
 import { MenuItem, Select } from "@mui/material";
 import logo from "../../assets/logo.svg"
 import phone from "../../assets/phone.svg"
-import { CircleUser, Heart, Search, ShoppingCart } from "lucide-react";
+import { CircleUser, Heart, Search, ShoppingCart, Menu } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useLogout } from "../../services/api/auth/auth";
 import LayoutContainer from "../../components/layout/LayoutContainer";
+import { useAppSelector } from "../../store/hooks";
+// import LayoutContainer from "../../components/layout/LayoutContainer";
 
-const Header: React.FC = () => {
+// import LandingPage from '../LandingPage/LandingPage';
+// import JewelryCategories from '../Categories/Categories';
+// import NewArrivals from '../NewArrivals/NewArrivals';
+
+const Header = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeItem, setActiveItem] = useState('Home');
+  const [scrolled, setScrolled] = useState(false);
+
   const [lang, setLang] = React.useState("EN");
   const [currency, setCurrency] = React.useState("USD");
   const logoutuser = useLogout();
@@ -19,37 +42,61 @@ const Header: React.FC = () => {
     navigate("/login");
   }
 
-  const persistedRoot = localStorage.getItem("persist:root");
-  const token =
-    persistedRoot &&
-    JSON.parse(persistedRoot).token &&
-    JSON.parse(JSON.parse(persistedRoot).token as string);
+  // <Menu />
 
-  console.log("token", token);
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
 
+  const navItems = [
+    { name: 'Home', icon: "Home", href: '#home' },
+    { name: 'About', icon: "Info", href: '#about' },
+    { name: 'Services', icon: "Star", href: '#services' },
+    { name: 'Portfolio', icon: "Briefcase", href: '#portfolio' },
+    { name: 'Team', icon: "User", href: '#team' },
+    { name: 'Contact', icon: "Mail", href: '#contact' }
+  ];
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleItemClick = (itemName) => {
+    setActiveItem(itemName);
+    setIsMenuOpen(false);
+  };
 
   return (
-    <header className="w-full">
-      {/* Top Bar */}
-      <div className=" py-2 text-sm border-b bg-gray-50">
+    <>
+      {/* Fixed Navigation Bar */}
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
+        ? 'bg-white backdrop-blur-md shadow-lg border-b border-gray-200/20'
+        : 'bg-white backdrop-blur-sm'
+        }`}>
+
         <LayoutContainer>
-          <div className="sm:flex hidden justify-between items-center">
-            <div className="flex items-center gap-2">
-              <img src={phone} alt="phone" />
-              <span>(307) 555-0133</span>
+
+          <div className="w-full flex justify-between items-center  sm:py-2 py-2 md:py-3 lg:py-3">
+            <div className="flex items-center md:gap-1 lg:gap-2 md:text-[18px] sm:text-[15px] text-[10px]">
+              <img src={phone} alt="phone" className="w-3 h-3 lg:w-6 lg:h-6 md:w-6 md:h-6 sm:w-5 sm:h-5" />
+              <span className="ml:1">(307) 555-0133</span>
             </div>
-            <span className="text-center flex-1 font-medium">
-              Get 50% OFF on Engagement Rings
+            <span className="text-center flex-1 font-medium md:text-[18px] text-[10px]">        Get 50% OFF on Engagement Rings
             </span>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center sm:gap-2 md:gap-3 lg:gap-4">
               {/* Language Dropdown */}
 
-              {
-                !token &&
-                <button onClick={() => navigate('/login')} className="flex-1 bg-[#660033] text-white font-semibold md:py-2 py-2 md:px-4 cursor-pointer px-2 text-sm sm:text-md hover:bg-[#51052b] transition-colors w-full sm:w-auto">
+              {!isAuthenticated &&
+                <button onClick={() => navigate('/login')} className="md:flex hidden bg-[#660033] text-white font-semibold md:py-2 py-2 md:px-4 cursor-pointer px-2 text-sm sm:text-md hover:bg-[#51052b] transition-colors w-full sm:w-auto">
                   LOG IN
                 </button>
-
               }
 
               <Select
@@ -78,39 +125,188 @@ const Header: React.FC = () => {
               </Select>
             </div>
           </div>
+
         </LayoutContainer>
-      </div>
 
-      {/* Main Navbar */}
-      <LayoutContainer>
-        <div className="flex justify-between items-center py-4">
-          <img src={logo} alt="PeariGem" onClick={handleLogout} />
+        <LayoutContainer>
+          <div className="flex justify-between items-center py-4">
+            <img src={logo} alt="PeariGem" onClick={handleLogout} />
 
-          {/* Navigation Links */}
-          <nav className="flex gap-8 font-medium text-sm ">
-            <a href="#" className="hover:text-gray-600">RINGS</a>
-            <a href="#" className="hover:text-gray-600">EARRINGS</a>
-            <a href="#" className="hover:text-gray-600">BRACELETS</a>
-            <a href="#" className="hover:text-gray-600">PENDENTS</a>
-            <a href="#" className="hover:text-gray-600">NECKLACES</a>
-          </nav>
+            {/* Navigation Links */}
+            <nav className="hidden lg:flex gap-8 font-medium text-sm">
+              <a href="#" className="hover:text-gray-600">RINGS</a>
+              <a href="#" className="hover:text-gray-600">EARRINGS</a>
+              <a href="#" className="hover:text-gray-600">BRACELETS</a>
+              <a href="#" className="hover:text-gray-600">PENDENTS</a>
+              <a href="#" className="hover:text-gray-600">NECKLACES</a>
+            </nav>
 
-          {/* Icons */}
-          <div className="flex gap-4 items-center">
-            <Search className="cursor-pointer" size={25} strokeWidth={1} />
-            <Heart className="cursor-pointer" size={25} strokeWidth={1} />
-            {
+            {/* Icons */}
+            <div className="flex sm:gap-2 gap-4 items-center">
+              <Search className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
 
-              token && <CircleUser className="cursor-pointer" size={25} strokeWidth={1} />
-            }
-            <ShoppingCart onClick={() => navigate('/user/mycart')} className="cursor-pointer" size={25} strokeWidth={1} />
+              <Heart onClick={() => navigate('/user/wishlist')} className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
+              {
+                isAuthenticated &&
+                <CircleUser className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
+              }
+
+              <ShoppingCart onClick={() => navigate('/user/mycart')} className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
+
+
+              {/* Mobile Menu Button */}
+              <button
+                onClick={toggleMenu}
+                className={`lg:hidden z-50 p-2 rounded-lg transition-all duration-300 ${isMenuOpen
+                  ? 'bg-white text-gray-900'
+                  : 'text-gray-700 hover:bg-gray-100'
+                  }`}
+              >
+                <div className="relative w-6 h-6">
+                  <Menu className={`absolute inset-0 w-6 h-6 transition-all duration-300 ${isMenuOpen ? 'opacity-0 rotate-180' : 'opacity-100 rotate-0'
+                    }`} />
+                  <CircleUser className={`absolute inset-0 w-6 h-6 transition-all duration-300 ${isMenuOpen ? 'opacity-100 rotate-0' : 'opacity-0 -rotate-180'
+                    }`} />
+                </div>
+              </button>
+
+            </div>
+          </div>
+        </LayoutContainer>
+
+      </nav>
+
+      {/* Mobile Menu Overlay */}
+      <div className={`fixed inset-0 z-40 lg:hidden transition-all duration-500 ${isMenuOpen
+        ? 'opacity-100 pointer-events-auto'
+        : 'opacity-0 pointer-events-none'
+        }`}>
+        {/* Backdrop */}
+        <div
+          className={`absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-500 ${isMenuOpen ? 'opacity-100' : 'opacity-0'
+            }`}
+          onClick={toggleMenu}
+        ></div>
+
+        {/* Full-screen menu sliding from left */}
+        <div className={`absolute top-0 left-0 h-full w-full max-w-sm bg-white shadow-2xl transform transition-all duration-500 ease-out ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}>
+          {/* Menu Header */}
+          <div className="flex items-center justify-between p-6 border-b border-gray-200">
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              Menu
+            </h2>
+          </div>
+
+          {/* Navigation Items */}
+          <div className="px-6 py-8 space-y-2">
+            {navItems.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  onClick={() => handleItemClick(item.name)}
+                  className={`flex items-center space-x-4 px-4 py-2 rounded-xl text-lg transition-all duration-300 group relative overflow-hidden`}
+                  style={{
+                    transitionDelay: isMenuOpen ? `${index * 100}ms` : '0ms'
+                  }}
+                >
+                  <a href="#" className="hover:text-gray-600">{item.name}</a>
+                  {/* <span className="relative z-10">{item.name}</span> */}
+                </a>
+              );
+            })}
+
+
+
+
+
+
+          </div>
+
+          {/* Mobile CTA */}
+
+
+          {/* Social Links */}
+          <div className={`px-6 pb-6 border-t border-gray-200 pt-6 transition-all duration-500 ${isMenuOpen
+            ? 'opacity-100 translate-y-0'
+            : 'opacity-0 translate-y-4'
+            }`}
+            style={{ transitionDelay: isMenuOpen ? '700ms' : '0ms' }}
+          >
+            <p className="text-sm text-gray-500 mb-4">Connect with us</p>
+            <div className="flex space-x-4">
+              {['Twitter', 'LinkedIn', 'GitHub'].map((social, index) => (
+                <div
+                  key={social}
+                  className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-blue-100 hover:text-blue-600 transition-all duration-300 cursor-pointer transform hover:scale-110"
+                >
+                  {social[0]}
+                </div>
+              ))}
+            </div>
 
           </div>
         </div>
-      </LayoutContainer>
-    </header>
+      </div>
 
+      {/* Demo Content */}
+
+
+      {/* Custom Styles */}
+      <style jsx>{`
+        @keyframes slideInFromLeft {
+          from {
+            transform: translateX(-100%);
+            opacity: 0;
+          }
+          to {
+            transform: translateX(0);
+            opacity: 1;
+          }
+        }
+
+        @keyframes fadeInUp {
+          from {
+            transform: translateY(20px);
+            opacity: 0;
+          }
+          to {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+
+        .animate-slide-in {
+          animation: slideInFromLeft 0.5s ease-out forwards;
+        }
+
+        .animate-fade-in-up {
+          animation: fadeInUp 0.3s ease-out forwards;
+        }
+
+        /* Custom scrollbar for mobile menu */
+        .mobile-menu::-webkit-scrollbar {
+          width: 4px;
+        }
+
+        .mobile-menu::-webkit-scrollbar-track {
+          background: transparent;
+        }
+
+        .mobile-menu::-webkit-scrollbar-thumb {
+          background: #e5e7eb;
+          border-radius: 2px;
+        }
+
+        .mobile-menu::-webkit-scrollbar-thumb:hover {
+          background: #d1d5db;
+        }
+      `}</style>
+    </>
   );
 };
 
 export default Header;
+

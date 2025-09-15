@@ -10,6 +10,7 @@ import CreateOrders from "../pages/Admin/Orders/CreateOrders";
 import ProductDetailPage from "../pages/ProductDetailPage/ProductDetailPage";
 import SelectAdress from "../pages/SelectAdress/SelectAdress";
 import Payment from "../pages/Payment/Payment";
+import WishList from "../pages/WishList/WishList";
 
 
 const Login = lazy(() => import("../pages/public/Login"));
@@ -32,6 +33,7 @@ function AppRoutes() {
         {/* Public */}
         <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
         <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
+
         <Route path="/" element={<PublicRoute><Dashboard /></PublicRoute>} >
           <Route index element={<HomePage />} />
           <Route path="home" element={<HomePage />} />
@@ -49,6 +51,7 @@ function AppRoutes() {
           <Route path="inventory" element={<ProductListingPage />} />
           <Route path="productdetailPage/:id" element={<ProductDetailPage />} />
           <Route path="mycart" element={<MyCart />} />
+          <Route path="wishlist" element={<WishList />} />
           {/* <Route path="selectadress" element={<SelectAdress />} /> */}
           <Route path="payment" element={<Payment />} />
           <Route path="revieworder" element={<ReviewOrder />} />
