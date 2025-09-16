@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Badge, MenuItem, Select } from "@mui/material";
-import logo from "../../assets/logo.svg"
+import logo from "../../assets/logohorizontal.svg"
 import phone from "../../assets/phone.svg"
 import { CircleUser, Heart, Search, ShoppingCart, Menu, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useLogout } from "../../services/api/auth/auth";
 import LayoutContainer from "../../components/layout/LayoutContainer";
 import { useAppSelector } from "../../store/hooks";
+import { NavigateBefore } from "@mui/icons-material";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -121,7 +122,15 @@ const Header = () => {
 
         <LayoutContainer>
           <div className="flex justify-between items-center py-4">
-            <img src={logo} alt="PeariGem" onClick={handleLogout} />
+
+            <img
+              src={logo}
+              alt="PeariGem"
+              onClick={() => navigate('/')}
+              className="w-35 sm:w-28 md:w-32 lg:w-40 xl:w-48 h-auto cursor-pointer"
+
+            />
+
 
             {/* Navigation Links */}
             <nav className="hidden lg:flex gap-8 font-medium text-sm">
