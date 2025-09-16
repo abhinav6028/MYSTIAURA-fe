@@ -1,12 +1,14 @@
 
+import ProductGrid from '../../components/inventory/ProductGrid'
 import LayoutContainer from '../../components/layout/LayoutContainer'
 
 export default function WishList() {
     return (
         <LayoutContainer>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 my-10">
-                ONS
-            </div>
+            {/* <h1 style={{ fontFamily: FONT_FAMILY }} className="text-2xl sm:text-3xl md:text-4xl mb-4 sm:mb-0">
+                Best Seller Products
+            </h1> */}
+            <ProductGrid />
         </LayoutContainer>
     )
 }
