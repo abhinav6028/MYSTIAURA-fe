@@ -20,7 +20,7 @@ const MyCart = () => {
     const { data: userCart } = useCart();
     const deleteCart = useDeleteCartItem();
     const deleteAllCart = useDeleteAllCartItem();
-    const [checkAllCart,setCheckAllCart] = useState(false);
+    const [checkAllCart, setCheckAllCart] = useState(false);
 
     useEffect(() => {
         // Scroll to the top of the page instantly when the route changes
@@ -34,34 +34,34 @@ const MyCart = () => {
     const navigate = useNavigate();
 
     return (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 my-10">
-                {/* Left Section */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 my-10">
+            {/* Left Section */}
 
-                <div className="md:col-span-2">
+            <div className="md:col-span-2">
 
-                    <div className="md:flex col items-center gap-2 mb-4 justify-between">
-                        <div className="flex items-center gap-2 h-full">
-                            <Checkbox checked={checkAllCart} onChange={()=>setCheckAllCart(!checkAllCart)} />
-                            <Typography variant="body1">
-                                {userCart?.items?.length}/{userCart?.items?.length} Items Selected
-                            </Typography>
-                        </div>
-                        <div className="flex items-stretch gap-2">
-                            <Button className="bg-red-100 p-2 flex items-center justify-center cursor-pointer" disabled={!checkAllCart} onClick={()=>deleteAllCart.mutate()}>
-                                <Trash size={20} color={"#fff"} />
-                            </Button>
-
-                            <p
-                                style={{ color: PRIMARY_COLOUR, border: `1px solid ${PRIMARY_COLOUR}` }}
-                                className="text-white py-2 px-5 cursor-pointer flex items-center border border-primary"
-                            >
-                                MOVE TO WISHLIST
-                            </p>
-                        </div>
+                <div className="md:flex col items-center gap-2 mb-4 justify-between">
+                    <div className="flex items-center gap-2 h-full">
+                        <Checkbox checked={checkAllCart} onChange={() => setCheckAllCart(!checkAllCart)} />
+                        <Typography variant="body1">
+                            {userCart?.items?.length}/{userCart?.items?.length} Items Selected
+                        </Typography>
                     </div>
+                    <div className="flex items-stretch gap-2">
+                        <Button className="bg-red-100 p-2 flex items-center justify-center cursor-pointer" disabled={!checkAllCart} onClick={() => deleteAllCart.mutate()}>
+                            <Trash size={20} color={"#fff"} />
+                        </Button>
 
-                    {userCart?.items && userCart.items.length > 0 ? (
-                        userCart.items.map((item) => (
+                        <p
+                            style={{ color: PRIMARY_COLOUR, border: `1px solid ${PRIMARY_COLOUR}` }}
+                            className="text-white py-2 px-5 cursor-pointer flex items-center border border-primary"
+                        >
+                            MOVE TO WISHLIST
+                        </p>
+                    </div>
+                </div>
+
+                {userCart?.items && userCart.items.length > 0 ? (
+                    userCart.items.map((item) => (
                         <Card
                             key={item._id}
                             className="mb-4 border border-green-100"
@@ -72,7 +72,7 @@ const MyCart = () => {
                                 <img
                                     src={item?.product?.images?.[0]?.secure_url}
                                     alt={item?.product.name}
-                                    className=" w-32 h-38 md:w-32 lg:w-40 md:h-40 lg:h-40 object-cover bg-[#f9f9f9]"
+                                    className=" w-32 h-38 md:w-32 lg:w-40 md:h-40 lg:h-4 object-cover bg-[#f9f9f9]"
                                 />
 
                                 {/* Details */}
@@ -90,7 +90,7 @@ const MyCart = () => {
 
                                     <div className="flex flex-wrap items-center gap-2">
                                         <Typography variant="h6" className="text-[#a56c46] font-bold text-sm md:text-base">
-                                        ₹ {finalPrice(item.product.price,item.product.discountPrice).toFixed(2) || 0}
+                                            ₹ {finalPrice(item.product.price, item.product.discountPrice).toFixed(2) || 0}
                                         </Typography>
                                         {item.price && (
                                             <Typography variant="body2" className="line-through text-gray-500 text-sm md:text-base">
@@ -135,26 +135,26 @@ const MyCart = () => {
 
                                 {/* Remove Button */}
                                 <div className="mb-auto hidden md:block">
-                                    <X size={20} className="self-start md:self-center cursor-pointer mt-2 md:mt-0" onClick={()=>deleteCart.mutate(item?.product?._id)} />
+                                    <X size={20} className="self-start md:self-center cursor-pointer mt-2 md:mt-0" onClick={() => deleteCart.mutate(item?.product?._id)} />
                                 </div>
                             </CardContent>
                         </Card>
 
-                    ))) : 
+                    ))) :
                     <p className="w-full h-full text-center">Cart not yet added</p>
-                    }
-                </div>
+                }
+            </div>
 
-                {/* Right Section (Summary) */}
-                <Card className=" p-4 h-fit border border-green-100 mb-5" sx={{ borderRadius: 0, boxShadow: 'none' }}>
-                    <CardContent>
-                        <div style={{ borderBottom: `1px solid ${PRIMARY_COLOUR}` }} className="flex justify-between my-1 md:my-2 py-2 md:py-3 border-b ">
-                            <span>Subtotal</span>
-                            <span>₹ {userCart?.totalPrice.toFixed(2) || 0}</span>
-                        </div>
+            {/* Right Section (Summary) */}
+            <Card className=" p-4 h-fit border border-green-100 mb-5" sx={{ borderRadius: 0, boxShadow: 'none' }}>
+                <CardContent>
+                    <div style={{ borderBottom: `1px solid ${PRIMARY_COLOUR}` }} className="flex justify-between my-1 md:my-2 py-2 md:py-3 border-b ">
+                        <span>Subtotal</span>
+                        <span>₹ {userCart?.totalPrice.toFixed(2) || 0}</span>
+                    </div>
 
-                        {/* Discount Code */}
-                        {/* <p style={{ width: '100%' }} className="mt-2">Enter Discount Code</p>
+                    {/* Discount Code */}
+                    {/* <p style={{ width: '100%' }} className="mt-2">Enter Discount Code</p>
                         <div className="flex justify-center w-full mb-2 mt-1">
 
                             <div className="flex flex-col md:flex-row w-full">
@@ -173,32 +173,34 @@ const MyCart = () => {
                         </div> */}
 
 
-                        <div className="flex justify-between mb-2 my-2">
-                            <span>Taxes</span>
-                            <span>₹ {0}</span>
-                        </div>
-                        <div className="flex justify-between mb-2">
-                            <span>Delivery Fee</span>
-                            <span className="text-green-600">FREE</span>
-                        </div>
-                        <Divider className="my-2" />
-                        <div className="flex justify-between font-bold text-lg py-3">
-                            <span>Grand Total</span>
-                            <span>₹ {userCart?.totalPrice}</span>
-                        </div>
+                    <div className="flex justify-between mb-2 my-2">
+                        <span>Taxes</span>
+                        <span>₹ {0}</span>
+                    </div>
+                    <div className="flex justify-between mb-2">
+                        <span>Delivery Fee</span>
+                        <span className="text-green-600">FREE</span>
+                    </div>
+                    <Divider className="my-2" />
+                    <div className="flex justify-between font-bold text-lg py-3">
+                        <span>Grand Total</span>
+                        <span>₹ {userCart?.totalPrice}</span>
+                    </div>
 
-                        <Button
-                            onClick={() => navigate('/selectadress')}
-                            fullWidth
-                            variant="contained"
-                            sx={{ bgcolor: PRIMARY_COLOUR, py: 1, borderRadius: 0, fontFamily: 'monospace' }}
-                            className="bg-amber-700 text-white normal-case mt-4 "
-                        >
-                            Checkout
-                        </Button>
-                    </CardContent>
-                </Card>
-            </div>
+                    <Button
+                        onClick={() => navigate('/selectadress')}
+                        fullWidth
+                        variant="contained"
+                        sx={{ bgcolor: PRIMARY_COLOUR, py: 1, borderRadius: 0, fontFamily: 'monospace' }}
+                        className="bg-amber-700 text-white normal-case mt-4 "
+                    >
+                        Checkout
+                    </Button>
+
+                    <p onClick={() => navigate('/user/inventory')} className="w-full text-center my-2 cursor-pointer">BACK TO SHOPPING</p>
+                </CardContent>
+            </Card>
+        </div>
 
     );
 };
