@@ -1,7 +1,6 @@
 
 import ProductGrid from '../../components/inventory/ProductGrid'
 import LayoutContainer from '../../components/layout/LayoutContainer'
-import { FONT_FAMILY } from '../../utils'
 
 export default function WishList() {
     return (
