@@ -4,10 +4,9 @@ import logo from "../../assets/logohorizontal.svg"
 import phone from "../../assets/phone.svg"
 import { CircleUser, Heart, Search, ShoppingCart, Menu, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useLogout } from "../../services/api/auth/auth";
+// import { useLogout } from "../../services/api/auth/auth";
 import LayoutContainer from "../../components/layout/LayoutContainer";
 import { useAppSelector } from "../../store/hooks";
-import { NavigateBefore } from "@mui/icons-material";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,14 +14,14 @@ const Header = () => {
 
   const [lang, setLang] = React.useState("EN");
   const [currency, setCurrency] = React.useState("USD");
-  const logoutuser = useLogout();
+  // const logoutuser = useLogout();
 
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    logoutuser();
-    navigate("/login");
-  }
+  // const handleLogout = () => {
+  //   logoutuser();
+  //   navigate("/login");
+  // }
 
   const { isAuthenticated } = useAppSelector((state) => state.auth);
 
