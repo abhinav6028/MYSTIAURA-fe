@@ -80,7 +80,6 @@ const BestSellerProduct = () => {
                             </button>
                         </div>
 
-
                         {/* Title & Price */}
                         <div className="w-full bg-white px-2 sm:px-4">
                             <h2 className="text-sm md:text-lg text-black mb-1">
