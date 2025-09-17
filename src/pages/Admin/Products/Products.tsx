@@ -12,7 +12,7 @@ import { useDeleteProduct } from '../../../services/api/product/product';
 import { useNavigate } from 'react-router-dom';
 
 function Products() {
-    const {data:userProduct} = useProducts();
+    const { data: userProduct } = useProducts();
     const [open, setOpen] = useState(false);
     const deleteProduct = useDeleteProduct();
     const [selectedrow, setSelectedRow] = useState<Product | null>(null);
@@ -35,6 +35,7 @@ function Products() {
         { field: "category", headerName: "Category", flex: 1 },
         { field: "stock", headerName: "Stock", flex: 1 },
         { field: "price", headerName: "Price", flex: 1 },
+        { field: "status", headerName: "Status", flex: 1 },
         {
             field: "actions",
             headerName: "Actions",
@@ -79,13 +80,13 @@ function Products() {
 
     const handleClose = () => {
         setOpen(false);
-      };
-    
-      const handleDelete = () => {
+    };
+
+    const handleDelete = () => {
         if (!selectedrow) return;
         deleteProduct.mutate(selectedrow?.id || "");
         setOpen(false);
-      };
+    };
 
     return (
         <AdminLayout>

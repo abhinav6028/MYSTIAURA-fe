@@ -16,7 +16,7 @@ const Category = () => {
     const { data: category } = useCategories({ search: searchText });
     const [open, setOpen] = useState(false);
     const deleteCategory = useDeleteCategory();
-    const [selectedrow,setSelectedRow] = useState<Category | null>(null);
+    const [selectedrow, setSelectedRow] = useState<Category | null>(null);
 
     const columns: GridColDef[] = [
         { field: "sno", headerName: "S.No", width: 90 },
@@ -28,7 +28,7 @@ const Category = () => {
                 <img
                     src={params.row?.image?.secure_url || ""}
                     alt={params.row.name}
-                    className="w-12 h-12 object-cover rounded-md"
+                    className="w-10 h-10 object-cover rounded-md mt-1"
                 />
             ),
         },
@@ -52,7 +52,7 @@ const Category = () => {
                     <IconButton
                         color="error"
                         size="small"
-                        onClick={() => {setOpen(true), setSelectedRow(params.row)}}
+                        onClick={() => { setOpen(true), setSelectedRow(params.row) }}
                     >
                         <Delete />
                     </IconButton>
@@ -73,19 +73,19 @@ const Category = () => {
 
     const handleClose = () => {
         setOpen(false);
-      };
-    
-      const handleDelete = () => {
+    };
+
+    const handleDelete = () => {
         if (!selectedrow) return;
         deleteCategory.mutate(selectedrow?._id);
         setOpen(false);
-      };
+    };
 
     return (
         <AdminLayout>
             <div className="flex items-center justify-between">
                 <h1 className="text-2xl font-bold">Category</h1>
-                <Button variant="contained" onClick={() => navigate('/admin/category/create')}>Add Category</Button>
+                <Button style={{ fontFamily: 'Poppins, sans-serif' }} variant="contained" onClick={() => navigate('/admin/category/create')}>Add Category</Button>
             </div>
             {/* search bar */}
             <div className="my-4">

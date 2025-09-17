@@ -4,12 +4,14 @@ import { finalPrice, FONT_FAMILY, PRIMARY_COLOUR } from "../../utils";
 import { useNavigate } from "react-router-dom";
 import { useProductList } from "../../services/api/product/product";
 import { useAddToCartProduct } from "../../services/api/cart/cart";
+import { useAddToWishList } from "../../services/api/wishlist/wishlist";
 
 const BestSellerProduct = () => {
 
     const { data } = useProductList(1, 8);
     const createAddToCart = useAddToCartProduct();
     const navigate = useNavigate();
+    const createAddToWishList = useAddToWishList()
 
     return (
         <div className="pb-8">
@@ -43,7 +45,12 @@ const BestSellerProduct = () => {
                     >
                         {/* Heart Icon for small screens */}
                         <div className="absolute top-2 left-2 sm:hidden w-8 h-8 flex items-center justify-center border-gray-300 bg-white">
-                            <Heart size={18} className="text-gray-600" />
+                            <Heart
+                                onClick={() =>
+                                    createAddToWishList.mutate({ productid: val._id })
+                                }
+                                // createAddToWishList
+                                size={30} className="text-gray-600" />
                         </div>
 
                         {/* Image Section */}
@@ -58,12 +65,16 @@ const BestSellerProduct = () => {
 
                         <div className="w-full flex flex-col sm:flex-row items-center px-2 sm:px-4 pb-4 gap-2 sm:gap-2 mt-2 sm:mt-0">
                             <div className="w-12 h-12 items-center justify-center bg-white flex-shrink-0 hidden sm:flex">
-                                <Heart size={20} className="text-gray-600" />
+                                <Heart
+                                    onClick={() =>
+                                        createAddToWishList.mutate({ productid: val._id })
+                                    }
+                                    size={20} className="text-gray-600" />
                             </div>
 
                             {/* Add to Cart Button */}
                             <button className="flex-1 bg-[#660033] text-white font-semibold md:py-3 py-2 text-sm sm:text-md hover:bg-[#51052b] transition-colors w-full sm:w-auto"
-                            onClick={()=>createAddToCart.mutate({product: val._id, quantity: 1})}
+                                onClick={() => createAddToCart.mutate({ product: val._id, quantity: 1 })}
                             >
                                 ADD TO CART
                             </button>
@@ -76,7 +87,7 @@ const BestSellerProduct = () => {
                             </h2>
 
                             <div className="flex items-baseline space-x-3">
-                                <span className="text-lg font-semibold text-[#a37557]">₹ {finalPrice(val.price, val.discountPrice).toFixed(2) || 0}</span>
+                                <span className="text-lg font-semibold text-[#a37557]">₹ {finalPrice(val.price, 10).toFixed(2) || 0}</span>
                                 <span className="text-md text-gray-400 line-through">₹ {val.price.toFixed(2) || 0}</span>
                             </div>
                         </div>
