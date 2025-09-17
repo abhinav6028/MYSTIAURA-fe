@@ -15,11 +15,11 @@ const ProductHeader = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="bg-white shadow rounded-md space-y-4">
+        <div className="bg-white  rounded-md space-y-4">
             {/* Top Row: Title and Create Button */}
             <div className="flex justify-between items-center">
                 <h1 className="text-xl font-bold">Product List</h1>
-                <Button variant="contained" color="primary" onClick={() => navigate('/admin/products/create')}>
+                <Button style={{ fontFamily: 'Poppins, sans-serif' }} variant="contained" color="primary" onClick={() => navigate('/admin/products/create')}>
                     Create Product
                 </Button>
             </div>
@@ -32,7 +32,7 @@ const ProductHeader = () => {
                     variant="outlined"
                     size="small"
                     value={search}
-                    sx={{width: 300}}
+                    sx={{ width: 300 }}
                     onChange={(e) => setSearch(e.target.value)}
                 />
 
@@ -40,38 +40,38 @@ const ProductHeader = () => {
                     {/* Date Range Picker */}
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
-                        label="Start Date"
-                        value={startDate}
-                        onChange={(newValue) => setStartDate(newValue)}
-                        slotProps={{
-                            textField: { size: "small" },
-                        }}
-                    />
-                    <DatePicker
-                        label="End Date"
-                        value={endDate}
-                        onChange={(newValue) => setEndDate(newValue)}
-                        slotProps={{
-                            textField: { size: "small" },
-                        }}
-                    />
-                </LocalizationProvider>
+                            label="Start Date"
+                            value={startDate}
+                            onChange={(newValue) => setStartDate(newValue)}
+                            slotProps={{
+                                textField: { size: "small" },
+                            }}
+                        />
+                        <DatePicker
+                            label="End Date"
+                            value={endDate}
+                            onChange={(newValue) => setEndDate(newValue)}
+                            slotProps={{
+                                textField: { size: "small" },
+                            }}
+                        />
+                    </LocalizationProvider>
 
-                {/* Status Dropdown */}
-                <FormControl size="small">
-                    <InputLabel>Status</InputLabel>
-                    <Select
-                        value={status}
-                        onChange={(e) => setStatus(e.target.value)}
-                        label="Status"
-                        sx={{minWidth: 120}}
-                    >
-                        <MenuItem value="">All</MenuItem>
-                        <MenuItem value="active">Active</MenuItem>
-                        <MenuItem value="inactive">Inactive</MenuItem>
-                        <MenuItem value="pending">Pending</MenuItem>
-                    </Select>
-                </FormControl>
+                    {/* Status Dropdown */}
+                    <FormControl size="small">
+                        <InputLabel>Status</InputLabel>
+                        <Select
+                            value={status}
+                            onChange={(e) => setStatus(e.target.value)}
+                            label="Status"
+                            sx={{ minWidth: 120 }}
+                        >
+                            <MenuItem value="">All</MenuItem>
+                            <MenuItem value="active">Active</MenuItem>
+                            <MenuItem value="inactive">Inactive</MenuItem>
+                            <MenuItem value="pending">Pending</MenuItem>
+                        </Select>
+                    </FormControl>
                 </div>
             </div>
         </div>

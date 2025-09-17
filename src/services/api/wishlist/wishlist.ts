@@ -6,10 +6,11 @@ import apiClient from "../../apiClient/apiClient";
 export type WishListResponse = {
   _id: string;
   products: Array<{
-    productId: string;
+    productid: string;
     name: string;
     price: number;
     image: string;
+    _id: string
   }>;
 };
 
@@ -30,8 +31,8 @@ export function useAddToWishList() {
   const notify = useNotify();
 
   return useMutation({
-    mutationFn: async (payload: { productId: string }) => {
-      const res = await apiClient.post("api/wishList/add", payload);
+    mutationFn: async (payload: { productid: string }) => {
+      const res = await apiClient.post("/api/wishList/add", payload);
       return res.data;
     },
     onSuccess: (res) => {
