@@ -1,29 +1,33 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNotify } from "../../../utilsComp/useNotify";
 import apiClient from "../../apiClient/apiClient";
-
-// --- Wishlist Types (you can replace with proper type if available) ---
-export type WishListResponse = {
-  _id: string;
-  products: Array<{
-    productid: string;
-    name: string;
-    price: number;
-    image: string;
-    _id: string
-  }>;
-};
+import type { Wishlist } from "../../../types/userTypes";
+import { setWishlistProducts } from "../../../store/slices/userSlice";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 // --- Get Wishlist ---
 export function useWishList() {
-  return useQuery<WishListResponse, Error>({
+  const dispatch = useDispatch();
+
+  const query = useQuery<Wishlist, Error>({
     queryKey: ["wishlist"],
     queryFn: async () => {
       const res = await apiClient.get("api/wishList");
-      return res.data?.data as WishListResponse;
+      return res.data?.data as Wishlist;
     },
+    retry: false,
   });
+
+  useEffect(() => {
+    if (query.data) {
+      dispatch(setWishlistProducts([query.data]));
+    }
+  }, [query.data, dispatch]);
+
+  return query;
 }
+
 
 // --- Add to Wishlist ---
 export function useAddToWishList() {
@@ -37,7 +41,7 @@ export function useAddToWishList() {
     },
     onSuccess: (res) => {
       notify.success(res?.message || "Added to wishlist");
-      queryClient.invalidateQueries({ queryKey: ["wishlist"] });
+      queryClient.invalidateQueries({ queryKey: ["wishlist"], refetchType: "all" });
     },
     onError: (error: any) => {
       notify.error(error.response?.data?.message || "Failed to add to wishlist");

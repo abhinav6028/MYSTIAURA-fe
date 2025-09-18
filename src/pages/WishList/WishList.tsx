@@ -2,9 +2,9 @@
 import { useNavigate } from 'react-router-dom';
 import LayoutContainer from '../../components/layout/LayoutContainer'
 import { useRemoveFromWishList, useWishList } from '../../services/api/wishlist/wishlist'
-import { Heart } from 'lucide-react';
+import { Trash } from 'lucide-react';
 import { finalPrice } from '../../utils';
-import bestSeller2 from "../../assets/homepage/bestseller2 (1).png";
+import type { WishProduct } from '../../types/userTypes';
 
 export default function WishList() {
 
@@ -14,7 +14,6 @@ export default function WishList() {
 
     const navigate = useNavigate()
 
-
     // useWishList
     return (
         <LayoutContainer>
@@ -22,7 +21,7 @@ export default function WishList() {
                 Best Seller Products
             </h1> */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:px-4 mb-5 md:mb-10">
-                {data?.products?.map((val, index) => (
+                {data?.products?.map((val: WishProduct, index: number) => (
                     <div
                         key={index}
                         className="bg-[#f9f9f9] flex flex-col place-items relative cursor-pointer"
@@ -30,22 +29,27 @@ export default function WishList() {
                     >
                         {/* Heart Icon for small screens */}
                         <div className="absolute top-2 left-2 sm:hidden w-8 h-8 flex items-center justify-center border-gray-300 bg-white">
-                            <Heart size={18} className="text-gray-600" />
+                            <Trash
+                                onClick={(e: any) => {
+                                    e.stopPropagation();
+                                    deleteWishListItem.mutate(val?._id)
+                                }}
+                                size={18} className="text-gray-600" />
                         </div>
 
 
-                        <div className="w-full h-80 md:h-80 flex justify-center bg-[#f9f9f9]">
+                        <div className="w-full h-80 md:h-80 flex justify-center bg-[#f9f9f9] p-4">
                             <img
-                                src={bestSeller2}
+                                src={val.images[0].secure_url}
                                 alt="Ring"
-                                className="w-full max-w-[200px] h-auto object-contain"
+                                className="w-full h-auto object-cover"
                                 onClick={() => navigate('/productdetailPage')}
                             />
                         </div>
 
                         <div className="w-full flex flex-col sm:flex-row items-center px-2 sm:px-4 pb-4 gap-2 sm:gap-2 mt-2 sm:mt-0">
                             <div className="w-12 h-12 items-center justify-center bg-white flex-shrink-0 hidden sm:flex">
-                                <Heart
+                                <Trash
                                     onClick={(e: any) => {
                                         e.stopPropagation();
                                         deleteWishListItem.mutate(val?._id)

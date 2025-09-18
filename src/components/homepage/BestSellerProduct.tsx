@@ -21,7 +21,7 @@ const BestSellerProduct = () => {
                     Best Seller Products
                 </h1>
                 <p
-                    onClick={() => navigate('/inventory')}
+                    onClick={() => navigate('/user/inventory')}
                     style={{ color: PRIMARY_COLOUR }}
                     className="text-sm sm:text-base cursor-pointer flex items-center hover:underline"
                 >
@@ -70,6 +70,7 @@ const BestSellerProduct = () => {
                                         createAddToWishList.mutate({ productid: val._id })
                                     }
                                     size={20} className="text-gray-600" />
+{/* <Trash /> */}
                             </div>
 
                             {/* Add to Cart Button */}
