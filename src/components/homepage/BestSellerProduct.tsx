@@ -70,6 +70,7 @@ const BestSellerProduct = () => {
                                         createAddToWishList.mutate({ productid: val._id })
                                     }
                                     size={20} className="text-gray-600" />
+{/* <Trash /> */}
                             </div>
 
                             {/* Add to Cart Button */}

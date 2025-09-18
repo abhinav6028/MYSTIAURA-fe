@@ -2,7 +2,7 @@
 import { useNavigate } from 'react-router-dom';
 import LayoutContainer from '../../components/layout/LayoutContainer'
 import { useRemoveFromWishList, useWishList } from '../../services/api/wishlist/wishlist'
-import { Heart } from 'lucide-react';
+import { Heart, Trash } from 'lucide-react';
 import { finalPrice } from '../../utils';
 import bestSeller2 from "../../assets/homepage/bestseller2 (1).png";
 
@@ -30,7 +30,12 @@ export default function WishList() {
                     >
                         {/* Heart Icon for small screens */}
                         <div className="absolute top-2 left-2 sm:hidden w-8 h-8 flex items-center justify-center border-gray-300 bg-white">
-                            <Heart size={18} className="text-gray-600" />
+                            <Trash
+                                onClick={(e: any) => {
+                                    e.stopPropagation();
+                                    deleteWishListItem.mutate(val?._id)
+                                }}
+                                size={18} className="text-gray-600" />
                         </div>
 
 
@@ -45,7 +50,7 @@ export default function WishList() {
 
                         <div className="w-full flex flex-col sm:flex-row items-center px-2 sm:px-4 pb-4 gap-2 sm:gap-2 mt-2 sm:mt-0">
                             <div className="w-12 h-12 items-center justify-center bg-white flex-shrink-0 hidden sm:flex">
-                                <Heart
+                                <Trash
                                     onClick={(e: any) => {
                                         e.stopPropagation();
                                         deleteWishListItem.mutate(val?._id)
