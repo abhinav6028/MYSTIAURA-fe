@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Badge, MenuItem, Select } from "@mui/material";
 import logo from "../../assets/logohorizontal.svg"
 import phone from "../../assets/phone.svg"
-import { CircleUser, Heart, Search, ShoppingCart, Menu, X } from "lucide-react";
+import { CircleUser, Heart, Search, ShoppingCart, Menu, X, Instagram, Facebook, Twitter } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 // import { useLogout } from "../../services/api/auth/auth";
 import LayoutContainer from "../../components/layout/LayoutContainer";
@@ -64,6 +64,13 @@ const Header = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+
+  const socials = [
+    { name: "Instagram", icon: Instagram },
+    { name: "Facebook", icon: Facebook },
+    { name: "Twitter", icon: Twitter },
+  ];
+
   return (
     <>
       {/* Fixed Navigation Bar */}
@@ -74,12 +81,12 @@ const Header = () => {
 
         <LayoutContainer>
 
-          <div className="w-full md:flex justify-between items-center sm:hidden  sm:py-2 py-2 md:py-3 lg:py-3">
+          <div className="w-full hidden lg:flex  justify-between items-center   sm:py-2 py-2 md:py-3 lg:py-3">
             <div className="flex items-center md:gap-1 lg:gap-2 md:text-[18px] sm:text-[15px] text-[10px]">
               <img src={phone} alt="phone" className="w-3 h-3 lg:w-6 lg:h-6 md:w-6 md:h-6 sm:w-5 sm:h-5" />
               <span className="ml:1">(307) 555-0133</span>
             </div>
-            <span className="text-center flex-1 font-medium md:text-[18px] text-[10px]">        Get 50% OFF on Engagement Rings
+            <span className="text-center flex-1 font-medium md:text-[18px] text-[10px]"> Get 50% OFF on Engagement Rings
             </span>
             <div className="flex items-center sm:gap-2 md:gap-3 lg:gap-4">
               {/* Language Dropdown */}
@@ -259,14 +266,17 @@ const Header = () => {
           >
             <p className="text-sm text-gray-500 mb-4">Connect with us</p>
             <div className="flex space-x-4">
-              {['Twitter', 'LinkedIn', 'GitHub'].map((social) => (
-                <div
-                  key={social}
-                  className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-blue-100 hover:text-blue-600 transition-all duration-300 cursor-pointer transform hover:scale-110"
-                >
-                  {social[0]}
-                </div>
-              ))}
+              {socials.map((social, index) => {
+                const Icon = social.icon; // alias to render as a component
+                return (
+                  <div
+                    key={`${social.name}-${index}`}   // ✅ unique string key
+                    className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-blue-100 hover:text-blue-600 transition-all duration-300 cursor-pointer transform hover:scale-110"
+                  >
+                    <Icon size={18} strokeWidth={1} />   {/* ✅ render component */}
+                  </div>
+                );
+              })}
             </div>
 
           </div>

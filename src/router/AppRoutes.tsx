@@ -43,6 +43,8 @@ function AppRoutes() {
           <Route path="productdetailPage/:id" element={<ProductDetailPage />} />
           <Route path="selectadress" element={<SelectAdress />} />
           <Route path="productdetailPage/:id" element={<ProductDetailPage />} />
+          <Route path="payment" element={<Payment />} />
+          <Route path="revieworder" element={<ReviewOrder />} />
         </Route >
 
         {/* Private Routes */}
