@@ -14,7 +14,6 @@ export default function WishList() {
 
     const navigate = useNavigate()
 
-
     // useWishList
     return (
         <LayoutContainer>

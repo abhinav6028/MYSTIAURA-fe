@@ -10,6 +10,7 @@ export type WishListResponse = {
     name: string;
     price: number;
     image: string;
+    discountPrice: number;
     _id: string
   }>;
 };
