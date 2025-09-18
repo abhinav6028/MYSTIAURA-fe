@@ -8,9 +8,6 @@ import { useNavigate } from "react-router-dom";
 import LayoutContainer from "../../components/layout/LayoutContainer";
 import { useAppSelector } from "../../store/hooks";
 
-
-
-
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
