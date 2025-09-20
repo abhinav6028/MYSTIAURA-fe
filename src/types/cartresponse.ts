@@ -7,6 +7,7 @@ export interface CartResponse {
   updatedAt: string;
   product?: string;
   quantity?: number;
+  totalCount?: number;
   __v: number;
 }
 

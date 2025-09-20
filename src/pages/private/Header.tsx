@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import LayoutContainer from "../../components/layout/LayoutContainer";
 import { useAppSelector } from "../../store/hooks";
 import { useWishList } from "../../services/api/wishlist/wishlist";
+import { useCart } from "../../services/api/cart/cart";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,7 +18,9 @@ const Header = () => {
   const [currency, setCurrency] = React.useState("USD");
 
   const { data: wishlistData } = useWishList();
+  const { data: cartData } = useCart();
   const wishlistCount = wishlistData?.totalCount ?? 0;
+  const cartCount = cartData?.totalCount ?? 0;
   // const logoutuser = useLogout();
 
   const navigate = useNavigate();
@@ -189,7 +192,7 @@ const Header = () => {
                 </div>
               }
 
-              <Badge badgeContent={4} color="primary">
+              <Badge badgeContent={cartCount} color="primary">
 
                 <ShoppingCart onClick={() => navigate('/user/mycart')} className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
               </Badge>
