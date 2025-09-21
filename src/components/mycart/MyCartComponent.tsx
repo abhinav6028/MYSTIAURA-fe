@@ -188,7 +188,7 @@ const MyCart = () => {
                     </div>
 
                     <Button
-                        onClick={() => navigate('/selectadress')}
+                        onClick={() => navigate('/user/selectadress')}
                         fullWidth
                         variant="contained"
                         sx={{ bgcolor: PRIMARY_COLOUR, py: 1, borderRadius: 0, fontFamily: 'monospace' }}
