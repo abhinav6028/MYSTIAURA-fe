@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useProductList } from "../../services/api/product/product";
 import { useAddToCartProduct } from "../../services/api/cart/cart";
 import { useAddToWishList, useRemoveFromWishList, useWishList } from "../../services/api/wishlist/wishlist";
+import { useSelector } from "react-redux";
 
 const BestSellerProduct = () => {
 
@@ -12,10 +13,9 @@ const BestSellerProduct = () => {
     const createAddToCart = useAddToCartProduct();
     const navigate = useNavigate();
     const createAddToWishList = useAddToWishList()
-
     const { data: wishlistData } = useWishList();
-
     const deleteWishListItem = useRemoveFromWishList();
+    const { auth } = useSelector((state: any) => state);
 
     return (
         <div className="pb-8">
@@ -75,7 +75,7 @@ const BestSellerProduct = () => {
                                     src={val.images[0].secure_url}
                                     alt={val.name}
                                     className="w-full h-auto object-cover"
-                                    onClick={() => navigate("/productdetailPage/" + val._id)}
+                                    onClick={() => navigate( auth.isAuthenticated ? "/user/productdetailPage/" + val._id  : "/productdetailPage/" + val._id)}
                                 />
                             </div>
 
