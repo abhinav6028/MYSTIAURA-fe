@@ -2,20 +2,34 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNotify } from "../../../utilsComp/useNotify";
 import apiClient from "../../apiClient/apiClient";
 import type { CartResponse } from "../../../types/cartresponse";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { setAddCartList } from "../../../store/slices/userSlice";
+import type { CartData } from "../../../types/userTypes";
 
 export function useCart() {
-  return useQuery<CartResponse, Error>({
+  const dispatch = useDispatch();
+  const query =  useQuery<CartData, Error>({
     queryKey: ["cart"],
     queryFn: async () => {
       const res = await apiClient.get("api/cart");
-      return res.data?.data as CartResponse;
+      return res.data?.data as CartData;
     },
+    retry: false,
   });
+
+   useEffect(() => {
+    if (query.data) {
+      dispatch(setAddCartList(query.data));
+    }
+  }, [query.data, dispatch]);
+
+  return query;
 }
 
 // Add to cart
 export function useAddToCartProduct() {
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
   const notify = useNotify();
 
   return useMutation({
@@ -25,6 +39,7 @@ export function useAddToCartProduct() {
     },
     onSuccess: (res) => {
       notify.success(res?.message || "Add to cart success");
+      queryClient.invalidateQueries({ queryKey: ["cart"], refetchType: "all" });
     },
     onError: (error: any) => {
       notify.error(error.response?.data?.message || "Cart not added");

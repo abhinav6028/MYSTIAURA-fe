@@ -10,8 +10,11 @@ import {
     Divider,
 } from "@mui/material";
 import { MapPin, MoreHorizontal, Phone } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import AddNewAddressModal from '../../components/AddressSection/AddNewAddressModal';
+import { useCheckout } from '../../services/api/checkout/checkout';
+import { useSelector } from 'react-redux';
+import CheckoutButton from './RazorPay';
 
 type CartItem = {
     id: number;
@@ -104,13 +107,22 @@ const steps: Step[] = [
 export default function SelectAdress() {
 
     const [cart] = useState<CartItem[]>(initialCart);
+    const createCheckout = useCheckout();
+    const cartItems = useSelector(
+        (state: any) => state.user.addCartList ?? []
+    );
+    const [razorPayDetail, setRazorPayDetail] = useState({
+        orderId: "",
+        amount: 0,
+        currency: ""
+    })
 
     const subtotal = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
     const taxes = 25;
     const deliveryFee = 0;
     const grandTotal = subtotal + taxes + deliveryFee;
 
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     const currentStep = 0 // Address step is active
 
     const contacts = [
@@ -143,6 +155,43 @@ export default function SelectAdress() {
             phone: "(603) 555-0123",
         },
     ]
+
+    const handleCreate = () => {
+        if (!cartItems?.items?.length) {
+            console.warn("No items in cart");
+            return;
+        }
+
+        const address = {
+            "name": "John Doe",
+            "addressLine1": "221B Baker Street",
+            "addressLine2": "Flat 4",
+            "city": "London",
+            "state": "London",
+            "country": "UK",
+            "postalCode": "NW16XE",
+            "phone": "+441234567890"
+        }
+
+        const payload = {
+            items: cartItems?.items,
+            shippingAddress: address,
+        };
+
+        createCheckout.mutate(payload, {
+            onSuccess: (data) => {
+                // data is the response from your API
+                setRazorPayDetail({
+                    orderId: data?.order?.payment?.razorpayOrderId,
+                    amount: data?.order?.totalAmount,
+                    currency: data?.razorpayOrder?.currency
+                });
+            },
+            onError: (error) => {
+                console.error("Checkout failed", error);
+            },
+        });
+    };
 
     return (
 
@@ -315,12 +364,15 @@ export default function SelectAdress() {
                         </div>
 
                         <button
-                            onClick={() => navigate('/payment')}
+                            onClick={handleCreate}
+                            // onClick={() => navigate('/payment')}
                             style={{ background: PRIMARY_COLOUR }}
                             className="text-white px-6 py-3 font-semibold w-full hover:bg-[#916A55] transition cursor-pointer"
                         >
                             CONTINUE
                         </button>
+                        {razorPayDetail.amount != null && razorPayDetail.currency && razorPayDetail.orderId &&
+                            <CheckoutButton razorPayDetail={razorPayDetail} />}
                     </CardContent>
                 </Card>
             </div>

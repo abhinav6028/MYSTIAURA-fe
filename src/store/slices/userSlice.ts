@@ -1,9 +1,10 @@
 import { createSlice,type PayloadAction } from "@reduxjs/toolkit";
-import type { BestSellerProduct, UserState, Wishlist } from "../../types/userTypes";
+import type { BestSellerProduct, CartData, UserState, Wishlist } from "../../types/userTypes";
 
 const initialState: UserState = {
  bestSellerProducts: [],
  wishlistProducts: [],
+ addCartList: null,
 };
 
 const userSlice = createSlice({
@@ -16,8 +17,11 @@ const userSlice = createSlice({
     setWishlistProducts: (state, action: PayloadAction<Wishlist[]>) => {
       state.wishlistProducts = action.payload;
     },
+    setAddCartList:  (state, action: PayloadAction<CartData>) => {
+      state.addCartList = action.payload;
+    },
   },
 });
 
-export const { setSellerProducts,setWishlistProducts } = userSlice.actions;
+export const { setSellerProducts,setWishlistProducts,setAddCartList } = userSlice.actions;
 export default userSlice.reducer;
