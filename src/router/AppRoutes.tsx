@@ -41,7 +41,6 @@ function AppRoutes() {
           <Route path="home" element={<HomePage />} />
           <Route path="inventory" element={<ProductListingPage />} />
           <Route path="productdetailPage/:id" element={<ProductDetailPage />} />
-          <Route path="productdetailPage/:id" element={<ProductDetailPage />} />
           <Route path="payment" element={<Payment />} />
           <Route path="revieworder" element={<ReviewOrder />} />
         </Route >
@@ -52,7 +51,7 @@ function AppRoutes() {
           <Route index element={<HomePage />} />
           <Route path="home" element={<HomePage />} />
           <Route path="inventory" element={<ProductListingPage />} />
-          {/* <Route path="productdetailPage/:id" element={<ProductDetailPage />} /> */}
+          <Route path="productdetailPage/:id" element={<ProductDetailPage />} />
           <Route path="categories/:id" element={<CategoryPage />} />
           <Route path="mycart" element={<MyCart />} />
           <Route path="wishlist" element={<WishList />} />

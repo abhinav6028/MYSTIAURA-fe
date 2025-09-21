@@ -1,7 +1,10 @@
+import type { Address } from "./address";
+
 export interface UserState {
     bestSellerProducts: BestSellerProduct[];
     wishlistProducts: Wishlist[];
     addCartList: CartData | null;
+    addresses: Address[];
 }
 
 export type BestSellerProduct = {

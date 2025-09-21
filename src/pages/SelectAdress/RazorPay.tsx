@@ -31,9 +31,7 @@ export default function CheckoutButton({ razorPayDetail }: { razorPayDetail: Raz
             order_id: razorPayDetail.orderId,
             handler: async function (response: any) {
                 const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = response;
-               const responseData =  await apiClient.post("/api/order/verify-payment", { razorpay_order_id, razorpay_payment_id, razorpay_signature });
-                console.log(responseData);
-                
+                await apiClient.post("/api/order/verify-payment", { razorpay_order_id, razorpay_payment_id, razorpay_signature });
             },
             prefill: {
                 name: "MYSTIAURA JEWELS",

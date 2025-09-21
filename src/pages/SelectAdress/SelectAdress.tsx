@@ -9,12 +9,14 @@ import {
     CardContent,
     Divider,
 } from "@mui/material";
-import { MapPin, MoreHorizontal, Phone } from "lucide-react";
+import { Edit, MapPin, Phone, Trash2 } from "lucide-react";
 // import { useNavigate } from "react-router-dom";
 import AddNewAddressModal from '../../components/AddressSection/AddNewAddressModal';
 import { useCheckout } from '../../services/api/checkout/checkout';
 import { useSelector } from 'react-redux';
 import CheckoutButton from './RazorPay';
+import { useAddresses, useDeleteAddress } from '../../services/api/selectAddress/selectAddress';
+import { useNotify } from '../../utilsComp/useNotify';
 
 type CartItem = {
     id: number;
@@ -107,6 +109,10 @@ const steps: Step[] = [
 export default function SelectAdress() {
 
     const [cart] = useState<CartItem[]>(initialCart);
+    const [open, setOpen] = useState(false);
+    const [selectedData, setSelectedData] = useState<any>(null);
+    const [selectedCheckAddress, setSelectedCheckAddress] = useState<any>(null);
+    const notify = useNotify();
     const createCheckout = useCheckout();
     const cartItems = useSelector(
         (state: any) => state.user.addCartList ?? []
@@ -115,7 +121,9 @@ export default function SelectAdress() {
         orderId: "",
         amount: 0,
         currency: ""
-    })
+    });
+    const { data: selectAdressState } = useAddresses();
+    const deleteAdress = useDeleteAddress();
 
     const subtotal = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
     const taxes = 25;
@@ -134,48 +142,15 @@ export default function SelectAdress() {
         },
     ]
 
-
-    const contacts2 = [
-        {
-            id: 1,
-            name: "Alexa Williams",
-            address: "1901 Thornridge Cir, Shiloh, Hawaii 81063",
-            phone: "(603) 555-0123",
-        },
-        {
-            id: 1,
-            name: "Alexa Williams",
-            address: "1901 Thornridge Cir, Shiloh, Hawaii 81063",
-            phone: "(603) 555-0123",
-        },
-        {
-            id: 1,
-            name: "Alexa Williams",
-            address: "1901 Thornridge Cir, Shiloh, Hawaii 81063",
-            phone: "(603) 555-0123",
-        },
-    ]
-
     const handleCreate = () => {
         if (!cartItems?.items?.length) {
-            console.warn("No items in cart");
+            notify.error("Cart is empty");
             return;
-        }
-
-        const address = {
-            "name": "John Doe",
-            "addressLine1": "221B Baker Street",
-            "addressLine2": "Flat 4",
-            "city": "London",
-            "state": "London",
-            "country": "UK",
-            "postalCode": "NW16XE",
-            "phone": "+441234567890"
         }
 
         const payload = {
             items: cartItems?.items,
-            shippingAddress: address,
+            shippingAddress: selectedCheckAddress,
         };
 
         createCheckout.mutate(payload, {
@@ -193,16 +168,21 @@ export default function SelectAdress() {
         });
     };
 
+    const handleEdit = (item: any) => {
+        setOpen(true);
+        setSelectedData(item);
+    }
+
+    const handleDelete = (item: any) => {
+        deleteAdress.mutate(item._id);
+    }
+
     return (
 
         <LayoutContainer>
             <h1 style={{ fontFamily: FONT_FAMILY }} className="text-4xl my-3">Select Address</h1>
-
-
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-
                 <div className="md:col-span-2">
-
                     <div className="w-full mx-auto my-3 md:my-5">
                         <div className="flex items-center justify-between relative">
                             {steps.map((step, index) => (
@@ -214,7 +194,6 @@ export default function SelectAdress() {
                                     >
                                         {step.icon}
                                     </div>
-
                                     <span
                                         className={`mt-3 text-sm font-medium transition-colors ${index <= currentStep ? "text-gray-900" : "text-gray-500"
                                             }`}
@@ -274,9 +253,21 @@ export default function SelectAdress() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="flex-shrink-0">
-                                            <button className="h-8 w-8 p-0 hover:bg-gray-100">
-                                                <MoreHorizontal className="w-4 h-4 text-gray-500" />
+                                        <div className="flex space-x-2 flex-shrink-0">
+                                            {/* Edit Button */}
+                                            <button
+                                                className="h-8 w-8 p-0 flex items-center justify-center cursor-pointer hover:bg-gray-100 rounded"
+                                                onClick={() => handleEdit(item)}
+                                            >
+                                                <Edit className="w-4 h-4 text-blue-500" />
+                                            </button>
+
+                                            {/* Delete Button */}
+                                            <button
+                                                className="h-8 w-8 p-0 flex items-center justify-center cursor-pointer hover:bg-gray-100 rounded"
+                                                onClick={() => handleDelete(item)}
+                                            >
+                                                <Trash2 className="w-4 h-4 text-red-500" />
                                             </button>
                                         </div>
                                     </CardContent>
@@ -291,9 +282,9 @@ export default function SelectAdress() {
                         </div>
 
                         <div className="space-y-4">
-                            {contacts2.map((item) => (
+                            {selectAdressState?.map((item) => (
                                 <Card
-                                    key={item.id}
+                                    key={item._id}
                                     className="mb-4 border border-green-100 md:mt-3 mt-2"
                                     style={{ borderRadius: 0, boxShadow: "none" }}
                                 >
@@ -301,8 +292,11 @@ export default function SelectAdress() {
                                         <div className="flex-1 space-y">
                                             <div className="flex items-center">
                                                 <input
-                                                    type="checkbox"
-                                                    className="w-4 h-4 rounded-full border border-gray-300 text-green-600 focus:ring-green-500 focus:ring-2 mb-auto"
+                                                    type="radio" // ✅ make it radio
+                                                    name="selectedAddress" // ✅ group name
+                                                    checked={selectedCheckAddress?._id === item._id} // ✅ only one selected
+                                                    className="w-4 h-4 mt-2 rounded-full border border-gray-300 text-green-600 focus:ring-green-500 focus:ring-2 mb-auto"
+                                                    onChange={() => setSelectedCheckAddress(item)}
                                                 />
 
                                                 <div className="md:ml-5 ml-3  mt--2">
@@ -315,7 +309,7 @@ export default function SelectAdress() {
                                                     <div className="flex items-start gap-2 text-gray-600 mt-4">
                                                         <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" />
                                                         <span className="text-sm leading-relaxed break-words sm:w-auto w-[200px]">
-                                                            {item.address}
+                                                            {item.addressLine1}
                                                         </span>
                                                     </div>
 
@@ -327,9 +321,21 @@ export default function SelectAdress() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="flex-shrink-0">
-                                            <button className="h-8 w-8 p-0 hover:bg-gray-100">
-                                                <MoreHorizontal className="w-4 h-4 text-gray-500" />
+                                        <div className="flex space-x-2 flex-shrink-0">
+                                            {/* Edit Button */}
+                                            <button
+                                                className="h-8 w-8 p-0 flex items-center justify-center cursor-pointer hover:bg-gray-100 rounded"
+                                                onClick={() => handleEdit(item)}
+                                            >
+                                                <Edit className="w-4 h-4 text-blue-500" />
+                                            </button>
+
+                                            {/* Delete Button */}
+                                            <button
+                                                className="h-8 w-8 p-0 flex items-center justify-center cursor-pointer hover:bg-gray-100 rounded"
+                                                onClick={() => handleDelete(item)}
+                                            >
+                                                <Trash2 className="w-4 h-4 text-red-500" />
                                             </button>
                                         </div>
                                     </CardContent>
@@ -337,7 +343,7 @@ export default function SelectAdress() {
                             ))}
                         </div>
                     </>
-                    <AddNewAddressModal />
+                    <AddNewAddressModal open={open} setOpen={setOpen} selectedData={selectedData} />
                     {/* */}
                 </div>
 
@@ -365,12 +371,11 @@ export default function SelectAdress() {
 
                         <button
                             onClick={handleCreate}
-                            className="
-        text-white px-6 py-3 font-semibold w-full transition
-        bg-primary hover:bg-[#916A55] cursor-pointer
-        disabled:bg-gray-400 disabled:cursor-not-allowed
-    "
-                            disabled={!(razorPayDetail.amount && razorPayDetail.currency && !razorPayDetail.orderId)}
+                            className="text-white px-6 py-3 font-semibold w-full transition
+                                    bg-primary hover:bg-[#916A55] cursor-pointer
+                                    disabled:bg-gray-400 disabled:cursor-not-allowed
+                                "
+                            disabled={Boolean(razorPayDetail.amount !== 0 && razorPayDetail.currency && razorPayDetail.orderId)}
                         >
                             CONTINUE
                         </button>
