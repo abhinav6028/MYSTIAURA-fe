@@ -1,3 +1,4 @@
+import apiClient from "../../services/apiClient/apiClient";
 import { RAZORPAYKEY_ID } from "../../utils";
 
 const loadRazorpayScript = (): Promise<boolean> => {
@@ -25,21 +26,19 @@ export default function CheckoutButton({ razorPayDetail }: { razorPayDetail: Raz
             key: RAZORPAYKEY_ID,
             amount: razorPayDetail.amount,
             currency: razorPayDetail.currency,
-            name: "DD Lovers",
+            name: "MYSTIAURA",
             description: "Order Payment",
             order_id: razorPayDetail.orderId,
             handler: async function (response: any) {
                 const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = response;
-                await fetch("/api/verify-payment", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ razorpay_order_id, razorpay_payment_id, razorpay_signature }),
-                });
+               const responseData =  await apiClient.post("/api/order/verify-payment", { razorpay_order_id, razorpay_payment_id, razorpay_signature });
+                console.log(responseData);
+                
             },
             prefill: {
-                name: "John Doe",
-                email: "john@example.com",
-                contact: "+441234567890",
+                name: "MYSTIAURA JEWELS",
+                email: "Vipinm500@gmail.com",
+                contact: "+918139886630",
             },
             theme: { color: "#3399cc" },
         };
@@ -53,7 +52,7 @@ export default function CheckoutButton({ razorPayDetail }: { razorPayDetail: Raz
             onClick={handlePayment}
             className="text-white px-6 py-3 mt-3 font-semibold w-full bg-primary hover:bg-transparent hover:text-primary border border-primary transition cursor-pointer"
         >
-            Pay Now
+            PAY NOW
         </button>
     );
 }

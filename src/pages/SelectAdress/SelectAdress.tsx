@@ -365,12 +365,16 @@ export default function SelectAdress() {
 
                         <button
                             onClick={handleCreate}
-                            // onClick={() => navigate('/payment')}
-                            style={{ background: PRIMARY_COLOUR }}
-                            className="text-white px-6 py-3 font-semibold w-full hover:bg-[#916A55] transition cursor-pointer"
+                            className="
+        text-white px-6 py-3 font-semibold w-full transition
+        bg-primary hover:bg-[#916A55] cursor-pointer
+        disabled:bg-gray-400 disabled:cursor-not-allowed
+    "
+                            disabled={!(razorPayDetail.amount && razorPayDetail.currency && !razorPayDetail.orderId)}
                         >
                             CONTINUE
                         </button>
+
                         {razorPayDetail.amount != null && razorPayDetail.currency && razorPayDetail.orderId &&
                             <CheckoutButton razorPayDetail={razorPayDetail} />}
                     </CardContent>
