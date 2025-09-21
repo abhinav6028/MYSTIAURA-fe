@@ -2,7 +2,7 @@
 import { useNavigate } from 'react-router-dom';
 import LayoutContainer from '../../components/layout/LayoutContainer'
 import { useRemoveFromWishList, useWishList } from '../../services/api/wishlist/wishlist'
-import { Heart, Trash } from 'lucide-react';
+import { Heart } from 'lucide-react';
 import { finalPrice } from '../../utils';
 import type { WishProduct } from '../../types/userTypes';
 
