@@ -50,7 +50,7 @@ export default function CheckoutButton({ razorPayDetail }: { razorPayDetail: Raz
             onClick={handlePayment}
             className="text-white px-6 py-3 mt-3 font-semibold w-full bg-primary hover:bg-transparent hover:text-primary border border-primary transition cursor-pointer"
         >
-            PAY NOW
+            Place Order
         </button>
     );
 }

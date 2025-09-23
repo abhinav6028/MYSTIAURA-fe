@@ -2,8 +2,6 @@
 import React, { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
 import { ArrowLeft, ArrowRight } from "lucide-react"; // you can use any icon
 import { FONT_FAMILY } from "../../utils";
 

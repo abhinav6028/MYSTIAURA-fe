@@ -9,7 +9,11 @@ import {
     CardContent,
     Divider,
 } from "@mui/material";
-import { PenLine } from "lucide-react";
+import { PenLine, Phone } from "lucide-react";
+import { useSelector } from 'react-redux';
+import { useCheckout } from '../../services/api/checkout/checkout';
+import CheckoutButton from '../SelectAdress/RazorPay';
+
 
 type CartItem = {
     id: number;
@@ -70,8 +74,8 @@ const steps: Step[] = [
         ),
     },
     {
-        id: "payment",
-        title: "Payment Method",
+        id: "review",
+        title: "Review",
         icon: (
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
@@ -84,22 +88,32 @@ const steps: Step[] = [
         ),
     },
     {
-        id: "review",
-        title: "Review",
+        id: "payment",
+        title: "Payment",
         icon: (
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                    d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
                 />
             </svg>
         ),
     },
 ]
 
-export default function ReviewOrder() {
+interface Address {
+    name: string;
+    addressLine1: string;
+    phone: number;
+    city: string
+}
+
+interface ReviewOrderProps {
+    selectedCheckAddress?: Address;
+}
+export default function ReviewOrder({ selectedCheckAddress }: ReviewOrderProps) {
 
     const [cart] = useState<CartItem[]>(initialCart);
 
@@ -108,24 +122,42 @@ export default function ReviewOrder() {
     const deliveryFee = 0;
     const grandTotal = subtotal + taxes + deliveryFee;
 
-    const currentStep = 2 // Address step is active
+    const currentStep = 1;
 
-    const cartItems = [
-        {
-            id: 1,
-            name: "Diamond Pearl Engagement Ring",
-            price: 160,
-            qty: 1,
-            image: bestSeller,
-        },
-        {
-            id: 2,
-            name: "Rose Gold Lotus Necklace",
-            price: 200,
-            qty: 1,
-            image: bestSeller2,
-        },
-    ];
+    const cartItems = useSelector(
+        (state: any) => state.user.addCartList ?? []
+    );
+
+    const createCheckout = useCheckout();
+
+    const [razorPayDetail, setRazorPayDetail] = useState({
+        orderId: "",
+        amount: 0,
+        currency: ""
+    });
+
+    const handleCreate = () => {
+
+        const payload = {
+            items: cartItems?.items,
+            shippingAddress: selectedCheckAddress,
+        };
+
+        createCheckout.mutate(payload, {
+            onSuccess: (data) => {
+                // data is the response from your API
+                setRazorPayDetail({
+                    orderId: data?.order?.payment?.razorpayOrderId,
+                    amount: data?.order?.totalAmount,
+                    currency: data?.razorpayOrder?.currency
+                });
+            },
+            onError: (error) => {
+                console.error("Checkout failed", error);
+            },
+        });
+    };
+
 
     return (
 
@@ -171,20 +203,20 @@ export default function ReviewOrder() {
                         </div>
 
                         <div className="space-y-4">
-                            {cartItems.map((item) => (
-                                <div key={item.id} style={{ borderBottom: '1px solid grey' }} className="flex items-center justify-between py-5">
+                            {cartItems?.items?.map((item: any) => (
+                                <div key={item._id} style={{ borderBottom: '1px solid grey' }} className="flex items-center justify-between py-5">
                                     <div className="flex gap-4">
                                         <div className="w-20 h-20 md:w-20 md:h-20 flex justify-center bg-[#f9f9f9]">
                                             <img
-                                                src={item.image}
+                                                src={item?.product?.images ? item?.product?.images[0]?.secure_url : null}
                                                 alt="Ring"
                                                 className="w-auto h-auto object-contain"
                                             />
                                         </div>
                                         <div className="flex flex-col">
-                                            <span className="md:text-lg text-sm">{item.name}</span>
+                                            <span className="md:text-lg text-sm">{item?.product?.name}</span>
                                             <span color={PRIMARY_COLOUR} className="font-semibold my-1">${item.price}.00</span>
-                                            <span className="text-gray-500">QTY: {item.qty}</span>
+                                            <span className="text-gray-500">QTY: {item.quantity}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -198,17 +230,23 @@ export default function ReviewOrder() {
                         </div>
 
                         {/* style={{ borderBottom: '1px solid grey' }}  */}
-                        <div style={{ borderBottom: '1px solid grey' }} className="space-y-1 flex items-center justify-between ">
+                        <div style={{ borderBottom: '1px solid grey' }} className="space-y-1 flex items-center justify-between">
                             <div className="flex items-center justify-between py-5">
                                 <div className="flex gap-4">
                                     <div className="flex flex-col">
-                                        <span className="md:text-lg text-sm">Alexa Willioms</span>
+                                        <span className="md:text-lg text-sm">{selectedCheckAddress && selectedCheckAddress.name}</span>
                                         <span className="mt-1 block w-full max-w-[200px] sm:max-w-[400px] break-words">
-                                            4140 Parker Rd. Allentown, New Mexico 31134
+                                            {selectedCheckAddress && selectedCheckAddress.addressLine1} {selectedCheckAddress && selectedCheckAddress.city}
                                         </span>
+                                        <div className="flex items-center gap-2 text-gray-600 my-2">
+                                            <Phone className="w-4 h-4 flex-shrink-0" />
+                                            <span className="text-md">{selectedCheckAddress && selectedCheckAddress.phone}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
+
 
                             <div className='h-10 w-10 bg-[#f9f9f9] flex items-center justify-center'>
                                 <PenLine
@@ -218,35 +256,6 @@ export default function ReviewOrder() {
                             </div>
                         </div>
                     </>
-
-                    <>
-                        <div className="flex justify-between font-semibold text-lg mt-8">
-                            <span>Payment Method</span>
-                        </div>
-
-                        {/* style={{ borderBottom: '1px solid grey' }}  */}
-                        <div style={{ borderBottom: '1px solid grey' }} className="space-y-1 flex items-center justify-between ">
-                            <div className="flex items-center justify-between py-5">
-                                <div className="flex gap-4">
-                                    <div className="flex flex-col">
-                                        <span className="md:text-lg text-sm">Credit Card</span>
-                                        <span className="mt-1 block w-full max-w-[200px] sm:max-w-[400px] break-words">
-                                            8291 3746 XX89 2635
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className='h-10 w-10 bg-[#f9f9f9] flex items-center justify-center'>
-                                <PenLine
-                                    size={20} strokeWidth={0.75}
-                                    className="text-black-500 bg-[#f9f9f9]"
-                                />
-                            </div>
-                        </div>
-                    </>
-
-
                 </div>
 
                 {/* Right Section (Summary) */}
@@ -268,15 +277,21 @@ export default function ReviewOrder() {
                         <Divider className="my-2" />
                         <div className="flex justify-between font-bold text-lg py-3">
                             <span>Grand Total</span>
-                            <span>${grandTotal.toFixed(2)}</span>
+                            <span>₹{grandTotal.toFixed(2)}</span>
                         </div>
 
                         <button
+                            onClick={handleCreate}
                             // onClick={() => navigate('/revieworder')}
                             style={{ background: PRIMARY_COLOUR }}
+                            disabled={Boolean(razorPayDetail.amount !== 0 && razorPayDetail.currency && razorPayDetail.orderId)}
                             className="text-white px-6 py-3 font-semibold w-full hover:bg-[#916A55] transition cursor-pointer">
                             PLACE ORDER
                         </button>
+
+
+                        {razorPayDetail.amount != null && razorPayDetail.currency && razorPayDetail.orderId &&
+                            <CheckoutButton razorPayDetail={razorPayDetail} />}
                     </CardContent>
                 </Card>
             </div>
@@ -284,3 +299,38 @@ export default function ReviewOrder() {
 
     )
 }
+
+
+
+
+
+
+
+
+
+// <>
+//     <div className="flex justify-between font-semibold text-lg mt-8">
+//         <span>Payment Method</span>
+//     </div>
+
+//     {/* style={{ borderBottom: '1px solid grey' }}  */}
+//     <div style={{ borderBottom: '1px solid grey' }} className="space-y-1 flex items-center justify-between ">
+//         <div className="flex items-center justify-between py-5">
+//             <div className="flex gap-4">
+//                 <div className="flex flex-col">
+//                     <span className="md:text-lg text-sm">Credit Card</span>
+//                     <span className="mt-1 block w-full max-w-[200px] sm:max-w-[400px] break-words">
+//                         8291 3746 XX89 2635
+//                     </span>
+//                 </div>
+//             </div>
+//         </div>
+
+//         <div className='h-10 w-10 bg-[#f9f9f9] flex items-center justify-center'>
+//             <PenLine
+//                 size={20} strokeWidth={0.75}
+//                 className="text-black-500 bg-[#f9f9f9]"
+//             />
+//         </div>
+//     </div>
+// </>
