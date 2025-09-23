@@ -37,8 +37,8 @@ export function useAddToCartProduct() {
       const res = await apiClient.post("api/cart/add", payload);
       return res.data;
     },
-    onSuccess: (res) => {
-      notify.success(res?.message || "Add to cart success");
+    onSuccess: (_res) => {
+      // notify.success(res?.message || "Add to cart success");
       queryClient.invalidateQueries({ queryKey: ["cart"], refetchType: "all" });
     },
     onError: (error: any) => {

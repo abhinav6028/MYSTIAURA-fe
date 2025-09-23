@@ -3,12 +3,12 @@ import { useNotify } from "../../../utilsComp/useNotify";
 import apiClient from "../../apiClient/apiClient";
 
 interface ICheckout {
-    items: {
-        product: string;
-        quantity: number;
-        price: number;
-    }
-    selectAddress: string;
+  items: {
+    product: string;
+    quantity: number;
+    price: number;
+  }
+  selectAddress: string;
 }
 
 // Add to cart
@@ -21,8 +21,8 @@ export function useCheckout() {
       const res = await apiClient.post("/api/order/create", payload);
       return res.data;
     },
-    onSuccess: (res) => {
-      notify.success(res?.message || "Add to cart success");
+    onSuccess: (_res) => {
+      // notify.success(res?.message || "Add to cart success");
       queryClient.invalidateQueries({ queryKey: ["cart"], refetchType: "all" });
     },
     onError: (error: any) => {
