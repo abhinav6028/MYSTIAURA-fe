@@ -1,7 +1,6 @@
 
 
 import axios from "axios";
-// check
 const apiClient = axios.create({
   baseURL: "https://jwelery-be.onrender.com/",
   // baseURL: "https://crtmxvxj-5000.inc1.devtunnels.ms/",
