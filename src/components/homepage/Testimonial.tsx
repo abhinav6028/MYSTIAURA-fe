@@ -5,6 +5,10 @@ import { Autoplay, Navigation } from "swiper/modules";
 import { ArrowLeft, ArrowRight } from "lucide-react"; // you can use any icon
 import { FONT_FAMILY } from "../../utils";
 
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
 const testimonialsData = [
   {
     name: "Ralph Edwards",
