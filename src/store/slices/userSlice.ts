@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { BestSellerProduct, CartData, UserState, Wishlist } from "../../types/userTypes";
+import type { BestSellerProduct, CartData, SingleProduct, UserState, Wishlist } from "../../types/userTypes";
 import type { Address } from "../../types/address";
 
 const initialState: UserState = {
@@ -7,6 +7,7 @@ const initialState: UserState = {
   wishlistProducts: [],
   addCartList: null,
   addresses: [],
+  singleProduct: null,
 };
 
 const userSlice = createSlice({
@@ -25,8 +26,11 @@ const userSlice = createSlice({
     setAddresses(state, action: PayloadAction<Address[]>) {
       state.addresses = action.payload;
     },
+    setSingleProduct(state, action: PayloadAction<SingleProduct | null>) {
+      state.singleProduct = action.payload;
+    },
   },
 });
 
-export const { setSellerProducts, setWishlistProducts, setAddCartList, setAddresses } = userSlice.actions;
+export const { setSellerProducts, setWishlistProducts, setAddCartList, setAddresses, setSingleProduct } = userSlice.actions;
 export default userSlice.reducer;

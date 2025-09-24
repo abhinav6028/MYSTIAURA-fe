@@ -1,11 +1,82 @@
 import type { Address } from "./address";
+import type { CategoryImage } from "./adminTypes";
 
 export interface UserState {
     bestSellerProducts: BestSellerProduct[];
     wishlistProducts: Wishlist[];
     addCartList: CartData | null;
     addresses: Address[];
+    singleProduct: SingleProduct | null;
 }
+
+export interface SingleProductImage {
+  _id: string;
+  public_id: string;
+  secure_url: string;
+  format: string;
+  resource_type: string;
+  size: number;
+}
+
+export interface ProductRatings {
+  average: number;
+  count: number;
+}
+
+export interface ProductSEO {
+  keywords: string[];
+}
+
+export interface ProductReview {
+  _id: string;
+  user: {
+    name: string;
+    email: string;
+  };
+  title: string;
+  comment: string;
+  rating: number;
+  createdAt: string; // ISO date
+}
+
+export interface Category {
+  _id: string;
+  name: string;
+  description?: string;
+  image?: CategoryImage;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface SingleProduct {
+  _id: string;
+  name: string;
+  description: string;
+  category: Category;
+  status: "active" | "inactive" | string; // if only active/inactive, narrow further
+  material: string;
+  occasion: string[];
+  price: number;
+  discountPrice: number;
+  stock: number;
+  images: SingleProductImage[];
+  ratings: ProductRatings;
+  tags: string[];
+  isFeatured: boolean;
+  seo: ProductSEO;
+  isActive: boolean;
+  is_deleted: boolean;
+  createdAt: string; // ISO date
+  updatedAt: string; // ISO date
+  __v: number;
+  reviews: ProductReview[];
+  averageRating: number;
+  reviewCount: number;
+  positiveReviewCount: number;
+  negativeReviewCount: number;
+  fiveStarCount: number;
+}
+
 
 export type BestSellerProduct = {
       _id: string;
