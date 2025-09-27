@@ -104,7 +104,11 @@ const steps: Step[] = [
     },
 ]
 
-export default function SelectAdress() {
+type SelectAddressProps = {
+    showItems: boolean; 
+};
+
+export default function SelectAdress({ showItems }: SelectAddressProps) {
 
     const [cart] = useState<CartItem[]>(initialCart);
     const [open, setOpen] = useState(false);
@@ -153,39 +157,46 @@ export default function SelectAdress() {
 
 
                 <LayoutContainer>
-                    <h1 style={{ fontFamily: FONT_FAMILY }} className="text-4xl my-3">Select Address</h1>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div className="md:col-span-2">
-                            <div className="w-full mx-auto my-3 md:my-5">
-                                <div className="flex items-center justify-between relative">
-                                    {steps.map((step, index) => (
-                                        <div key={step.id} className="flex flex-col items-center relative z-10">
-                                            <div
-                                                style={{ backgroundColor: index <= currentStep ? PRIMARY_COLOUR : 'white', border: `1px solid ${PRIMARY_COLOUR}` }}
-                                                className={`md:w-12 md:h-12 w-10 h-10 flex items-center justify-center transition-colors ${index <= currentStep ? "text-white" : " text-gray-400 bg-white"
-                                                    }`}
-                                            >
-                                                {step.icon}
-                                            </div>
-                                            <span
-                                                className={`mt-3 text-sm font-medium transition-colors ${index <= currentStep ? "text-gray-900" : "text-gray-500"
-                                                    }`}
-                                            >
-                                                {step.title}
-                                            </span>
-                                        </div>
-                                    ))}
 
-                                    <div className="absolute top-6 left-0 right-0 flex justify-between px-6">
-                                        {steps.slice(0, -1).map((_, index) => (
-                                            <div key={index} className={`h-px flex-1 mx-6 ${index < currentStep ? "bg-amber-700" : "bg-red-700"}`} />
+
+                    <h1 style={{ fontFamily: FONT_FAMILY }} className={`text-4xl ${!showItems ? "my-3" : ''}`}>{!showItems ? "Select Address" : 'Address Section'}</h1>
+                    <div className={`grid grid-cols-1 ${!showItems ? 'md:grid-cols-3' : 'md:grid-cols-2'} md:grid-cols-2 gap-6`}>
+                        <div className="md:col-span-2">
+
+                            {
+                                !showItems &&
+
+                                <div className="w-full mx-auto my-3 md:my-5">
+                                    <div className="flex items-center justify-between relative">
+                                        {steps.map((step, index) => (
+                                            <div key={step.id} className="flex flex-col items-center relative z-10">
+                                                <div
+                                                    style={{ backgroundColor: index <= currentStep ? PRIMARY_COLOUR : 'white', border: `1px solid ${PRIMARY_COLOUR}` }}
+                                                    className={`md:w-12 md:h-12 w-10 h-10 flex items-center justify-center transition-colors ${index <= currentStep ? "text-white" : " text-gray-400 bg-white"
+                                                        }`}
+                                                >
+                                                    {step.icon}
+                                                </div>
+                                                <span
+                                                    className={`mt-3 text-sm font-medium transition-colors ${index <= currentStep ? "text-gray-900" : "text-gray-500"
+                                                        }`}
+                                                >
+                                                    {step.title}
+                                                </span>
+                                            </div>
                                         ))}
+
+                                        <div className="absolute top-6 left-0 right-0 flex justify-between px-6">
+                                            {steps.slice(0, -1).map((_, index) => (
+                                                <div key={index} className={`h-px flex-1 mx-6 ${index < currentStep ? "bg-amber-700" : "bg-red-700"}`} />
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            }
 
                             <>
-                                <div className="flex justify-between font-bold text-lg mt-8">
+                                <div className={`flex justify-between font-bold text-lg  ${showItems ? 'mt-4' : 'mt-8'}`}>
                                     <span>Default Address</span>
                                 </div>
 
@@ -321,41 +332,47 @@ export default function SelectAdress() {
                         </div>
 
                         {/* Right Section (Summary) */}
-                        <Card className=" px-4 h-fit border border-green-100 mb-5" sx={{ borderRadius: 0, boxShadow: 'none' }}>
-                            <CardContent>
-                                <div style={{ borderBottom: `1px solid ${PRIMARY_COLOUR}` }} className="flex justify-between my-1 md:my-2 py-2 md:py-3 border-b ">
-                                    <span>Subtotal</span>
-                                    <span>${subtotal.toFixed(2)}</span>
-                                </div>
 
-                                <div className="flex justify-between mb-2 my-2">
-                                    <span>Taxes</span>
-                                    <span>${taxes.toFixed(2)}</span>
-                                </div>
-                                <div className="flex justify-between mb-2">
-                                    <span>Delivery Fee</span>
-                                    <span style={{ color: PRIMARY_COLOUR }} className="">FREE</span>
-                                </div>
-                                <Divider className="my-2" />
-                                <div className="flex justify-between font-bold text-lg py-3">
-                                    <span>Grand Total</span>
-                                    <span>₹{grandTotal.toFixed(2)}</span>
-                                </div>
+                        {
+                            !showItems &&
 
-                                <button
-                                    onClick={() => {
-                                        // handleCreate()
-                                        setShowComponent(2)
-                                    }}
-                                    className="text-white px-6 py-3 font-semibold w-full transition
+                            <Card className=" px-4 h-fit border border-green-100 mb-5" sx={{ borderRadius: 0, boxShadow: 'none' }}>
+                                <CardContent>
+                                    <div style={{ borderBottom: `1px solid ${PRIMARY_COLOUR}` }} className="flex justify-between my-1 md:my-2 py-2 md:py-3 border-b ">
+                                        <span>Subtotal</span>
+                                        <span>${subtotal.toFixed(2)}</span>
+                                    </div>
+
+                                    <div className="flex justify-between mb-2 my-2">
+                                        <span>Taxes</span>
+                                        <span>${taxes.toFixed(2)}</span>
+                                    </div>
+                                    <div className="flex justify-between mb-2">
+                                        <span>Delivery Fee</span>
+                                        <span style={{ color: PRIMARY_COLOUR }} className="">FREE</span>
+                                    </div>
+                                    <Divider className="my-2" />
+                                    <div className="flex justify-between font-bold text-lg py-3">
+                                        <span>Grand Total</span>
+                                        <span>₹{grandTotal.toFixed(2)}</span>
+                                    </div>
+
+                                    <button
+                                        onClick={() => {
+                                            // handleCreate()
+                                            setShowComponent(2)
+                                        }}
+                                        className="text-white px-6 py-3 font-semibold w-full transition
                                     bg-primary hover:bg-[#916A55] cursor-pointer
                                     disabled:bg-gray-400 disabled:cursor-not-allowed
                                 "
-                                >
-                                    CONTINUE
-                                </button>
-                            </CardContent>
-                        </Card>
+                                    >
+                                        CONTINUE
+                                    </button>
+                                </CardContent>
+                            </Card>
+                        }
+
                     </div>
 
                 </LayoutContainer >

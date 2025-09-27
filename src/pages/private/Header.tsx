@@ -178,7 +178,7 @@ const Header = () => {
 
                   {open && (
                     <div className="absolute right-0 mt-2 w-40 bg-white shadow-lg py-2 z-50">
-                      <button className="w-full px-4 py-2 text-md font-medium text-gray-700 hover:bg-gray-100 text-left cursor-pointer">
+                      <button onClick={() => navigate('/user/myprofile')} className="w-full px-4 py-2 text-md font-medium text-gray-700 hover:bg-gray-100 text-left cursor-pointer">
                         Profile
                       </button>
                       <button className="w-full px-4 py-2 text-md font-medium text-gray-700 hover:bg-gray-100 text-left cursor-pointer">

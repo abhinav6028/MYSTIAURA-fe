@@ -1,4 +1,4 @@
-import { Home, ShoppingCart, BarChart3, User, LogOut } from "lucide-react";
+  import { Home, ShoppingCart, BarChart3, User, LogOut } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useLogout } from "../../services/api/auth/auth";
 import { TbCategory } from "react-icons/tb";
