@@ -85,3 +85,23 @@ export function useLogout() {
         localStorage.removeItem("persist:root"); // optional
     };
 }
+
+// forgot password
+export function useForgotPassword() {
+    return useMutation({
+        mutationFn: async (payload: { email: string }) => {
+            const res = await apiClient.post("/api/auth/reset-password", payload);
+            return res.data;
+        },
+    });
+}
+
+// reset password
+export function useResetPassword() {
+    return useMutation({
+        mutationFn: async (payload: { code: string, password: string }) => {
+            const res = await apiClient.post("/api/auth/update-password", payload);
+            return res.data;
+        },
+    });
+}

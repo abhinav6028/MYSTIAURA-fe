@@ -6,12 +6,17 @@ import { Eye, EyeOff } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useLogin } from '../../../services/api/auth/auth';
+import { Google } from '@mui/icons-material';
+import { useLoginWithGoogle } from '../../../services/api/loginWithGoogle';
+import type { SendOtpFormProps } from '../../../types/authTypes';
 
-export default function LoginForm() {
+
+export default function LoginForm({ setShowForm }: SendOtpFormProps) {
 
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const loginUser = useLogin();
+    const loginMutation = useLoginWithGoogle();
 
     const schema = yup.object({
         email: yup.string().email("Invalid email").required("Email is required"),
@@ -110,7 +115,7 @@ export default function LoginForm() {
                                 />
                                 <span className="ml-2">Remember Me</span>
                             </label>
-                            <p className="text-[#660033] cursor-pointer hover:underline text-sm">
+                            <p className="text-[#660033] cursor-pointer hover:underline text-sm" onClick={() => setShowForm(2)}>
                                 Forgot Password?
                             </p>
                         </div>
@@ -134,8 +139,10 @@ export default function LoginForm() {
 
                         <button
                             type="button"
-                            className="w-full border border-[PRIMARY_COLOUR] text-[#660033] font-semibold py-3 hover:border-[#51052b] cursor-pointer hover:text-[#51052b] transition"
+                            className="w-full border flex items-center justify-center gap-2 border-[PRIMARY_COLOUR] text-[#660033] font-semibold py-3 hover:border-[#51052b] cursor-pointer hover:text-[#51052b] transition"
+                            onClick={() => loginMutation.mutate()}
                         >
+                            <Google className="w-5 h-5" />
                             LOGIN WITH GOOGLE
                         </button>
                     </form>

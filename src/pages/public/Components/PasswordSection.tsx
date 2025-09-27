@@ -13,9 +13,19 @@ import { IoArrowBack } from "react-icons/io5";
 const schema = yup.object({
     email: yup.string().email("Invalid email").required("Email is required"),
     otp: yup.string().matches(/^\d{6}$/, "OTP must be exactly 6 digits").required("OTP is required"),
-    password: yup.string().required("Password is required").min(6, "Password must be at least 6 characters"),
-    cpassword: yup.string().oneOf([yup.ref("password"), undefined], "Passwords must match").required("Confirm password is required"),
-});
+    password: yup
+      .string()
+      .required("Password is required")
+      .min(8, "Password must be at least 8 characters")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
+      ),
+    cpassword: yup
+      .string()
+      .oneOf([yup.ref("password")], "Passwords must match")
+      .required("Confirm password is required"),
+  });
 
 type FormData = yup.InferType<typeof schema>;
 

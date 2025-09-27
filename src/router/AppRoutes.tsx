@@ -37,6 +37,7 @@ function AppRoutes() {
       <Routes>
         {/* Public */}
         <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+        <Route path="/login/:id" element={<PublicRoute><Login /></PublicRoute>} />
         <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
 
         <Route path="/" element={<PublicRoute><Dashboard /></PublicRoute>} >
