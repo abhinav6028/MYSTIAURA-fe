@@ -1,5 +1,4 @@
 import LayoutContainer from '../../components/layout/LayoutContainer';
-import { Files } from 'lucide-react';
 import InnerSideBar from '../../components/UI/InnerSideBar';
 
 export default function MyOrders() {

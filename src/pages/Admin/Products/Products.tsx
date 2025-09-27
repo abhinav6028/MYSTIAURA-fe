@@ -63,7 +63,7 @@ function Products() {
         },
     ];
 
-    const rows = userProduct?.map((product) => ({
+    const rows = userProduct?.data?.map((product: Product) => ({
         id: product._id,
         name: product.name,
         category: product.category?.name,

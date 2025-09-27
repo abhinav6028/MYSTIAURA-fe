@@ -78,6 +78,7 @@ export interface SingleProduct {
   positiveReviewCount: number;
   negativeReviewCount: number;
   fiveStarCount: number;
+  discountType: string;
 }
 
 
