@@ -1,8 +1,10 @@
 import stunningImg from "../../assets/homepage/stunning.jpg";
-import { FONT_FAMILY, PRIMARY_COLOUR } from "../../utils";
+import { FONT_FAMILY } from "../../utils";
 import { ArrowUpRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const StunningBanner = () => {
+    const navigate = useNavigate();
     return (
         <div className="pt-10 relative">
             {/* Image */}
@@ -33,12 +35,11 @@ const StunningBanner = () => {
                     Whether casual or glamorous, our jewelry is designed to add the perfect finishing touch.
                 </p>
                 <p
-                    style={{ color: PRIMARY_COLOUR }}
-                    className="text-sm sm:text-base cursor-pointer flex items-center font-medium hover:underline"
+                    className="text-sm cursor-pointer text-white flex items-center font-medium"
+                    onClick={() => navigate('/user/inventory')}
                 >
                     VIEW ALL
                     <ArrowUpRight
-                        style={{ color: PRIMARY_COLOUR }}
                         className="ml-2"
                         size={20}
                         strokeWidth={2.75}

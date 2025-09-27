@@ -5,33 +5,15 @@ import {
     Avatar,
     Rating,
 } from "@mui/material";
-import { FONT_FAMILY } from "../../utils";
+import { FONT_FAMILY, formatDate } from "../../utils";
 import ProductGrid from "../inventory/ProductGrid";
 import ReviewDialog from "./ReviewModal";
-// import ReviewDialog from "./ReviewModal";
-
-const reviews = [
-    {
-        name: "Annette Black",
-        content: "Exquisite Craftsmanship & Timeless Beauty",
-        details:
-            "Absolutely stunning! The craftsmanship and attention to detail are beyond compare. Truly timeless and elegant. Each piece is meticulously designed to bring out brilliance and sophistication, making every moment special.",
-        rating: 5,
-        date: "Feb 25, 2025",
-        company: "PearlGem",
-    },
-    {
-        name: "Darrell Steward",
-        content: "Perfect Gift for Any Occasion",
-        details:
-            "Bought a necklace for my wife, and she loved it! A perfect blend of luxury and charm. Designed to make every celebration memorable, our jewelry captures love, elegance, and personal style effortlessly.",
-        rating: 5,
-        date: "Feb 25, 2025",
-        company: "PearlGem",
-    },
-];
+import { useAppSelector } from "../../store/hooks";
 
 function ReviewsAndProducts() {
+    const state = useAppSelector((state) => state.user.singleProduct);
+    const reviews = state?.reviews ?? [];
+    
     return (
         <div className="py-8">
             {/* Reviews Section */}
@@ -44,33 +26,31 @@ function ReviewsAndProducts() {
                 </h1>
 
                 <ReviewDialog/>
-               
-                {/* <ReviewDialog /> */}
             </div>
 
             <div className="space-y-6">
-                {reviews.map((review, idx) => (
+                {reviews.length > 0 ? reviews.map((review, idx) => (
                     <Card sx={{ borderRadius: 0, borderBottom: ".5px solid grey" }} key={idx} className="shadow-none">
                         <CardContent>
                             <Typography variant="h6" className="font-semibold mb-1">
-                                {review.content}
+                                {review.comment}
                             </Typography>
-                            <Typography variant="body2" className="text-gray-600 mb-2">
+                            {/* <Typography variant="body2" className="text-gray-600 mb-2">
                                 {review.details}
-                            </Typography>
+                            </Typography> */}
                             <div className="flex items-center mt-3">
                                 <Avatar src={`https://i.pravatar.cc/40?img=${idx + 1}`} />
                                 <div className="ml-3">
-                                    <Typography className="font-medium">{review.name}</Typography>
+                                    <Typography className="font-medium">{review.user.name}</Typography>
                                     <Rating value={review.rating} readOnly size="small" />
                                     <Typography variant="caption" className="text-gray-500 block">
-                                        Review by {review.company} on {review.date}
+                                        Review by {review.title} on {formatDate(review.createdAt)}
                                     </Typography>
                                 </div>
                             </div>
                         </CardContent>
                     </Card>
-                ))}
+                )) : <p>No reviews yet</p>}
             </div>
 
             {/* Similar Products Section */}

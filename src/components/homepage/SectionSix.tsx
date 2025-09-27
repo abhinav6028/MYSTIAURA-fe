@@ -1,8 +1,10 @@
 import LayoutContainer from "../layout/LayoutContainer";
 import { FONT_FAMILY, PRIMARY_COLOUR } from "../../utils";
 import { ArrowUpRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const SectionSix = () => {
+    const navigate = useNavigate();
     return (
         <div className="bg-[#FEF9F2] w-full py-10 sm:py-16">
             <LayoutContainer>
@@ -27,7 +29,9 @@ const SectionSix = () => {
                             <p className="text-base sm:text-lg md:text-xl text-gray-700">
                                 Each piece is carefully designed to celebrate your individuality. From delicate details to bold statements, find your perfect match today.
                             </p>
-                            <p style={{ color: PRIMARY_COLOUR }} className="text-base sm:text-lg cursor-pointer flex items-center text-primary">
+                            <p style={{ color: PRIMARY_COLOUR }} className="text-base sm:text-lg cursor-pointer flex items-center text-primary"
+                                onClick={() => navigate('/user/inventory')}
+                            >
                                 VIEW ALL
                                 <ArrowUpRight
                                     style={{ color: PRIMARY_COLOUR }}
@@ -54,7 +58,9 @@ const SectionSix = () => {
                         <p className="text-base sm:text-lg md:text-xl text-gray-700">
                             Each piece is carefully designed to celebrate your individuality. From delicate details to bold statements, find your perfect match today.
                         </p>
-                        <p style={{ color: PRIMARY_COLOUR }} className="text-base sm:text-lg cursor-pointer flex items-center text-primary">
+                        <p style={{ color: PRIMARY_COLOUR }} className="text-base sm:text-lg cursor-pointer flex items-center text-primary"
+                            onClick={() => navigate('/user/inventory')}
+                        >
                             VIEW ALL
                             <ArrowUpRight
                                 style={{ color: PRIMARY_COLOUR }}

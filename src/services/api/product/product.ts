@@ -4,9 +4,9 @@ import { useNotify } from "../../../utilsComp/useNotify";
 import type { IAdminFormInputs, Product } from "../../../types/adminTypes";
 import { useUploadImages } from "../imageUpload";
 import { useNavigate } from "react-router-dom";
-import { setSellerProducts } from "../../../store/slices/userSlice";
+import { setSellerProducts, setSingleProduct } from "../../../store/slices/userSlice";
 import { useDispatch } from "react-redux";
-import type { BestSellerProduct } from "../../../types/userTypes";
+import type { BestSellerProduct, SingleProduct } from "../../../types/userTypes";
 import { useEffect } from "react";
 
 // 🔹 Get all products
@@ -46,7 +46,8 @@ export function useProductList(page: number, limit: number) {
 
 // 🔹 Get product by ID
 export function useProductWithId(productId: string) {
-  return useQuery<Product, Error>({
+  const dispatch = useDispatch();
+  const query = useQuery<SingleProduct, Error>({
     queryKey: ["products", productId],
     queryFn: async () => {
       const res = await apiClient.get(`api/product/${productId}`);
@@ -55,6 +56,14 @@ export function useProductWithId(productId: string) {
     retry: false,
     enabled: !!productId,
   });
+
+  useEffect(() => {
+    if (query.data) {
+      dispatch(setSingleProduct(query.data as any));
+    }
+  }, [query.data, dispatch]);
+
+  return query;
 }
 
 // 🔹 Create product
@@ -134,7 +143,7 @@ export function useDeleteProduct() {
       return res.data;
     },
     onSuccess: () => {
-      notify.success("Product deleted 🗑️");
+      notify.success("Product deleted");
       queryClient.invalidateQueries({ queryKey: ["products"] });
     },
     onError: (error: any) => {

@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Badge, MenuItem, Select } from "@mui/material";
+import { useEffect, useRef, useState } from "react";
+import { Badge } from "@mui/material";
 import logo from "../../assets/logohorizontal.svg"
 import phone from "../../assets/phone.svg"
 import { CircleUser, Heart, Search, ShoppingCart, Menu, X, Instagram, Facebook, Twitter } from "lucide-react";
@@ -13,9 +13,6 @@ import { useCart } from "../../services/api/cart/cart";
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-
-  const [lang, setLang] = React.useState("EN");
-  const [currency, setCurrency] = React.useState("USD");
 
   const { data: wishlistData } = useWishList();
   const { data: cartData } = useCart();
@@ -103,31 +100,6 @@ const Header = () => {
                   LOG IN
                 </button>
               }
-
-              <Select
-                value={lang}
-                onChange={(e) => setLang(e.target.value)}
-                variant="standard"
-                disableUnderline
-                className="text-sm"
-              >
-                <MenuItem value="EN">EN</MenuItem>
-                <MenuItem value="FR">FR</MenuItem>
-                <MenuItem value="ES">ES</MenuItem>
-              </Select>
-
-              {/* Currency Dropdown */}
-              <Select
-                value={currency}
-                onChange={(e) => setCurrency(e.target.value)}
-                variant="standard"
-                disableUnderline
-                className="text-sm"
-              >
-                <MenuItem value="USD">USD</MenuItem>
-                <MenuItem value="EUR">EUR</MenuItem>
-                <MenuItem value="INR">INR</MenuItem>
-              </Select>
             </div>
           </div>
 
@@ -159,7 +131,7 @@ const Header = () => {
             <div className="flex sm:gap-2 gap-2 md:gap-4 items-center">
               <Search className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
 
-              <Badge badgeContent={wishlistCount} color="primary" showZero>
+              <Badge badgeContent={wishlistCount} color="primary">
 
                 <Heart onClick={() => navigate('/user/wishlist')} className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
 
@@ -181,9 +153,6 @@ const Header = () => {
                       <button onClick={() => navigate('/user/myprofile')} className="w-full px-4 py-2 text-md font-medium text-gray-700 hover:bg-gray-100 text-left cursor-pointer">
                         Profile
                       </button>
-                      <button className="w-full px-4 py-2 text-md font-medium text-gray-700 hover:bg-gray-100 text-left cursor-pointer">
-                        Settings
-                      </button>
                       <button className="w-full px-4 py-2 text-md font-medium text-[#660033] hover:bg-gray-100 text-left cursor-pointer">
                         Logout
                       </button>
@@ -192,7 +161,7 @@ const Header = () => {
                 </div>
               }
 
-              <Badge badgeContent={cartCount} color="primary" showZero>
+              <Badge badgeContent={cartCount} color="primary">
 
                 <ShoppingCart onClick={() => navigate('/user/mycart')} className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
               </Badge>

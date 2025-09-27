@@ -14,7 +14,7 @@ const HeroBannerSection = () => {
             <div className="absolute bottom-20 left-5 lg:left-20">
                 <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-7xl max-w-[60%] mb-5">Unveiling the Beauty of Fine Jewelry</h1>
                 <p className="text-xl mb-5">Handpicked gemstones and intricate designs for a lifetime of luxury.</p>
-                <Button variant="text" sx={{ color: "#fff", borderBottom: "1px solid #fff", display: "flex", alignItems: "center", gap: "5px" }}>Show Now <img src={arrowSvg} alt="" /></Button>
+                <Button variant="text" sx={{ color: "#fff", display: "flex", alignItems: "center", gap: "5px" }}>Show Now <img src={arrowSvg} alt="" /></Button>
             </div>
             <div className="hidden lg:block lg:absolute right-20 top-90">
                 <div className="flex flex-col max-w-[20rem] gap-5 relative">
