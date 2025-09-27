@@ -12,6 +12,7 @@ export function useCreateReview(productId: string) {
         });
         return res.data;
       },
+      retry: false,
       onSuccess: (res) => {
         notify.success(res?.message || "Review created");
         queryClient.invalidateQueries({ queryKey: ["products", productId] });

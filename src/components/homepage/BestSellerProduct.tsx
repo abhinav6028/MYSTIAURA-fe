@@ -43,7 +43,7 @@ const BestSellerProduct = () => {
             {/* grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4 */}
             {/* Product Grid */}
 
-            <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4 ">
+            <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:px-4 ">
 
                 {data?.map((val) => {
                     const isWishlisted = wishlistData?.products?.some(
@@ -56,7 +56,7 @@ const BestSellerProduct = () => {
                             className="bg-[#f9f9f9] flex flex-col items-center relative cursor-pointer"
                         >
                             {/* Heart for small screens */}
-                            <div className="absolute top-2 left-2 sm:hidden w-8 h-8 flex items-center justify-center bg-white rounded-full">
+                            {/* <div className="absolute top-2 left-2 sm:hidden w-8 h-8 flex items-center justify-center bg-white rounded-full">
                                 <Heart
                                     onClick={() =>
                                         createAddToWishList.mutate({ productid: val._id })
@@ -67,7 +67,7 @@ const BestSellerProduct = () => {
                                     className={`cursor-pointer ${isWishlisted ? "text-red-500" : "text-gray-600"
                                         }`}
                                 />
-                            </div>
+                            </div> */}
 
                             {/* Image */}
                             <div className="w-full h-80 md:h-80 flex justify-center bg-[#f9f9f9] p-4">
@@ -80,8 +80,8 @@ const BestSellerProduct = () => {
                             </div>
 
                             {/* Bottom section */}
-                            <div className="w-full flex flex-col sm:flex-row items-center px-2 sm:px-4 pb-4 gap-2 sm:gap-2 mt-2 sm:mt-0">
-                                <div className="w-12 h-12 items-center justify-center bg-white flex-shrink-0 hidden sm:flex">
+                            <div className="w-full flex sm:flex-row items-center px-2 sm:px-4 pb-4 gap-2 sm:gap-2 mt-2 sm:mt-0">
+                                <div className="w-12 h-12 items-center justify-center bg-white flex-shrink-0 flex">
                                     <Heart
 
                                         onClick={() =>

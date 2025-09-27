@@ -1,24 +1,36 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import apiClient from "../../apiClient/apiClient";
 import { useNotify } from "../../../utilsComp/useNotify";
-import type { IAdminFormInputs, Product } from "../../../types/adminTypes";
+import type { IAdminFormInputs } from "../../../types/adminTypes";
 import { useUploadImages } from "../imageUpload";
 import { useNavigate } from "react-router-dom";
-import { setSellerProducts, setSingleProduct } from "../../../store/slices/userSlice";
+import { selectedProductCategory, setSellerProducts, setSingleProduct } from "../../../store/slices/userSlice";
 import { useDispatch } from "react-redux";
 import type { BestSellerProduct, SingleProduct } from "../../../types/userTypes";
 import { useEffect } from "react";
+import type { AxiosResponse } from "axios";
 
 // 🔹 Get all products
-export function useProducts() {
-  return useQuery<Product[], Error>({
-    queryKey: ["products"],
+export function useProducts(category?: string) {
+  const dispatch = useDispatch();
+
+  const query = useQuery<AxiosResponse, Error>({
+    queryKey: ["products", category],
     queryFn: async () => {
-      const res = await apiClient.get("api/product/all");
-      return res.data.products;
+      return apiClient.get("api/product/all", {
+        params: category ? { category } : {},
+      });
     },
     retry: false,
   });
+
+  useEffect(() => {
+    if (query.data) {
+      dispatch(selectedProductCategory(query.data));
+    }
+  }, [query.data, dispatch]);
+
+  return query;
 }
 
 // Product list with pagination
@@ -33,6 +45,7 @@ export function useProductList(page: number, limit: number) {
       });
       return res.data.products as BestSellerProduct; // ✅ return the full object
     },
+    retry: false,
   });
 
   useEffect(() => {

@@ -9,6 +9,9 @@ import LayoutContainer from "../../components/layout/LayoutContainer";
 import { useAppSelector } from "../../store/hooks";
 import { useWishList } from "../../services/api/wishlist/wishlist";
 import { useCart } from "../../services/api/cart/cart";
+import { useCategories } from "../../services/api/category/category";
+import { useSelector } from "react-redux";
+import type { ProductCategory } from "../../types/categoryTypes";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,6 +19,7 @@ const Header = () => {
 
   const { data: wishlistData } = useWishList();
   const { data: cartData } = useCart();
+  useCategories();
   const wishlistCount = wishlistData?.totalCount ?? 0;
   const cartCount = cartData?.totalCount ?? 0;
   // const logoutuser = useLogout();
@@ -29,13 +33,7 @@ const Header = () => {
 
   const { isAuthenticated } = useAppSelector((state) => state.auth);
 
-  const navItems = [
-    { name: 'RINGS', href: 'RINGS' },
-    { name: 'EARRINGS', href: 'EARRINGS' },
-    { name: 'BRACELETS', href: 'BRACELETS' },
-    { name: 'PENDENTS', href: 'PENDENTS' },
-    { name: 'NECKLACES', href: 'NECKLACES' },
-  ];
+  const categoryList = useSelector((state: any) => state?.user?.categories);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -120,8 +118,8 @@ const Header = () => {
             {/* Navigation Links */}
             <nav className="hidden lg:flex gap-8 font-medium text-sm">
               {
-                navItems?.map((data, index) =>
-                  <a key={index} onClick={() => navigate(`categories/${data?.href}`)} className="hover:text-gray-600 cursor-pointer">{data?.name}</a>
+                categoryList?.map((data: ProductCategory, index: number) =>
+                  <a key={index} onClick={() => navigate(`inventory/${data?.name}`)} className="hover:text-gray-600 cursor-pointer">{data?.name.toUpperCase()}</a>
                 )
               }
 
@@ -214,12 +212,12 @@ const Header = () => {
 
           {/* Navigation Items */}
           <div className="px-6 py-8 space-y-2">
-            {navItems.map((item, index) => {
+            {categoryList?.map((item: ProductCategory, index: number) => {
               // const Icon = item.icon;
               return (
                 <a
                   key={item.name}
-                  href={item.href}
+                  href={item.name}
                   onClick={() => handleItemClick()}
                   className={`flex items-center space-x-4 px-4 py-2 rounded-xl text-lg transition-all duration-300 group relative overflow-hidden`}
                   style={{
@@ -231,6 +229,10 @@ const Header = () => {
                 </a>
               );
             })}
+
+            <button onClick={() => navigate('/login')} className="bg-[#660033] text-white font-semibold md:py-2 py-2 md:px-4 cursor-pointer px-2 text-sm sm:text-md hover:bg-[#51052b] transition-colors w-full sm:w-auto">
+              LOG IN
+            </button>
 
           </div>
 

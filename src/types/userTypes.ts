@@ -1,5 +1,6 @@
 import type { Address } from "./address";
 import type { CategoryImage } from "./adminTypes";
+import type { ProductCategory } from "./categoryTypes";
 
 export interface UserState {
     bestSellerProducts: BestSellerProduct[];
@@ -7,6 +8,8 @@ export interface UserState {
     addCartList: CartData | null;
     addresses: Address[];
     singleProduct: SingleProduct | null;
+    categories: ProductCategory[];
+    selectedProductCategory: ProductCategory | null;
 }
 
 export interface SingleProductImage {

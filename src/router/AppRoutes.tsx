@@ -13,7 +13,7 @@ import Payment from "../pages/Payment/Payment";
 import WishList from "../pages/WishList/WishList";
 import CategoryPage from "../pages/CategoryPage/CategoryPage";
 import DashBoard from "../pages/DashBoard/DashBoard";
-
+import Loading from "../components/loading";
 
 const Login = lazy(() => import("../pages/public/Login"));
 const Register = lazy(() => import("../pages/public/Register"));
@@ -30,7 +30,7 @@ const CreateUser = lazy(() => import("../pages/Admin/Users/CreateUser"));
 function AppRoutes() {
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loading /> }>
       <Routes>
         {/* Public */}
         <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
@@ -40,6 +40,7 @@ function AppRoutes() {
           <Route index element={<HomePage />} />
           <Route path="home" element={<HomePage />} />
           <Route path="inventory" element={<ProductListingPage />} />
+          <Route path="inventory/:categoryname" element={<ProductListingPage />} />
           <Route path="productdetailPage/:id" element={<ProductDetailPage />} />
           <Route path="payment" element={<Payment />} />
           <Route path="revieworder" element={<ReviewOrder />} />
