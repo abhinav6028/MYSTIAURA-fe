@@ -10,6 +10,7 @@ function App() {
       smooth: true,
       smoothTouch: true,
     });
+    
 
     const raf = (time: number) => {
       lenis.raf(time);
