@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     Dialog,
     DialogTitle,
@@ -15,12 +15,12 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { PRIMARY_COLOUR } from "../../utils";
+import { useParams } from "react-router-dom";
+import { useCreateReview } from "../../services/api/review/review";
 
 // Validation schema
 const schema = yup.object().shape({
     rating: yup.number().required("Rating is required").min(1, "Select a rating"),
-    name: yup.string().required("Name is required"),
-    email: yup.string().required("Email is required").email("Invalid email"),
     review: yup
         .string()
         .required("Review is required")
@@ -29,14 +29,15 @@ const schema = yup.object().shape({
 
 type ReviewFormData = {
     rating: number;
-    name: string;
-    email: string;
     review: string;
 };
 
 const ReviewDialog = () => {
     const [open, setOpen] = useState(false);
+    const { id } = useParams();
+    const createReview = useCreateReview(id!);
 
+    
     const {
         handleSubmit,
         control,
@@ -46,22 +47,26 @@ const ReviewDialog = () => {
         resolver: yupResolver(schema),
         defaultValues: {
             rating: 0,
-            name: "",
-            email: "",
             review: "",
         },
     });
-
-    const onSubmit = (data: ReviewFormData) => {
-        console.log("Review Submitted:", data);
-        reset();
-        setOpen(false);
+    
+    useEffect(() => {
+        if(open){
+            reset();
+        }
+    }, [open, reset]);
+    
+    const onSubmit = async (data: ReviewFormData) => {
+        const response = await createReview.mutateAsync({ ...data, productId: id });
+        if(response.status === 201){
+            reset();
+            setOpen(false);
+        }
     };
 
     return (
         <div>
-
-
             <p
                 onClick={() => setOpen(true)}
                 style={{ background: PRIMARY_COLOUR }}
@@ -109,50 +114,6 @@ const ReviewDialog = () => {
                                 )}
                             />
                         </div>
-
-                        {/* Name */}
-                        <Controller
-                            name="name"
-                            control={control}
-                            render={({ field }) => (
-                                <TextField
-                                    {...field}
-                                    label="Name"
-                                    fullWidth
-                                    margin="normal"
-                                    error={!!errors.name}
-                                    helperText={errors.name?.message}
-                                    variant="outlined" // make sure variant is outlined
-                                    sx={{
-                                        "& .MuiOutlinedInput-root": {
-                                            borderRadius: 0, // sharp corners
-                                        },
-                                    }}
-                                />
-                            )}
-                        />
-
-                        {/* Email */}
-                        <Controller
-                            name="email"
-                            control={control}
-                            render={({ field }) => (
-                                <TextField
-                                    {...field}
-                                    label="Email Address"
-                                    fullWidth
-                                    margin="normal"
-                                    error={!!errors.email}
-                                    helperText={errors.email?.message}
-                                    variant="outlined" // make sure variant is outlined
-                                    sx={{
-                                        "& .MuiOutlinedInput-root": {
-                                            borderRadius: 0, // sharp corners
-                                        },
-                                    }}
-                                />
-                            )}
-                        />
 
                         {/* Review */}
                         <Controller

@@ -39,8 +39,8 @@ export function useAddToWishList() {
       const res = await apiClient.post("/api/wishList/add", payload);
       return res.data;
     },
-    onSuccess: (res) => {
-      notify.success(res?.message || "Added to wishlist");
+    onSuccess: () => {
+      // notify.success(res?.message || "Added to wishlist");
       queryClient.invalidateQueries({ queryKey: ["wishlist"], refetchType: "all" });
     },
     onError: (error: any) => {
@@ -59,8 +59,8 @@ export function useRemoveFromWishList() {
       const res = await apiClient.delete(`api/wishList/remove/${productId}`);
       return res.data;
     },
-    onSuccess: (res) => {
-      notify.success(res?.message || "Removed from wishlist");
+    onSuccess: () => {
+      // notify.success(res?.message || "Removed from wishlist");
       queryClient.invalidateQueries({ queryKey: ["wishlist"] });
     },
     onError: (error: any) => {

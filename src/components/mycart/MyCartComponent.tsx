@@ -34,7 +34,7 @@ const MyCart = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 my-10">
+        <div className={`grid grid-cols-1 ${userCart?.items?.length === 0 ? "grid-cols-1" : "md:grid-cols-3"}  gap-6 my-10`}>
             {/* Left Section */}
 
             <div className="md:col-span-2">
@@ -46,18 +46,11 @@ const MyCart = () => {
                             {userCart?.items?.length}/{userCart?.items?.length} Items Selected
                         </Typography>
                     </div>
-                    <div className="flex items-stretch gap-2">
+                    {userCart?.items?.length !== 0 && <div className="flex items-stretch gap-2">
                         <Button className="bg-red-100 p-2 flex items-center justify-center cursor-pointer" disabled={!checkAllCart} onClick={() => deleteAllCart.mutate()}>
                             <Trash size={20} color={"#fff"} />
                         </Button>
-
-                        <p
-                            style={{ color: PRIMARY_COLOUR, border: `1px solid ${PRIMARY_COLOUR}` }}
-                            className="text-white py-2 px-5 cursor-pointer flex items-center border border-primary"
-                        >
-                            MOVE TO WISHLIST
-                        </p>
-                    </div>
+                    </div>}
                 </div>
 
                 {userCart?.items && userCart.items.length > 0 ? (
@@ -141,20 +134,27 @@ const MyCart = () => {
                         </Card>
 
                     ))) :
-                    <p className="w-full h-full text-center">Cart not yet added</p>
+                    <div className="w-full h-full text-center">
+                        <button onClick={() => navigate("/user/inventory")} className="text-white px-6 mb-4 mt-4 py-3 font-semibold w-60 transition
+                                    bg-primary cursor-pointer">
+                            MOVE TO PRODUCT
+                        </button>
+                        <p className="w-full h-full text-center">Cart not yet added</p>
+                    </div>
                 }
             </div>
 
             {/* Right Section (Summary) */}
-            <Card className=" p-4 h-fit border border-green-100 mb-5" sx={{ borderRadius: 0, boxShadow: 'none' }}>
-                <CardContent>
-                    <div style={{ borderBottom: `1px solid ${PRIMARY_COLOUR}` }} className="flex justify-between my-1 md:my-2 py-2 md:py-3 border-b ">
-                        <span>Subtotal</span>
-                        <span>₹ {userCart?.totalPrice.toFixed(2) || 0}</span>
-                    </div>
+            {userCart?.items?.length !== 0 &&
+                <Card className=" p-4 h-fit border border-green-100 mb-5" sx={{ borderRadius: 0, boxShadow: 'none' }}>
+                    <CardContent>
+                        <div style={{ borderBottom: `1px solid ${PRIMARY_COLOUR}` }} className="flex justify-between my-1 md:my-2 py-2 md:py-3 border-b ">
+                            <span>Subtotal</span>
+                            <span>₹ {userCart?.totalPrice.toFixed(2) || 0}</span>
+                        </div>
 
-                    {/* Discount Code */}
-                    {/* <p style={{ width: '100%' }} className="mt-2">Enter Discount Code</p>
+                        {/* Discount Code */}
+                        {/* <p style={{ width: '100%' }} className="mt-2">Enter Discount Code</p>
                         <div className="flex justify-center w-full mb-2 mt-1">
 
                             <div className="flex flex-col md:flex-row w-full">
@@ -173,33 +173,33 @@ const MyCart = () => {
                         </div> */}
 
 
-                    <div className="flex justify-between mb-2 my-2">
-                        <span>Taxes</span>
-                        <span>₹ {0}</span>
-                    </div>
-                    <div className="flex justify-between mb-2">
-                        <span>Delivery Fee</span>
-                        <span className="text-green-600">FREE</span>
-                    </div>
-                    <Divider className="my-2" />
-                    <div className="flex justify-between font-bold text-lg py-3">
-                        <span>Grand Total</span>
-                        <span>₹ {userCart?.totalPrice}</span>
-                    </div>
+                        <div className="flex justify-between mb-2 my-2">
+                            <span>Taxes</span>
+                            <span>₹ {0}</span>
+                        </div>
+                        <div className="flex justify-between mb-2">
+                            <span>Delivery Fee</span>
+                            <span className="text-green-600">FREE</span>
+                        </div>
+                        <Divider className="my-2" />
+                        <div className="flex justify-between font-bold text-lg py-3">
+                            <span>Grand Total</span>
+                            <span>₹ {userCart?.totalPrice}</span>
+                        </div>
 
-                    <Button
-                        onClick={() => navigate('/user/selectadress')}
-                        fullWidth
-                        variant="contained"
-                        sx={{ bgcolor: PRIMARY_COLOUR, py: 1, borderRadius: 0, fontFamily: 'monospace' }}
-                        className="bg-amber-700 text-white normal-case mt-4 "
-                    >
-                        Checkout
-                    </Button>
+                        <button
+                            onClick={() => navigate('/user/selectadress')}
+                            disabled={userCart?.items?.length === 0}
+                            className="text-white px-6 py-3 font-semibold w-full transition
+                        bg-primary hover:bg-[#916A55] cursor-pointer
+                        disabled:bg-gray-400 disabled:cursor-not-allowed">
+                            CHECKOUT
+                        </button>
 
-                    <p onClick={() => navigate('/user/inventory')} className="w-full text-center my-2 cursor-pointer">BACK TO SHOPPING</p>
-                </CardContent>
-            </Card>
+                        <p onClick={() => navigate('/user/inventory')} className="w-full text-center my-2 cursor-pointer">BACK TO SHOPPING</p>
+                    </CardContent>
+                </Card>
+            }
         </div>
 
     );
