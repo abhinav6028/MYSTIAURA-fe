@@ -1,10 +1,12 @@
 import stunningImg from "../../assets/homepage/stunning.jpg";
-import { FONT_FAMILY } from "../../utils";
+import { FONT_FAMILY, navigatePath } from "../../utils";
 import { ArrowUpRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../store/hooks";
 
 const StunningBanner = () => {
     const navigate = useNavigate();
+    const { isAuthenticated } = useAppSelector((state) => state.auth);
     return (
         <div className="pt-10 relative">
             {/* Image */}
@@ -36,7 +38,7 @@ const StunningBanner = () => {
                 </p>
                 <p
                     className="text-sm cursor-pointer text-white flex items-center font-medium"
-                    onClick={() => navigate('/user/inventory')}
+                    onClick={() => navigate(`${isAuthenticated ? "/": ""}${navigatePath}/inventory`)}
                 >
                     VIEW ALL
                     <ArrowUpRight

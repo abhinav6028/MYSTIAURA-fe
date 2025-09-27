@@ -1,11 +1,11 @@
 import { ArrowUpRight, Heart } from "lucide-react";
 import subbanner from "../../assets/homepage/subbanner.png";
-import { finalPrice, FONT_FAMILY, PRIMARY_COLOUR } from "../../utils";
+import { finalPrice, FONT_FAMILY, navigatePath, PRIMARY_COLOUR } from "../../utils";
 import { useNavigate } from "react-router-dom";
 import { useProductList } from "../../services/api/product/product";
 import { useAddToCartProduct } from "../../services/api/cart/cart";
 import { useAddToWishList, useRemoveFromWishList, useWishList } from "../../services/api/wishlist/wishlist";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../store/hooks";
 
 const BestSellerProduct = () => {
 
@@ -15,7 +15,7 @@ const BestSellerProduct = () => {
     const createAddToWishList = useAddToWishList()
     const { data: wishlistData } = useWishList();
     const deleteWishListItem = useRemoveFromWishList();
-    const { auth } = useSelector((state: any) => state);
+    const { isAuthenticated } = useAppSelector((state) => state.auth);
 
     return (
         <div className="pb-8">
@@ -25,7 +25,7 @@ const BestSellerProduct = () => {
                     Best Seller Products
                 </h1>
                 <p
-                    onClick={() => navigate('/user/inventory')}
+                    onClick={() => navigate(`${isAuthenticated ? "/": ""}${navigatePath}/inventory`)}
                     style={{ color: PRIMARY_COLOUR }}
                     className="text-sm sm:text-base cursor-pointer flex items-center"
                 >
@@ -75,7 +75,7 @@ const BestSellerProduct = () => {
                                     src={val.images[0].secure_url}
                                     alt={val.name}
                                     className="w-full h-auto object-cover"
-                                    onClick={() => navigate( auth.isAuthenticated ? "/user/productdetailPage/" + val._id  : "/productdetailPage/" + val._id)}
+                                    onClick={() => navigate(`${isAuthenticated ? "/": ""}${navigatePath}/productdetailPage/` + val._id)}
                                 />
                             </div>
 

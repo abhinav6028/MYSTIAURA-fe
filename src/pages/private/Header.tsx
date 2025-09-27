@@ -10,8 +10,11 @@ import { useAppSelector } from "../../store/hooks";
 import { useWishList } from "../../services/api/wishlist/wishlist";
 import { useCart } from "../../services/api/cart/cart";
 import { useCategories } from "../../services/api/category/category";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { ProductCategory } from "../../types/categoryTypes";
+import { navigatePath } from "../../utils";
+import { logout } from "../../store/slices/authSlice";
+import { persistor } from "../../store";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -20,16 +23,17 @@ const Header = () => {
   const { data: wishlistData } = useWishList();
   const { data: cartData } = useCart();
   useCategories();
+  const dispatch = useDispatch();
   const wishlistCount = wishlistData?.totalCount ?? 0;
   const cartCount = cartData?.totalCount ?? 0;
-  // const logoutuser = useLogout();
 
   const navigate = useNavigate();
 
-  // const handleLogout = () => {
-  //   logoutuser();
-  //   navigate("/login");
-  // }
+  const handleLogout = () => {
+    dispatch(logout());
+    persistor.purge();
+    navigate("/login");
+  }
 
   const { isAuthenticated } = useAppSelector((state) => state.auth);
 
@@ -119,10 +123,9 @@ const Header = () => {
             <nav className="hidden lg:flex gap-8 font-medium text-sm">
               {
                 categoryList?.map((data: ProductCategory, index: number) =>
-                  <a key={index} onClick={() => navigate(`inventory/${data?.name}`)} className="hover:text-gray-600 cursor-pointer">{data?.name.toUpperCase()}</a>
+                  <a key={index} onClick={() => navigate(`${isAuthenticated ? "/": ""}${navigatePath}/inventory/${data?.name}`)} className="hover:text-gray-600 cursor-pointer">{data?.name.toUpperCase()}</a>
                 )
               }
-
             </nav>
 
             {/* Icons */}
@@ -131,7 +134,7 @@ const Header = () => {
 
               <Badge badgeContent={wishlistCount} color="primary">
 
-                <Heart onClick={() => navigate('/user/wishlist')} className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
+                <Heart onClick={() => navigate(`${isAuthenticated ? "/": ""}${navigatePath}/wishlist`)} className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
 
               </Badge>
 
@@ -151,7 +154,8 @@ const Header = () => {
                       <button className="w-full px-4 py-2 text-md font-medium text-gray-700 hover:bg-gray-100 text-left cursor-pointer">
                         Profile
                       </button>
-                      <button className="w-full px-4 py-2 text-md font-medium text-[#660033] hover:bg-gray-100 text-left cursor-pointer">
+                      <button className="w-full px-4 py-2 text-md font-medium text-[#660033] hover:bg-gray-100 text-left cursor-pointer"
+                        onClick={handleLogout}>
                         Logout
                       </button>
                     </div>
@@ -161,7 +165,7 @@ const Header = () => {
 
               <Badge badgeContent={cartCount} color="primary">
 
-                <ShoppingCart onClick={() => navigate('/user/mycart')} className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
+                <ShoppingCart onClick={() => navigate(`${isAuthenticated ? "/": ""}${navigatePath}/mycart`)} className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
               </Badge>
 
 
