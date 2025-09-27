@@ -5,8 +5,8 @@ import AppRoutes from "./router/AppRoutes";
 function App() {
   useEffect(() => {
     const lenis = new window.Lenis({
-      duration: 2.5,
-      easing: (t: number) => 1 - Math.pow(1 - t, 4),
+      duration: 0.5,
+      easing: (t: number) => t,
       smooth: true,
       smoothTouch: true,
     });

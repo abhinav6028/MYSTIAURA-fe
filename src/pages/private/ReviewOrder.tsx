@@ -282,13 +282,11 @@ export default function ReviewOrder({ selectedCheckAddress }: ReviewOrderProps) 
 
                         <button
                             onClick={handleCreate}
-                            // onClick={() => navigate('/revieworder')}
                             style={{ background: PRIMARY_COLOUR }}
                             disabled={Boolean(razorPayDetail.amount !== 0 && razorPayDetail.currency && razorPayDetail.orderId)}
-                            className="text-white px-6 py-3 font-semibold w-full hover:bg-[#916A55] transition cursor-pointer">
+                            className="text-white px-6 py-3 font-semibold w-full hover:bg-[#916A55] transition cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-400">
                             PLACE ORDER
                         </button>
-
 
                         {razorPayDetail.amount != null && razorPayDetail.currency && razorPayDetail.orderId &&
                             <CheckoutButton razorPayDetail={razorPayDetail} />}

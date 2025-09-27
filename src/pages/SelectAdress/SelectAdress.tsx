@@ -9,11 +9,12 @@ import {
     CardContent,
     Divider,
 } from "@mui/material";
-import { Edit, MapPin, Phone, Trash2 } from "lucide-react";
+import { ArrowLeft, Edit, MapPin, Phone, Trash2 } from "lucide-react";
 // import { useNavigate } from "react-router-dom";
 import AddNewAddressModal from '../../components/AddressSection/AddNewAddressModal';
 import { useAddresses, useDeleteAddress } from '../../services/api/selectAddress/selectAddress';
 import ReviewOrder from '../private/ReviewOrder';
+import { useNavigate } from 'react-router-dom';
 
 
 type CartItem = {
@@ -112,22 +113,14 @@ export default function SelectAdress() {
     const [selectedCheckAddress, setSelectedCheckAddress] = useState<any>(null);
     const { data: selectAdressState } = useAddresses();
     const deleteAdress = useDeleteAddress();
+    const navigate = useNavigate();
 
     const subtotal = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
     const taxes = 25;
     const deliveryFee = 0;
     const grandTotal = subtotal + taxes + deliveryFee;
 
-    const currentStep = 0 // Address step is active
-
-    const contacts = [
-        {
-            id: 1,
-            name: "Alexa Williams",
-            address: "1901 Thornridge Cir, Shiloh, Hawaii 81063",
-            phone: "(603) 555-0123",
-        },
-    ]
+    const currentStep = 0;
 
     const handleEdit = (item: any) => {
         setOpen(true);
@@ -147,13 +140,13 @@ export default function SelectAdress() {
             {
                 showomponet == 2 && <ReviewOrder selectedCheckAddress={selectedCheckAddress} />
             }
-
             {
                 showomponet == 1 &&
-
-
                 <LayoutContainer>
-                    <h1 style={{ fontFamily: FONT_FAMILY }} className="text-4xl my-3">Select Address</h1>
+                    <div className='flex items-center gap-2'>
+                        <ArrowLeft size={30} onClick={() => navigate("/user/mycart")} className='cursor-pointer' />
+                        <h1 style={{ fontFamily: FONT_FAMILY }} className="text-4xl my-3">Select Address</h1>
+                    </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div className="md:col-span-2">
                             <div className="w-full mx-auto my-3 md:my-5">
@@ -186,72 +179,7 @@ export default function SelectAdress() {
 
                             <>
                                 <div className="flex justify-between font-bold text-lg mt-8">
-                                    <span>Default Address</span>
-                                </div>
-
-                                <div className="space-y-4">
-                                    {contacts.map((item) => (
-                                        <Card
-                                            key={item.id}
-                                            className="mb-4 border border-green-100 md:mt-3 mt-2"
-                                            style={{ borderRadius: 0, boxShadow: "none" }}
-                                        >
-                                            <CardContent className="flex md:flex-row md:gap-10 items-start p-4">
-                                                <div className="flex-1 space-y">
-                                                    <div className="flex items-center">
-                                                        <input
-                                                            type="checkbox"
-                                                            className="w-4 h-4 rounded-full border border-gray-300 text-green-600 focus:ring-green-500 focus:ring-2 mb-auto"
-                                                        />
-
-                                                        <div className="md:ml-5 ml-3  mt--2">
-                                                            <div className='flex'>
-                                                                <h3 className="text-lg font-medium text-gray-900">{item.name}
-                                                                    <span style={{ backgroundColor: PRIMARY_COLOUR }} className='ml-2 md:py-2 py-1 px-3 text-white text-sm font-light'>HOME</span></h3>
-                                                            </div>
-
-                                                            {/* Address */}
-                                                            <div className="flex items-start gap-2 text-gray-600 mt-4">
-                                                                <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                                                                <span className="text-sm leading-relaxed break-words sm:w-auto w-[200px]">
-                                                                    {item.address}
-                                                                </span>
-                                                            </div>
-
-                                                            {/* Phone */}
-                                                            <div className="flex items-center gap-2 text-gray-600 my-2">
-                                                                <Phone className="w-4 h-4 flex-shrink-0" />
-                                                                <span className="text-sm">{item.phone}</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="flex space-x-2 flex-shrink-0">
-                                                    {/* Edit Button */}
-                                                    <button
-                                                        className="h-8 w-8 p-0 flex items-center justify-center cursor-pointer hover:bg-gray-100 rounded"
-                                                        onClick={() => handleEdit(item)}
-                                                    >
-                                                        <Edit className="w-4 h-4 text-blue-500" />
-                                                    </button>
-
-                                                    {/* Delete Button */}
-                                                    <button
-                                                        className="h-8 w-8 p-0 flex items-center justify-center cursor-pointer hover:bg-gray-100 rounded"
-                                                        onClick={() => handleDelete(item)}
-                                                    >
-                                                        <Trash2 className="w-4 h-4 text-red-500" />
-                                                    </button>
-                                                </div>
-                                            </CardContent>
-                                        </Card>
-                                    ))}
-                                </div>
-                            </>
-
-                            <>
-                                <div className="flex justify-between font-bold text-lg mt-8">
-                                    <span>Other Address</span>
+                                    <span>Address</span>
                                 </div>
 
                                 <div className="space-y-4">
@@ -347,8 +275,9 @@ export default function SelectAdress() {
                                         // handleCreate()
                                         setShowComponent(2)
                                     }}
+                                    disabled={selectedCheckAddress === null}
                                     className="text-white px-6 py-3 font-semibold w-full transition
-                                    bg-primary hover:bg-[#916A55] cursor-pointer
+                                    bg-primary cursor-pointer
                                     disabled:bg-gray-400 disabled:cursor-not-allowed
                                 "
                                 >

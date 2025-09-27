@@ -16,7 +16,7 @@ import paypalSvg from "../../assets/footer/paypal.svg";
 import amexSvg from "../../assets/footer/amex.svg";
 import discoverSvg from "../../assets/footer/discover.svg";
 import mastercardSvg from "../../assets/footer/mastercard.svg";
-import { FONT_FAMILY, PRIMARY_COLOUR } from "../../utils";
+import { PRIMARY_COLOUR } from "../../utils";
 
 const topInfoRow = [
     {
@@ -70,7 +70,7 @@ const Footer: React.FC = () => {
 
             {/* Middle Contact + Subscribe */}
             <div className="py-10 border-b px-10 xl:px-20">
-                <div className="grid grid-cols-1 md:grid-cols-[25%_50%_22%] gap-8 text-center md:text-left">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-center md:text-left">
                     {/* Contact */}
                     <div className="flex justify-center flex-col">
                         <h3 className="font-bold mb-2">CONTACT US</h3>
@@ -78,7 +78,7 @@ const Footer: React.FC = () => {
                     </div>
 
                     {/* Subscribe */}
-                    <div>
+                    {/* <div>
                         <h3 style={{ fontFamily: FONT_FAMILY }} className="font-bold md:text-3xl text-xl mb-2">Let’s Get In Touch!</h3>
                         <p style={{ color: PRIMARY_COLOUR }} className="text-sm mb-4">
                             What’s inside? Exclusive sales, new arrivals & much more.
@@ -93,10 +93,10 @@ const Footer: React.FC = () => {
                                 SIGN UP
                             </button>
                         </div>
-                    </div>
+                    </div> */}
 
                     {/* Social */}
-                    <div className="flex flex-col justify-center">
+                    <div className="flex flex-col justify-center items-end">
                         <h3 className="font-bold mb-2">SOCIAL NETWORKS</h3>
                         <div className="flex justify-center md:justify-start gap-4">
                             <Facebook className="cursor-pointer" />
@@ -111,8 +111,8 @@ const Footer: React.FC = () => {
             {/* Bottom Links */}
             <div className="py-6 px-10 xl:px-20 flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
                 <div className="flex gap-6">
-                    <a href="#">RINGS</a>
-                    <a href="#">BRACELETS</a>
+                    {/* <a href="#">RINGS</a>
+                    <a href="#">BRACELETS</a> */}
                     <a href="#">ABOUT US</a>
                     <a href="#">CONTACT US</a>
                 </div>
@@ -126,7 +126,7 @@ const Footer: React.FC = () => {
             {/* Copyright + Payment */}
             <div style={{ background: PRIMARY_COLOUR }} className=" text-white text-sm py-4">
                 <div className="px-10 xl:px-20 flex flex-col md:flex-row justify-between items-center gap-4">
-                    <p>Copyright © 2025 PeariGem. All Rights Reserved.</p>
+                    <p>Copyright © 2025 MYSTIAURA. All Rights Reserved.</p>
                     <div className="flex gap-4 items-center">
                         <img src={klarnaSvg} alt="klarna" />
                         <img src={visaSvg} alt="visa" />

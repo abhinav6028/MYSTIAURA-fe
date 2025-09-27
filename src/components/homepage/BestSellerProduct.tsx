@@ -27,7 +27,7 @@ const BestSellerProduct = () => {
                 <p
                     onClick={() => navigate('/user/inventory')}
                     style={{ color: PRIMARY_COLOUR }}
-                    className="text-sm sm:text-base cursor-pointer flex items-center hover:underline"
+                    className="text-sm sm:text-base cursor-pointer flex items-center"
                 >
                     VIEW ALL
                     <ArrowUpRight
