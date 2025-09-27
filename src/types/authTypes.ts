@@ -1,5 +1,6 @@
 export type Sendotp = {
   email: string;
+  name: string;
 }
 
 export type SendOtpFormProps = {

@@ -9,6 +9,7 @@ import type { Sendotp, SendOtpFormProps } from '../../../types/authTypes';
 
 const schema = yup.object({
     email: yup.string().email("Invalid email").required("Email is required"),
+    name: yup.string().required("Name is required"),
 });
 
 
@@ -41,7 +42,30 @@ export default function SendOtpForm({ setShowForm }: SendOtpFormProps) {
 
                     <form onSubmit={handleSubmit(onSubmit)} noValidate>
 
-                        {/* Password Field */}
+                        {/* Name Field */}
+                        <div className="md:mb-4 mb-2">
+                            <label className="block text-gray-700 mb-2">Name</label>
+                            <Controller
+                                name="name"
+                                control={control}
+                                render={({ field, fieldState }) => (
+                                    <>
+                                        <input
+                                            {...field}
+                                            type="text"
+                                            placeholder="alexa williams"
+                                            className={`w-full border px-4 py-2 focus:outline-none focus:ring-0 ${fieldState.error ? "border-red-500" : "border-gray-300"
+                                                }`}
+                                        />
+                                        {fieldState.error && (
+                                            <p className="text-red-500 text-sm mt-1">{fieldState.error.message}</p>
+                                        )}
+                                    </>
+                                )}
+                            />
+                        </div>
+
+                        {/* Email Field */}
                         <div className="md:mb-4 mb-2">
                             <label className="block text-gray-700 mb-2">Email</label>
                             <Controller

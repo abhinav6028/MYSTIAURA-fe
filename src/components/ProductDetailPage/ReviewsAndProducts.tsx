@@ -13,7 +13,7 @@ import { useAppSelector } from "../../store/hooks";
 function ReviewsAndProducts() {
     const state = useAppSelector((state) => state.user.singleProduct);
     const reviews = state?.reviews ?? [];
-    
+
     return (
         <div className="py-8">
             {/* Reviews Section */}
@@ -25,7 +25,7 @@ function ReviewsAndProducts() {
                     Reviews
                 </h1>
 
-                <ReviewDialog/>
+                <ReviewDialog />
             </div>
 
             <div className="space-y-6">
@@ -39,7 +39,10 @@ function ReviewsAndProducts() {
                                 {review.details}
                             </Typography> */}
                             <div className="flex items-center mt-3">
-                                <Avatar src={`https://i.pravatar.cc/40?img=${idx + 1}`} />
+                                <Avatar sx={{ width: 40, height: 40 }}>
+                                    {review.user.name?.charAt(0).toUpperCase()}
+                                </Avatar>
+
                                 <div className="ml-3">
                                     <Typography className="font-medium">{review.user.name}</Typography>
                                     <Rating value={review.rating} readOnly size="small" />
