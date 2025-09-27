@@ -13,6 +13,9 @@ import Payment from "../pages/Payment/Payment";
 import WishList from "../pages/WishList/WishList";
 import CategoryPage from "../pages/CategoryPage/CategoryPage";
 import DashBoard from "../pages/DashBoard/DashBoard";
+import MyOrders from "../pages/OrderHistory/OrderHistory";
+import MyProfile from "../pages/MyProfile/MyProfile";
+
 import Loading from "../components/loading";
 
 const Login = lazy(() => import("../pages/public/Login"));
@@ -57,10 +60,12 @@ function AppRoutes() {
           <Route path="categories/:id" element={<CategoryPage />} />
           <Route path="mycart" element={<MyCart />} />
           <Route path="wishlist" element={<WishList />} />
-          <Route path="selectadress" element={<SelectAdress />} />
+          <Route path="selectadress" element={<SelectAdress showItems={true} />} />
           {/* <Route path="selectadress" element={<SelectAdress />} /> */}
           <Route path="payment" element={<Payment />} />
           <Route path="revieworder" element={<ReviewOrder />} />
+          <Route path="myorders" element={<MyOrders />} />
+          <Route path="myprofile" element={<MyProfile />} />
         </Route>
 
         {/* Admin Routes */}

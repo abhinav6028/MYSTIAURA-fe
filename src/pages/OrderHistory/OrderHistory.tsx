@@ -1,5 +1,6 @@
 import LayoutContainer from '../../components/layout/LayoutContainer';
 import { Files } from 'lucide-react';
+import InnerSideBar from '../../components/UI/InnerSideBar';
 
 export default function MyOrders() {
 
@@ -19,30 +20,7 @@ export default function MyOrders() {
         <LayoutContainer>
             <div className="min-h-scree p-6 flex">
                 {/* Sidebar */}
-                <aside className="w-64 bg-white p-4 ">
-                    <nav className="space-y-3">
-                        <a href="#" className="flex items-center gap-2 text-gray-700 my-5">
-                            <Files className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-5 lg:h-5" strokeWidth={1} />  My Profile
-                        </a>
-                        <a
-                            href="#" className="flex items-center gap-2 text-[#660033] font-semibold bg-[#f1e5e8] py-4 px-2 rounded-2xl">
-                            <Files className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-5 lg:h-5" strokeWidth={1} />  My Orders
-                        </a>
-
-                        {/* <a href="#" className="flex items-center gap-2 text-gray-700 my-5">
-                            <Files className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-5 lg:h-5" strokeWidth={1} />  Customer Care
-                        </a>
-                        <a href="#" className="flex items-center gap-2 text-gray-700 my-5">
-                            <Files className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-5 lg:h-5" strokeWidth={1} />  Saved Cards
-                        </a>
-                        <a href="#" className="flex items-center gap-2 text-gray-700 my-5">
-                            <Files className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-5 lg:h-5" strokeWidth={1} />  Pending Payments
-                        </a>
-                        <a href="#" className="flex items-center gap-2 text-gray-700 my-5">
-                            <Files className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-5 lg:h-5" strokeWidth={1} />  Gift Cards
-                        </a> */}
-                    </nav>
-                </aside>
+                <InnerSideBar />
 
                 {/* Main content */}
                 <main className="flex-1 ml-6">
