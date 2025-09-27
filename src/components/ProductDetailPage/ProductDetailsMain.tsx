@@ -60,8 +60,8 @@ const ProductDetailsMain = () => {
 
                         <div className="flex items-center gap-2 text-yellow-500 mb-2">
                             <RatingStars
-                                rating={singleProduct?.ratings?.average || 0}
-                                count={singleProduct?.ratings?.count || 0}
+                                rating={singleProduct?.averageRating || 0}
+                                count={singleProduct?.reviewCount || 0}
                             />
                         </div>
 

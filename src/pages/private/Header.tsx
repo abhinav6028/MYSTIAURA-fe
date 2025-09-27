@@ -48,6 +48,35 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const navRef = useRef<HTMLDivElement>(null);
+
+  // Auto scroll effect
+  useEffect(() => {
+    const nav = navRef.current;
+    if (!nav) return;
+
+    let scrollAmount = 0;
+    let direction = 1;
+
+    const interval = setInterval(() => {
+      if (!nav) return;
+
+      nav.scrollTo({
+        left: scrollAmount,
+        behavior: "smooth",
+      });
+
+      scrollAmount += 50 * direction;
+
+      // Reverse direction at ends
+      if (scrollAmount >= nav.scrollWidth - nav.clientWidth || scrollAmount <= 0) {
+        direction *= -1;
+      }
+    }, 2000); // every 2s it scrolls smoothly
+
+    return () => clearInterval(interval);
+  }, []);
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -120,12 +149,23 @@ const Header = () => {
 
 
             {/* Navigation Links */}
-            <nav className="hidden lg:flex gap-8 font-medium text-sm">
-              {
-                categoryList?.map((data: ProductCategory, index: number) =>
-                  <a key={index} onClick={() => navigate(`${isAuthenticated ? "/": ""}${navigatePath}/inventory/${data?.name}`)} className="hover:text-gray-600 cursor-pointer">{data?.name.toUpperCase()}</a>
-                )
-              }
+            <nav
+            ref={navRef}
+              className="hidden lg:flex gap-8 font-medium text-sm max-w-[450px] overflow-x-auto scroll-smooth whitespace-nowrap scrollbar-hide"
+            >
+              {categoryList?.map((data: ProductCategory, index: number) => (
+                <a
+                  key={index}
+                  onClick={() =>
+                    navigate(
+                      `${isAuthenticated ? "/" : ""}${navigatePath}/inventory/${data?.name}`
+                    )
+                  }
+                  className="hover:text-gray-600 cursor-pointer"
+                >
+                  {data?.name.toUpperCase()}
+                </a>
+              ))}
             </nav>
 
             {/* Icons */}
@@ -134,7 +174,7 @@ const Header = () => {
 
               <Badge badgeContent={wishlistCount} color="primary">
 
-                <Heart onClick={() => navigate(`${isAuthenticated ? "/": ""}${navigatePath}/wishlist`)} className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
+                <Heart onClick={() => navigate(`${isAuthenticated ? "/" : ""}${navigatePath}/wishlist`)} className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
 
               </Badge>
 
@@ -165,7 +205,7 @@ const Header = () => {
 
               <Badge badgeContent={cartCount} color="primary">
 
-                <ShoppingCart onClick={() => navigate(`${isAuthenticated ? "/": ""}${navigatePath}/mycart`)} className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
+                <ShoppingCart onClick={() => navigate(`${isAuthenticated ? "/" : ""}${navigatePath}/mycart`)} className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
               </Badge>
 
 

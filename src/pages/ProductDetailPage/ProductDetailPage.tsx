@@ -3,6 +3,7 @@ import ProductDetailsMain from '../../components/ProductDetailPage/ProductDetail
 import ReviewsAndProducts from '../../components/ProductDetailPage/ReviewsAndProducts'
 
 export default function ProductDetailPage() {
+    
     return (
         <LayoutContainer>
             <ProductDetailsMain />
