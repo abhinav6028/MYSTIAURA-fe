@@ -21,6 +21,7 @@ export function useUsers(params?: {
       const res = await apiClient.get("/api/user", { params });
       return res?.data?.users;
     },
+    retry: false,
   });
 }
 

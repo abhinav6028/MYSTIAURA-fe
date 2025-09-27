@@ -1,10 +1,12 @@
 import LayoutContainer from "../layout/LayoutContainer";
-import { FONT_FAMILY, PRIMARY_COLOUR } from "../../utils";
+import { FONT_FAMILY, navigatePath, PRIMARY_COLOUR } from "../../utils";
 import { ArrowUpRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../store/hooks";
 
 const SectionSix = () => {
     const navigate = useNavigate();
+    const { isAuthenticated } = useAppSelector((state) => state.auth);
     return (
         <div className="bg-[#FEF9F2] w-full py-10 sm:py-16">
             <LayoutContainer>
@@ -30,7 +32,7 @@ const SectionSix = () => {
                                 Each piece is carefully designed to celebrate your individuality. From delicate details to bold statements, find your perfect match today.
                             </p>
                             <p style={{ color: PRIMARY_COLOUR }} className="text-base sm:text-lg cursor-pointer flex items-center text-primary"
-                                onClick={() => navigate('/user/inventory')}
+                                onClick={() => navigate(`${isAuthenticated ? "/": ""}${navigatePath}/inventory`)}
                             >
                                 VIEW ALL
                                 <ArrowUpRight
@@ -59,7 +61,7 @@ const SectionSix = () => {
                             Each piece is carefully designed to celebrate your individuality. From delicate details to bold statements, find your perfect match today.
                         </p>
                         <p style={{ color: PRIMARY_COLOUR }} className="text-base sm:text-lg cursor-pointer flex items-center text-primary"
-                            onClick={() => navigate('/user/inventory')}
+                            onClick={() => navigate(`${isAuthenticated ? "/": ""}${navigatePath}/inventory`)}
                         >
                             VIEW ALL
                             <ArrowUpRight

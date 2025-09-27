@@ -4,10 +4,15 @@ import SidebarFilters from "../../components/inventory/InventorySideFilter";
 import ProductGrid from "../../components/inventory/ProductGrid";
 import { PRIMARY_COLOUR } from "../../utils";
 import { ListFilter } from "lucide-react";
+import type { UserState } from "../../types/userTypes";
+import { useSelector } from "react-redux";
 
 const ProductListingPage: React.FC = () => {
 
   const [lang, setLang] = useState("EN");
+
+  const state = useSelector((state: {user: UserState}) => state?.user?.selectedProductCategory as any);
+  const filteredCount = state?.data?.products?.count;
 
   return (
     <div className="flex">
@@ -19,7 +24,7 @@ const ProductListingPage: React.FC = () => {
       {/* Products */}
       <main className="flex-1 p-6">
         <div className="flex justify-between items-center mb-6">
-          <p className="text-gray-600">Showing 1-10 of 60 results</p>
+          <p className="text-gray-600">Showing 1-{filteredCount <= 8 ? filteredCount : 8} of {filteredCount} results</p>
           <div className="flex gap-3">
             <button style={{ background: PRIMARY_COLOUR, }} className="text-white px-3 md:px-5 flex items-center gap-1.5 cursor-pointer"> <ListFilter size={16} /> Filter</button>
             <Select

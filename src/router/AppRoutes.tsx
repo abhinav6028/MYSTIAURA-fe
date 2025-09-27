@@ -16,6 +16,7 @@ import DashBoard from "../pages/DashBoard/DashBoard";
 import MyOrders from "../pages/OrderHistory/OrderHistory";
 import MyProfile from "../pages/MyProfile/MyProfile";
 
+import Loading from "../components/loading";
 
 const Login = lazy(() => import("../pages/public/Login"));
 const Register = lazy(() => import("../pages/public/Register"));
@@ -32,16 +33,17 @@ const CreateUser = lazy(() => import("../pages/Admin/Users/CreateUser"));
 function AppRoutes() {
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loading /> }>
       <Routes>
         {/* Public */}
         <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
         <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
 
         <Route path="/" element={<PublicRoute><Dashboard /></PublicRoute>} >
-          <Route index element={<HomePage />} />
+          <Route index path="/" element={<HomePage />} />
           <Route path="home" element={<HomePage />} />
           <Route path="inventory" element={<ProductListingPage />} />
+          <Route path="inventory/:categoryname" element={<ProductListingPage />} />
           <Route path="productdetailPage/:id" element={<ProductDetailPage />} />
           <Route path="payment" element={<Payment />} />
           <Route path="revieworder" element={<ReviewOrder />} />
@@ -53,11 +55,12 @@ function AppRoutes() {
           <Route index element={<HomePage />} />
           <Route path="home" element={<HomePage />} />
           <Route path="inventory" element={<ProductListingPage />} />
+          <Route path="inventory/:categoryname" element={<ProductListingPage />} />
           <Route path="productdetailPage/:id" element={<ProductDetailPage />} />
           <Route path="categories/:id" element={<CategoryPage />} />
           <Route path="mycart" element={<MyCart />} />
           <Route path="wishlist" element={<WishList />} />
-          <Route path="selectadress" element={<SelectAdress />} />
+          <Route path="selectadress" element={<SelectAdress showItems={true} />} />
           {/* <Route path="selectadress" element={<SelectAdress />} /> */}
           <Route path="payment" element={<Payment />} />
           <Route path="revieworder" element={<ReviewOrder />} />

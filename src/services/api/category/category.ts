@@ -4,6 +4,9 @@ import { useNotify } from "../../../utilsComp/useNotify";
 import type { Category, CategoryInput } from "../../../types/adminTypes";
 import { useUploadImages } from "../imageUpload";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setCategories } from "../../../store/slices/userSlice";
 
 // 🔹 Get all categories
 export function useCategories(params?: {
@@ -13,14 +16,24 @@ export function useCategories(params?: {
   order?: "asc" | "desc";
   search?: string;
 }) {
-  return useQuery<Category[], Error>({
+  const dispatch = useDispatch();
+  const query = useQuery<Category[], Error>({
     queryKey: ["categories", params ?? {}],
     queryFn: async () => {
       const res = await apiClient.get("/api/category", { params });
       return res.data?.categories ?? [];
     },
+    retry: false,
     initialData: [],
   });
+  
+  useEffect(() => {
+    if (query.data.length > 0) {
+      dispatch(setCategories(query.data as any));
+    }
+  }, [query.data, dispatch]);
+
+  return query;
 }
 
 // 🔹 Get category by ID

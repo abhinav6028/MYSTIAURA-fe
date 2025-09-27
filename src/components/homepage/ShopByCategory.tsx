@@ -1,15 +1,15 @@
+import { useSelector } from "react-redux";
 import arrowSvg from "../../assets/homepage/arrow.svg";
 import selectCategory from "../../assets/homepage/selectcategory.jpg";
-import { FONT_FAMILY } from "../../utils";
+import { FONT_FAMILY, navigatePath } from "../../utils";
+import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../store/hooks";
 
-const categories = [
-    { id: 1, name: "Rings", value: "rings" },
-    { id: 2, name: "Earrings", value: "earrings" },
-    { id: 3, name: "Bracelets", value: "bracelets" },
-    { id: 4, name: "Pendents", value: "pendents" },
-    { id: 5, name: "Necklaces", value: "necklaces" },
-]
 const ShopByCategory = () => {
+    
+    const navigate = useNavigate();
+    const categoryList = useSelector((state: any) => state?.user?.categories);
+    const { isAuthenticated } = useAppSelector((state) => state.auth);
 
     return (
         <div className="py-10">
@@ -17,10 +17,10 @@ const ShopByCategory = () => {
             <div className="grid grid-cols-1 lg:grid-cols-[65%_35%] md:space-x-10">
                 <div className="flex flex-col justify-between">
                     {
-                        categories?.map((val) => {
+                        categoryList?.map((val: any) => {
                             return <div className="flex items-center justify-between pb-4 border-b border-b-gray-200 w-full">
-                                <h1 style={{ fontFamily: FONT_FAMILY }} className="text-2xl">{val.name}</h1>
-                                <span className="md:w-10 md:h-10 w-8 h-8 bg-primary flex items-center justify-center rounded-full"><img src={arrowSvg} alt="" /></span>
+                                <h1 style={{ fontFamily: FONT_FAMILY }} className="text-2xl">{val?.name}</h1>
+                                <span className="md:w-10 md:h-10 w-8 h-8 bg-primary flex items-center justify-center rounded-full cursor-pointer" onClick={() => navigate(`${isAuthenticated ? "/": ""}${navigatePath}/inventory/${val?.name}`)}><img src={arrowSvg} alt="" /></span>
                             </div>
                         })
                     }
