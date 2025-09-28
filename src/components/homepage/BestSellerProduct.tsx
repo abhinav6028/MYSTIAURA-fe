@@ -20,12 +20,12 @@ const BestSellerProduct = () => {
     return (
         <div className="pb-8">
             {/* Header */}
-            <div className="w-full flex flex-col sm:flex-row justify-between items-center mb-8 px-4">
+            <div className="w-full flex flex-col sm:flex-row justify-between items-center mb-8 px-0">
                 <h1 style={{ fontFamily: FONT_FAMILY }} className="text-2xl sm:text-3xl md:text-4xl mb-4 sm:mb-0">
                     Best Seller Products
                 </h1>
                 <p
-                    onClick={() => navigate(`${isAuthenticated ? "/": ""}${navigatePath}/inventory`)}
+                    onClick={() => navigate(`${isAuthenticated ? "/" : ""}${navigatePath}/inventory`)}
                     style={{ color: PRIMARY_COLOUR }}
                     className="text-sm sm:text-base cursor-pointer flex items-center"
                 >
@@ -43,7 +43,7 @@ const BestSellerProduct = () => {
             {/* grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4 */}
             {/* Product Grid */}
 
-            <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:px-4 ">
+            <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:px-4">
 
                 {data?.map((val) => {
                     const isWishlisted = wishlistData?.products?.some(
@@ -75,7 +75,7 @@ const BestSellerProduct = () => {
                                     src={val.images[0].secure_url}
                                     alt={val.name}
                                     className="w-full h-auto object-cover"
-                                    onClick={() => navigate(`${isAuthenticated ? "/": ""}${navigatePath}/productdetailPage/` + val._id)}
+                                    onClick={() => navigate(`${isAuthenticated ? "/" : ""}${navigatePath}/productdetailPage/` + val._id)}
                                 />
                             </div>
 
