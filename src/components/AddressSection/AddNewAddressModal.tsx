@@ -150,8 +150,15 @@ const AddNewAddressModal = ({ open, setOpen, selectedData }: { open: boolean, se
                   error={!!errors.name}
                   helperText={errors.name?.message}
                   variant="outlined"
-                  sx={{ "& .MuiOutlinedInput-root": { borderRadius: 0 } }}
+                  sx={{
+                    "& .MuiInputBase-root": {
+                      width: { xs: "110%", sm: "100%" }, // wider on xs, normal on sm+
+                    },
+                    ml: { xs: -1, sm: 0 }, // shift only on small screens
+                    "& .MuiOutlinedInput-root": { borderRadius: 0 },
+                  }}
                 />
+
               )}
             />
 
@@ -169,7 +176,13 @@ const AddNewAddressModal = ({ open, setOpen, selectedData }: { open: boolean, se
                   error={!!errors.addressLine1}
                   helperText={errors.addressLine1?.message}
                   variant="outlined"
-                  sx={{ "& .MuiOutlinedInput-root": { borderRadius: 0 } }}
+                  sx={{
+                    "& .MuiInputBase-root": {
+                      width: { xs: "110%", sm: "100%" }, // wider on xs, normal on sm+
+                    },
+                    ml: { xs: -1, sm: 0 }, // shift only on small screens
+                    "& .MuiOutlinedInput-root": { borderRadius: 0 },
+                  }}
                 />
               )}
             />
@@ -188,7 +201,13 @@ const AddNewAddressModal = ({ open, setOpen, selectedData }: { open: boolean, se
                   error={!!errors.addressLine2}
                   helperText={errors.addressLine2?.message}
                   variant="outlined"
-                  sx={{ "& .MuiOutlinedInput-root": { borderRadius: 0 } }}
+                  sx={{
+                    "& .MuiInputBase-root": {
+                      width: { xs: "110%", sm: "100%" }, // wider on xs, normal on sm+
+                    },
+                    ml: { xs: -1, sm: 0 }, // shift only on small screens
+                    "& .MuiOutlinedInput-root": { borderRadius: 0 },
+                  }}
                 />
               )}
             />
@@ -207,7 +226,13 @@ const AddNewAddressModal = ({ open, setOpen, selectedData }: { open: boolean, se
                   error={!!errors.city}
                   helperText={errors.city?.message}
                   variant="outlined"
-                  sx={{ "& .MuiOutlinedInput-root": { borderRadius: 0 } }}
+                  sx={{
+                    "& .MuiInputBase-root": {
+                      width: { xs: "110%", sm: "100%" }, // wider on xs, normal on sm+
+                    },
+                    ml: { xs: -1, sm: 0 }, // shift only on small screens
+                    "& .MuiOutlinedInput-root": { borderRadius: 0 },
+                  }}
                 />
               )}
             />
@@ -226,7 +251,13 @@ const AddNewAddressModal = ({ open, setOpen, selectedData }: { open: boolean, se
                   error={!!errors.state}
                   helperText={errors.state?.message}
                   variant="outlined"
-                  sx={{ "& .MuiOutlinedInput-root": { borderRadius: 0 } }}
+                  sx={{
+                    "& .MuiInputBase-root": {
+                      width: { xs: "110%", sm: "100%" }, // wider on xs, normal on sm+
+                    },
+                    ml: { xs: -1, sm: 0 }, // shift only on small screens
+                    "& .MuiOutlinedInput-root": { borderRadius: 0 },
+                  }}
                 />
               )}
             />
@@ -245,7 +276,13 @@ const AddNewAddressModal = ({ open, setOpen, selectedData }: { open: boolean, se
                   error={!!errors.country}
                   helperText={errors.country?.message}
                   variant="outlined"
-                  sx={{ "& .MuiOutlinedInput-root": { borderRadius: 0 } }}
+                  sx={{
+                    "& .MuiInputBase-root": {
+                      width: { xs: "110%", sm: "100%" }, // wider on xs, normal on sm+
+                    },
+                    ml: { xs: -1, sm: 0 }, // shift only on small screens
+                    "& .MuiOutlinedInput-root": { borderRadius: 0 },
+                  }}
                 />
               )}
             />
@@ -264,7 +301,13 @@ const AddNewAddressModal = ({ open, setOpen, selectedData }: { open: boolean, se
                   error={!!errors.postalCode}
                   helperText={errors.postalCode?.message}
                   variant="outlined"
-                  sx={{ "& .MuiOutlinedInput-root": { borderRadius: 0 } }}
+                  sx={{
+                    "& .MuiInputBase-root": {
+                      width: { xs: "110%", sm: "100%" }, // wider on xs, normal on sm+
+                    },
+                    ml: { xs: -1, sm: 0 }, // shift only on small screens
+                    "& .MuiOutlinedInput-root": { borderRadius: 0 },
+                  }}
                 />
               )}
             />
@@ -284,7 +327,13 @@ const AddNewAddressModal = ({ open, setOpen, selectedData }: { open: boolean, se
                   error={!!errors.phone}
                   helperText={errors.phone?.message}
                   variant="outlined"
-                  sx={{ "& .MuiOutlinedInput-root": { borderRadius: 0 } }}
+                  sx={{
+                    "& .MuiInputBase-root": {
+                      width: { xs: "110%", sm: "100%" }, // wider on xs, normal on sm+
+                    },
+                    ml: { xs: -1, sm: 0 }, // shift only on small screens
+                    "& .MuiOutlinedInput-root": { borderRadius: 0 },
+                  }}
                 />
               )}
             />
