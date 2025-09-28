@@ -54,7 +54,10 @@ const schema = yup.object({
   state: yup.string().required("State is required"),
   country: yup.string().required("Country is required"),
   postalCode: yup.string().required("Postal Code is required"),
-  phone: yup.string().required("Phone is required"),
+  phone: yup
+    .string()
+    .required("Phone is required")
+    .matches(/^\d{10}$/, "Phone number must be exactly 10 digits"),
 }).required();
 
 // ----------------- Component -----------------
