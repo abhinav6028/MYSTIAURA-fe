@@ -150,8 +150,8 @@ const Header = () => {
 
             {/* Navigation Links */}
             <nav
-            ref={navRef}
-              className="hidden lg:flex gap-8 font-medium text-sm max-w-[450px] overflow-x-auto scroll-smooth whitespace-nowrap scrollbar-hide"
+              ref={navRef}
+              className="hidden lg:flex gap-8 font-medium text-sm max-w-[700px] overflow-x-auto scroll-smooth whitespace-nowrap scrollbar-hide"
             >
               {categoryList?.map((data: ProductCategory, index: number) => (
                 <a
@@ -245,7 +245,7 @@ const Header = () => {
         ></div>
 
         {/* Full-screen menu sliding from left */}
-        <div className={`absolute top-0 left-0 h-full w-full max-w-sm bg-white shadow-2xl transform transition-all duration-500 ease-out ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'
+        <div className={`absolute top-0 left-0 h-full w-full max-w-sm shadow-2xl transform transition-all duration-500 ease-out ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'
           }`}>
           {/* Menu Header */}
           <div className="flex items-center justify-between p-6 border-b border-gray-200">
@@ -303,10 +303,10 @@ const Header = () => {
 
           </div>
         </div>
-      </div>
+      </div >
 
       {/* Custom Styles */}
-      <style>{`
+      < style > {`
         @keyframes slideInFromLeft {
           from {
             transform: translateX(-100%);
