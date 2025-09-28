@@ -17,6 +17,7 @@ export interface Product {
     average: number;
     count: number;
   };
+  status?: string
 }
 
 export type ProductInput = Omit<Product, "_id" | "createdAt" | "updatedAt">;
@@ -34,7 +35,7 @@ export interface IAdminFormInputs {
   images?: File[];
 }
 
- export interface CategoryImage {
+export interface CategoryImage {
   _id: string;
   public_id: string;
   secure_url: string;

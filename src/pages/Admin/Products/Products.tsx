@@ -63,7 +63,10 @@ function Products() {
         },
     ];
 
-    const rows = userProduct?.data?.map((product: Product) => ({
+
+
+
+    const rows = userProduct?.data?.products?.products?.map((product: Product) => ({
         id: product._id,
         name: product.name,
         category: product.category?.name,
@@ -76,6 +79,7 @@ function Products() {
         discountPrice: product.discountPrice,
         categoryDetails: product.category,
         imageContainer: product.images,
+        status: product?.status
     }));
 
     const handleClose = () => {
