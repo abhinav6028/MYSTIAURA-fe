@@ -11,6 +11,7 @@ const initialState: UserState = {
   singleProduct: null,
   categories: [],
   selectedProductCategory: null,
+  selectedDashboad: null
 };
 
 const userSlice = createSlice({
@@ -38,8 +39,11 @@ const userSlice = createSlice({
     selectedProductCategory(state, action: PayloadAction<any>) {
       state.selectedProductCategory = action.payload;
     },
+    selectedDashboad(state, action: PayloadAction<any>) {
+      state.selectedDashboad = action.payload;
+    },
   },
 });
 
-export const { setSellerProducts, setWishlistProducts, setAddCartList, setAddresses, setSingleProduct, setCategories, selectedProductCategory } = userSlice.actions;
+export const { setSellerProducts, setWishlistProducts, setAddCartList, setAddresses, setSingleProduct, setCategories, selectedProductCategory, selectedDashboad } = userSlice.actions;
 export default userSlice.reducer;
