@@ -16,28 +16,28 @@ export default function DashBoard() {
     const stats = [
         {
             title: "Total Sales",
-            value: "$34,456.00",
+            value: "₹34,456.00",
             change: 14,
             isIncrease: true,
             note: "in the last month",
         },
         {
             title: "Total Order",
-            value: "3,456",
+            value: "₹3,456",
             change: 17,
             isIncrease: false,
             note: "in the last month",
         },
         {
             title: "Total Revenue",
-            value: "$1,456.00",
+            value: "₹1,456.00",
             change: 14,
             isIncrease: true,
             note: "in the last month",
         },
         {
             title: "Total Customer",
-            value: "42,456",
+            value: "₹42,456",
             change: 11,
             isIncrease: false,
             note: "in the last month",
@@ -127,7 +127,7 @@ export default function DashBoard() {
                                 <ArrowDownRight className="text-red-500 w-4 h-4" />
                             )}
                             <span
-                                className={`font-semibold ${item.isIncrease ? "text-green-500" : "text-red-500"
+                                className={`font-semibold ₹{item.isIncrease ? "text-green-500" : "text-red-500"
                                     }`}
                             >
                                 {item.change}%
@@ -167,11 +167,11 @@ export default function DashBoard() {
                         <div className="text-sm text-gray-600 flex gap-6 mb-4">
                             <span className="flex items-center gap-2">
                                 <span className="w-3 h-3 rounded-full bg-green-500" />
-                                Current Week <span className="font-medium text-gray-800">$58,211</span>
+                                Current Week <span className="font-medium text-gray-800">₹58,211</span>
                             </span>
                             <span className="flex items-center gap-2">
                                 <span className="w-3 h-3 rounded-full bg-purple-500" />
-                                Previous Week <span className="font-medium text-gray-800">$68,768</span>
+                                Previous Week <span className="font-medium text-gray-800">₹68,768</span>
                             </span>
                         </div>
 
