@@ -48,7 +48,7 @@ const MyCart = () => {
 
             <div className="md:col-span-2">
 
-                <div className="md:flex col items-center gap-2 mb-4 justify-between">
+                <div className="flex items-center gap-2 mb-4 justify-between">
                     <div className="flex items-center gap-2 h-full">
                         <Checkbox checked={checkAllCart} onChange={() => setCheckAllCart(!checkAllCart)} />
                         <Typography variant="body1">
