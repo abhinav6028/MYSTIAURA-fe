@@ -15,9 +15,6 @@ import LayoutContainer from "../../components/layout/LayoutContainer";
 import { Trash, X } from "lucide-react";
 import { PRIMARY_COLOUR } from "../../utils";
 import { useNavigate } from "react-router-dom";
-// import { LiaShippingFastSolid } from "react-icons/lia";
-// import { IoMdClose } from "react-icons/io";
-// import { RiDeleteBinLine } from "react-icons/ri";
 
 type CartItem = {
     id: number;
@@ -149,7 +146,7 @@ const MyCart = () => {
                                     {/* Qty Dropdown */}
                                     <div className="flex items-center gap-2">
                                         <label htmlFor={`qty-${item.id}`} className="text-sm md:text-base">
-                                            Qty:
+                                            Qty
                                         </label>
                                         <Select
                                             value={item.qty}

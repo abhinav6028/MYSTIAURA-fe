@@ -23,15 +23,24 @@ const MyCart = () => {
     const [checkAllCart, setCheckAllCart] = useState(false);
 
     useEffect(() => {
-        // Scroll to the top of the page instantly when the route changes
         window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     }, [location.pathname]);
 
-    // const handleRemove = (id: number) => {
-    //     setCart((prev) => prev.filter((item) => item.id !== id));
-    // };
 
     const navigate = useNavigate();
+
+    function getDateAfterDays(days: number) {
+        const today = new Date();
+        today.setDate(today.getDate() + days);
+
+        const day = String(today.getDate()).padStart(2, "0");
+        const month = String(today.getMonth() + 1).padStart(2, "0"); // months are 0-based
+        const year = today.getFullYear();
+
+        return `${day}/${month}/${year}`;
+    }
+
+    const futureDate = getDateAfterDays(15);
 
     return (
         <div className={`grid grid-cols-1 ${userCart?.items?.length === 0 ? "grid-cols-1" : "md:grid-cols-3"}  gap-6 my-10`}>
@@ -43,7 +52,10 @@ const MyCart = () => {
                     <div className="flex items-center gap-2 h-full">
                         <Checkbox checked={checkAllCart} onChange={() => setCheckAllCart(!checkAllCart)} />
                         <Typography variant="body1">
-                            {userCart?.items?.length}/{userCart?.items?.length} Items Selected
+                            {checkAllCart
+                                ? `${userCart?.items?.length}/${userCart?.items?.length}`
+                                : '0/0'} Items Selected
+
                         </Typography>
                     </div>
                     {userCart?.items?.length !== 0 && <div className="flex items-stretch gap-2">
@@ -60,16 +72,16 @@ const MyCart = () => {
                             className="mb-4 border border-green-100"
                             sx={{ borderRadius: 0, boxShadow: "none" }}
                         >
-                            <CardContent className="flex flex-col md:flex-row gap-4 md:gap-10 items-start">
+                            <CardContent className="flex flex-row gap-4 md:gap-10 items-center">
                                 {/* Image */}
                                 <img
                                     src={item?.product?.images?.[0]?.secure_url}
                                     alt={item?.product.name}
-                                    className=" w-32 h-38 md:w-32 lg:w-40 md:h-40 lg:h-40 object-cover bg-[#f9f9f9]"
+                                    className=" w-25 h-25 md:w-32 lg:w-40 md:h-40 lg:h-40 object-cover bg-[#f9f9f9]"
                                 />
 
                                 {/* Details */}
-                                <div className="flex-1 flex flex-col gap-2 w-full">
+                                <div className="flex-1 flex flex-col gap-0 sm:gap-1  lg:gap-1 md:gap-1 w-full ">
                                     <div className="flex items-center w-full ">
                                         <Typography variant="subtitle1" className="font-semibold text-sm md:text-base">
                                             {item.product.name}
@@ -92,10 +104,6 @@ const MyCart = () => {
                                         )}
                                     </div>
 
-                                    {/* <Typography variant="body2" className="text-gray-600 text-sm md:text-base">
-                                        Color: {item.color}
-                                    </Typography> */}
-
                                     {/* Qty Dropdown */}
                                     <div className="flex items-center gap-2">
                                         <label htmlFor={`qty-${item._id}`} className="text-sm md:text-base">
@@ -105,7 +113,18 @@ const MyCart = () => {
                                             value={item.quantity}
                                             size="small"
                                             id={`qty-${item._id}`}
-                                            sx={{ minWidth: 60 }}
+                                            sx={{
+                                                minWidth: 60,
+                                                "& .MuiSelect-select": {
+                                                    paddingY: 0.5,
+                                                    paddingX: 1,
+                                                    fontSize: 14,
+                                                    height: "28px",
+                                                    display: "flex",
+                                                    alignItems: "center",
+
+                                                },
+                                            }}
                                         >
                                             {[1, 2, 3, 4, 5].map((num) => (
                                                 <MenuItem key={num} value={num}>
@@ -115,20 +134,15 @@ const MyCart = () => {
                                         </Select>
                                     </div>
 
-                                    {/* Return + Delivery Info */}
-                                    {/* <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 text-gray-600 pt-2">
-                                        <span className="text-sm md:text-base">{item.returnDays || 0} Days return available</span>
-                                    </div> */}
-                                    {/* <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 text-gray-600">
+                                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 text-gray-600">
                                         <span className="flex flex-wrap gap-1 text-sm md:text-base">
-                                            Delivered by <b>{item.deliveryDate}</b>
+                                            Delivered by: <b>{futureDate}</b>
                                         </span>
-                                    </div> */}
+                                    </div>
                                 </div>
 
-                                {/* Remove Button */}
                                 <div className="mb-auto hidden md:block">
-                                    <X size={20} className="self-start md:self-center cursor-pointer mt-2 md:mt-0" onClick={() => deleteCart.mutate(item?.product?._id)} />
+                                    <X size={20} className="self-start md:self-center cursor-pointer md:mt-0" onClick={() => deleteCart.mutate(item?.product?._id)} />
                                 </div>
                             </CardContent>
                         </Card>
