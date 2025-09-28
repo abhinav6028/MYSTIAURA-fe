@@ -10,7 +10,7 @@ import { ArrowUpRight, ArrowDownRight, MoreHorizontal } from "lucide-react";
 import { Paper } from "@mui/material";
 import { useDashBoardLatestOrders, useDashBoardLatestProducts, useDashBoardStatus } from "../../services/api/dashboard/dashboard";
 import { DataGrid, type GridColDef } from "@mui/x-data-grid";
-import type { Product } from "../../types/adminTypes";
+import type { Order, Product } from "../../types/adminTypes";
 
 export default function DashBoard() {
 
@@ -113,7 +113,7 @@ export default function DashBoard() {
                 />
             ),
         },
-        { field: "name", headerName: "Name", flex: 1 },
+        { field: "userName", headerName: "User Name", flex: 1 },
         { field: "category", headerName: "Category", flex: 1 },
         { field: "stock", headerName: "Stock", flex: 1 },
         { field: "price", headerName: "Price", flex: 1 },
@@ -137,9 +137,9 @@ export default function DashBoard() {
         status: product?.status
     }));
 
-    const row1 = latestOrders?.data?.data.map((product: Product) => ({
+    const row1 = latestOrders?.data?.data.map((product: Order) => ({
         id: product._id,
-        name: product?.shippingAddress?.name,
+        userName: product?.shippingAddress?.name,
         category: product.category?.name,
         stock: product.stock,
         price: product.price,

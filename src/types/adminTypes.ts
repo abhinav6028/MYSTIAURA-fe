@@ -22,6 +22,12 @@ export interface Product {
 
 export type ProductInput = Omit<Product, "_id" | "createdAt" | "updatedAt">;
 
+export interface ShippingAddress {
+  name: string;
+  street?: string;
+  city?: string;
+  postalCode?: string;
+}
 
 export interface Order {
   id?: string;
@@ -41,7 +47,8 @@ export interface Order {
     average: number;
     count: number;
   };
-  status?: string
+  status?: string,
+  shippingAddress?: ShippingAddress
 }
 
 export type OrderInput = Omit<Order, "_id" | "createdAt" | "updatedAt">;
