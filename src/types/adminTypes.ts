@@ -23,6 +23,29 @@ export interface Product {
 export type ProductInput = Omit<Product, "_id" | "createdAt" | "updatedAt">;
 
 
+export interface Order {
+  id?: string;
+  _id: string;
+  name: string;
+  description: string;
+  price: number;
+  stock: number;
+  category?: Category;
+  images?: Image[];
+  createdAt?: string;
+  updatedAt?: string;
+  discountPrice?: number;
+  discountType?: string;
+  material?: string;
+  ratings?: {
+    average: number;
+    count: number;
+  };
+  status?: string
+}
+
+export type OrderInput = Omit<Order, "_id" | "createdAt" | "updatedAt">;
+
 export interface IAdminFormInputs {
   name: string;
   material: string;
