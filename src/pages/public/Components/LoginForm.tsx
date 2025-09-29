@@ -2,7 +2,7 @@ import { Dialog } from '@mui/material'
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useLogin } from '../../../services/api/auth/auth';
@@ -18,6 +18,7 @@ export default function LoginForm({ setShowForm }: SendOtpFormProps) {
     const [showPassword, setShowPassword] = useState(false);
     const loginUser = useLogin();
     const loginMutation = useLoginWithGoogle();
+
 
     const schema = yup.object({
         email: yup.string().email("Invalid email").required("Email is required"),
@@ -58,7 +59,11 @@ export default function LoginForm({ setShowForm }: SendOtpFormProps) {
                         <div className="fixed inset-0 flex md:items-center items-baseline-last justify-center bg-opacity-100 z-50">
                             <div className="bg-white w-[100%] md:w-[500px] shadow-lg p-6 relative">
                                 {/* Title */}
-                                <h2 style={{ fontFamily: 'Prata' }} className="lg:text-3xl text-2xl font-medium text-gray-900 md:mb-1">Welcome</h2>
+                                <div className='w-full flex items-center justify-between'>
+
+                                    <h2 style={{ fontFamily: 'Prata' }} className="lg:text-3xl text-2xl font-medium text-gray-900 md:mb-1">Welcome</h2>
+                                    <X onClick={() => navigate('/')} className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
+                                </div>
                                 <p className="text-gray-600 sm:text-lg md:mb-4 mb-2">Please login here</p>
 
                                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
