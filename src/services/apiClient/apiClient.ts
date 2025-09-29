@@ -19,7 +19,7 @@ apiClient.interceptors.request.use((config) => {
         const token = JSON.parse(tokenString); // real value
         config.headers.Authorization = `Bearer ${token}`;
       }
-    }
+    } 
   }
   return config;
 });

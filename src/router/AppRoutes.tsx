@@ -33,7 +33,7 @@ const CreateUser = lazy(() => import("../pages/Admin/Users/CreateUser"));
 function AppRoutes() {
 
   return (
-    <Suspense fallback={<Loading /> }>
+    <Suspense fallback={<Loading />}>
       <Routes>
         {/* Public */}
         <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
@@ -48,6 +48,7 @@ function AppRoutes() {
           <Route path="productdetailPage/:id" element={<ProductDetailPage />} />
           <Route path="payment" element={<Payment />} />
           <Route path="revieworder" element={<ReviewOrder />} />
+          <Route path="inventory/:id" element={<ProductListingPage />} />
         </Route >
 
         {/* Private Routes */}
@@ -56,7 +57,7 @@ function AppRoutes() {
           <Route index element={<HomePage />} />
           <Route path="home" element={<HomePage />} />
           <Route path="inventory" element={<ProductListingPage />} />
-          <Route path="inventory/:categoryname" element={<ProductListingPage />} />
+          {/* <Route path="inventory/:categoryname" element={<ProductListingPage />} /> */}
           <Route path="productdetailPage/:id" element={<ProductDetailPage />} />
           <Route path="categories/:id" element={<CategoryPage />} />
           <Route path="mycart" element={<MyCart />} />

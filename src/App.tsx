@@ -1,6 +1,7 @@
 // import { useEffect } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import AppRoutes from "./router/AppRoutes";
+import PopUp from "./components/UI/PopUp";
 
 function App() {
   // useEffect(() => {
@@ -10,7 +11,7 @@ function App() {
   //     smooth: true,
   //     smoothTouch: true,
   //   });
-    
+
 
   //   const raf = (time: number) => {
   //     lenis.raf(time);
@@ -23,6 +24,7 @@ function App() {
 
   return (
     <Router>
+      <PopUp />
       <AppRoutes />
     </Router>
   );
