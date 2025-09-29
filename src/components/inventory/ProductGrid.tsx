@@ -16,6 +16,8 @@ const ProductGrid: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
+
+  
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:px-4 mb-5 md:mb-10">
       {Array.isArray(productsData) && productsData?.map((val: ProductCategory, index: number) => (
