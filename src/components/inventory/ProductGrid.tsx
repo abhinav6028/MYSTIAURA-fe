@@ -34,7 +34,7 @@ const ProductGrid: React.FC = () => {
             <div
               key={index}
               className="bg-[#f9f9f9] flex flex-col place-items relative cursor-pointer"
-              onClick={() => navigate(`/productdetailPage/${val?._id}`)}
+              onClick={() => navigate(`/user/productdetailPage/${val?._id}`)}
             >
               <div className="w-full h-80 md:h-80 flex justify-center bg-[#f9f9f9]">
                 <img
