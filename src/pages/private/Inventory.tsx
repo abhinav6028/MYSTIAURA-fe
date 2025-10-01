@@ -38,7 +38,7 @@ const ProductListingPage: React.FC = () => {
 
       {/* Products */}
       <main className="flex-1 p-6">
-        <div className="flex justify-between items-center mb-6">
+        {/* <div className="flex justify-between items-center mb-6">
           <p className="text-gray-600">Showing {filteredCount === 0 ? 0 : 1}-{filteredCount <= 8 ? filteredCount : 8} of {filteredCount} results</p>
           <div className="flex gap-3">
             <button style={{ background: PRIMARY_COLOUR, }} className="text-white px-3 md:px-5 flex items-center gap-1.5 cursor-pointer"> <ListFilter size={16} /> Filter</button>
@@ -55,7 +55,7 @@ const ProductListingPage: React.FC = () => {
             </Select>
 
           </div>
-        </div>
+        </div> */}
 
         <ProductGrid />
       </main>

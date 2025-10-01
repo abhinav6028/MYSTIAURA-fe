@@ -5,19 +5,18 @@ import { useProducts } from "../../services/api/product/product";
 import type { ProductCategory } from "../../types/categoryTypes";
 import { finalPrice } from "../../utils";
 
-const ProductGrid: React.FC = () => {
+const ProductGrid: React.FC = ({ productCategory }) => {
 
   const navigate = useNavigate();
-  const { categoryname } = useParams();
-  const { data: products } = useProducts(categoryname);
+
+  const { data: products } = useProducts(productCategory);
+
   const productsData = products?.data?.products?.products || [];
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
-
-  
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:px-4 mb-5 md:mb-10">
       {Array.isArray(productsData) && productsData?.map((val: ProductCategory, index: number) => (
