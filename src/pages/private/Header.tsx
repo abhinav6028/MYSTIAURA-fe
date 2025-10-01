@@ -15,6 +15,7 @@ import type { ProductCategory } from "../../types/categoryTypes";
 import { navigatePath } from "../../utils";
 import { logout } from "../../store/slices/authSlice";
 import { persistor } from "../../store";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -106,6 +107,24 @@ const Header = () => {
     { name: "Twitter", icon: Twitter },
   ];
 
+  const [showSearch, setShowSearch] = useState(false);
+
+  const [query, setQuery] = useState("");
+  const popularSearches = [
+    "Neck in Jewellery",
+    "Neck in Women's Jewellery",
+    "Neck in Category",
+    "Neck in Shop By Gender",
+  ];
+
+  const suggestedProducts = [
+    { name: "Royal Grid Gold Necklace", price: "₹574,979.00", image: "https://via.placeholder.com/150" },
+    { name: "Blunt Edge Charm Diamond Necklace set", price: "₹345,760.00", image: "https://via.placeholder.com/150" },
+    { name: "Wild Color Palette Gold", price: "₹83,126.00", image: "https://via.placeholder.com/150" },
+    { name: "Wild Color Palette Gold", price: "₹80,503.00", image: "https://via.placeholder.com/150" },
+    // Add more products as needed
+  ];
+
   return (
     <>
       {/* Fixed Navigation Bar */}
@@ -170,7 +189,57 @@ const Header = () => {
 
             {/* Icons */}
             <div className="flex sm:gap-2 gap-2 md:gap-4 items-center">
-              <Search className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
+              {showSearch ? (
+                <div className="relative transition-all duration-300 ease-in-out w-40 sm:w-56 md:w-72">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" strokeWidth={1} />
+                  <input
+                    type="text"
+                    placeholder="Search..."
+                    autoFocus
+                    onChange={(e) => setQuery(e.target.value)}
+                    className="pl-10 pr-3 py-1 sm:py-2 border text-sm sm:text-base w-full outline-none focus:outline-none focus:ring-0 cursor-default"
+                  />
+
+                  {query && (
+                    <div className="absolute top-full left-0 w-full bg-white shadow-lg rounded border border-gray-200 flex z-50">
+                      {/* Popular Searches */}
+                      <div className="w-full border-r border-gray-200 p-4">
+                        <ul className="space-y-2">
+                          {popularSearches.map((item, idx) => (
+                            <li
+                              key={idx}
+                              className="text-gray-700 hover:text-red-600 cursor-pointer py-1"
+                              onClick={() => setQuery(item)}
+                            >
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+
+                    </div>
+                  )}
+
+                </div>
+              ) : (
+                <Search
+                  onClick={() => setShowSearch(true)}
+                  className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7"
+                  strokeWidth={1}
+                />
+              )}
+
+
+              {/* <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" strokeWidth={1} />
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  className="pl-10 pr-3 py-1 sm:py-2 border rounded-md text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div> */}
+              {/* <Search className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} /> */}
 
               <Badge badgeContent={wishlistCount} color="primary">
 

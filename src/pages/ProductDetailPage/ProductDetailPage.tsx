@@ -11,9 +11,6 @@ export default function ProductDetailPage() {
 
     const [productCategory, setProductCategory] = useState();
 
-    console.log("productCategory", productCategory);
-
-
     return (
         <LayoutContainer>
             <ProductDetailsMain setProductCategory={setProductCategory} />
