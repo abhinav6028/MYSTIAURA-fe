@@ -11,15 +11,13 @@ import { MdOutlinePrivacyTip } from "react-icons/md";
 import { useAddToCartProduct } from "../../services/api/cart/cart";
 const fallback = "../assets/fallback.png";
 
-const ProductDetailsMain = ({ setProductCategory }: { setProductCategory: (category: string) => void }) => {
+const ProductDetailsMain = () => {
     const [quantity, setQuantity] = useState<number>(1);
     const navigate = useNavigate();
     const { id } = useParams();
 
     const { data: singleProduct } = useProductWithId(id as string);
     const createAddToCart = useAddToCartProduct();
-
-    setProductCategory(singleProduct?.category?.name || "");
 
     // 👉 State for magnifier
     const [showMagnifier, setShowMagnifier] = useState(false);

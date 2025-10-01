@@ -1,18 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
-import { MenuItem, Select } from "@mui/material";
+import React, { useEffect, useRef } from "react";
 import SidebarFilters from "../../components/inventory/InventorySideFilter";
 import ProductGrid from "../../components/inventory/ProductGrid";
-import { PRIMARY_COLOUR } from "../../utils";
-import { ListFilter } from "lucide-react";
-import type { UserState } from "../../types/userTypes";
-import { useSelector } from "react-redux";
+// import type { UserState } from "../../types/userTypes";
+// import { useSelector } from "react-redux";
 
 const ProductListingPage: React.FC = () => {
 
-  const [lang, setLang] = useState("EN");
 
-  const state = useSelector((state: {user: UserState}) => state?.user?.selectedProductCategory as any);
-  const filteredCount = state?.data?.products?.count;
+  // const state = useSelector((state: {user: UserState}) => state?.user?.selectedProductCategory as any);
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
