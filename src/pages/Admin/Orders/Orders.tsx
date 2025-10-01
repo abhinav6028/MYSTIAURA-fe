@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDeleteProduct, useProducts } from '../../../services/api/product/product';
+import { useDeleteProduct } from '../../../services/api/product/product';
 import { useNavigate } from 'react-router-dom';
 import { IconButton } from '@mui/material';
 import { Delete, Edit } from 'lucide-react';
@@ -66,7 +66,7 @@ function Orders() {
 
 
 
-    const rows = userProduct?.data?.products?.products?.map((product: Product) => ({
+    const rows = useProducts?.data?.products?.products?.map((product: Product) => ({
         id: product._id,
         name: product.name,
         category: product.category?.name,

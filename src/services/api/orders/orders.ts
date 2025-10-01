@@ -10,7 +10,7 @@ export function useOrders(category?: string) {
     const query = useQuery<AxiosResponse, Error>({
         queryKey: ["orders", category],
         queryFn: async () => {
-            return apiClient.get("api/dashboard/latest-products", {
+            return apiClient.get("api/dashboard/orders", {
                 params: category ? { category } : {},
             });
         },

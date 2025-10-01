@@ -57,7 +57,7 @@ function AppRoutes() {
           <Route index element={<HomePage />} />
           <Route path="home" element={<HomePage />} />
           <Route path="inventory" element={<ProductListingPage />} />
-          {/* <Route path="inventory/:categoryname" element={<ProductListingPage />} /> */}
+          <Route path="inventory/:categoryname" element={<ProductListingPage />} />
           <Route path="productdetailPage/:id" element={<ProductDetailPage />} />
           <Route path="categories/:id" element={<CategoryPage />} />
           <Route path="mycart" element={<MyCart />} />
