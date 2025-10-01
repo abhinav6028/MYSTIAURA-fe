@@ -11,13 +11,19 @@ import { MdOutlinePrivacyTip } from "react-icons/md";
 import { useAddToCartProduct } from "../../services/api/cart/cart";
 const fallback = "../assets/fallback.png";
 
-const ProductDetailsMain = () => {
+const ProductDetailsMain = ({ setProductCategory }) => {
     const [quantity, setQuantity] = useState<number>(1);
     const navigate = useNavigate();
     const { id } = useParams();
 
     const { data: singleProduct } = useProductWithId(id as string);
     const createAddToCart = useAddToCartProduct();
+
+    setProductCategory(singleProduct?.category?.name)
+    console.log('singleProduct', singleProduct?.category?.name);
+
+
+    // setProductCategory
 
     return (
         <div className="px-4 md:px-6 lg:px-10 py-6">
