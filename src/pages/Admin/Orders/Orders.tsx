@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useDeleteProduct } from '../../../services/api/product/product';
 import { useNavigate } from 'react-router-dom';
-import { IconButton } from '@mui/material';
-import { Delete, Edit } from 'lucide-react';
 import type { GridColDef } from '@mui/x-data-grid';
 import type { Product } from '../../../types/adminTypes';
+import { IconButton } from '@mui/material';
+import { Edit, Delete } from 'lucide-react';
 import AdminLayout from '../../../components/layout/AdminLayout';
 import CommonDataGrid from '../../../components/MuiComponents/CustomDatagrid';
 import AlertDialog from '../../../components/MuiComponents/CustomDialogBox';
@@ -12,30 +12,46 @@ import OrderHeader from './OrderHeader';
 import { useOrders } from '../../../services/api/orders/orders';
 
 function Orders() {
-    const { data: useProducts } = useOrders();
+    const { data: orders } = useOrders();
     const [open, setOpen] = useState(false);
     const deleteProduct = useDeleteProduct();
     const [selectedrow, setSelectedRow] = useState<Product | null>(null);
+    const ordersData = orders?.orders?.data?.result;
+    const totalOrders = orders?.orders?.data?.total || 0;
+    console.log("totalOrders", totalOrders);
     const navigate = useNavigate();
 
     const columns: GridColDef[] = [
         {
-            field: "images",
+            field: "productImage",
             headerName: "Image",
-            flex: 1,
-            renderCell: (params) => (
-                <img
-                    src={params.row.images}
-                    alt="product"
-                    className="w-10 h-10 object-cover rounded"
-                />
-            ),
+            width: 80,
+            renderCell: (params) =>
+                params.value ? (
+                    <img src={params.value} alt="product" className="w-10 h-10 object-cover rounded" />
+                ) : null,
+            sortable: false,
+            filterable: false,
         },
-        { field: "name", headerName: "Name", flex: 1 },
-        { field: "category", headerName: "Category", flex: 1 },
-        { field: "stock", headerName: "Stock", flex: 1 },
-        { field: "price", headerName: "Price", flex: 1 },
-        { field: "status", headerName: "Status", flex: 1 },
+        { field: "orderId", headerName: "Order ID", flex: 1, minWidth: 160 },
+        { field: "productName", headerName: "First Item", flex: 1 },
+        { field: "itemsCount", headerName: "Items", width: 90, type: "number" },
+        {
+            field: "totalAmount",
+            headerName: "Amount",
+            width: 120,
+            renderCell: (params) => (params.value != null ? `₹${params.value}` : "-"),
+        },
+        {
+            field: "createdAt",
+            headerName: "Date",
+            width: 160,
+            valueFormatter: (value) => (value ? new Date(value as any).toLocaleString() : ""),
+        },
+        { field: "orderStatus", headerName: "Order Status", width: 140 },
+        { field: "paymentStatus", headerName: "Payment", width: 110 },
+        { field: "customer", headerName: "Customer", flex: 1 },
+        { field: "city", headerName: "City", width: 120 },
         {
             field: "actions",
             headerName: "Actions",
@@ -47,7 +63,7 @@ function Orders() {
                     <IconButton
                         color="primary"
                         size="small"
-                        onClick={() => navigate(`/admin/products/${params.row.id}`)}
+                        onClick={() => navigate(`/admin/orders/${params.row.id}`)}
                     >
                         <Edit />
                     </IconButton>
@@ -63,24 +79,26 @@ function Orders() {
         },
     ];
 
+    const rows = ordersData?.map((order: any) => {
+        const firstItem = order.items?.[0];
+        const product = firstItem?.product;
 
-
-
-    const rows = useProducts?.data?.products?.products?.map((product: Product) => ({
-        id: product._id,
-        name: product.name,
-        category: product.category?.name,
-        stock: product.stock,
-        price: product.price,
-        images: product.images?.[0]?.secure_url,
-        description: product.description,
-        material: product.material,
-        discountType: product.discountType,
-        discountPrice: product.discountPrice,
-        categoryDetails: product.category,
-        imageContainer: product.images,
-        status: product?.status
-    }));
+        return {
+            id: order._id,
+            orderId: order._id,
+            createdAt: order.createdAt,
+            orderStatus: order.orderStatus,          // e.g., "confirmed"
+            paymentStatus: order.payment?.status,    // e.g., "paid"
+            totalAmount: order.totalAmount,          // e.g., 135
+            itemsCount: order.items?.length ?? 0,
+            customer: order.shippingAddress?.name,
+            city: order.shippingAddress?.city,
+            // For preview
+            productName: product?.name,
+            productImage: product?.images?.[0]?.secure_url,
+            productPrice: product?.price,
+        };
+    });
 
     const handleClose = () => {
         setOpen(false);
@@ -100,8 +118,9 @@ function Orders() {
                     rows={rows || []}
                     columns={columns}
                     checkboxSelection
-                    pageSize={5}
+                    pageSize={totalOrders || 10}
                     autoHeight
+                    totalRecords={totalOrders}
                 />
             </div>
 
