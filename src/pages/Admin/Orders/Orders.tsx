@@ -12,7 +12,7 @@ import OrderHeader from './OrderHeader';
 import { useOrders } from '../../../services/api/orders/orders';
 
 function Orders() {
-    const { data: useProducts } = useOrders();
+
     const [open, setOpen] = useState(false);
     const deleteProduct = useDeleteProduct();
     const [selectedrow, setSelectedRow] = useState<Product | null>(null);
@@ -66,21 +66,7 @@ function Orders() {
 
 
 
-    const rows = userProduct?.data?.products?.products?.map((product: Product) => ({
-        id: product._id,
-        name: product.name,
-        category: product.category?.name,
-        stock: product.stock,
-        price: product.price,
-        images: product.images?.[0]?.secure_url,
-        description: product.description,
-        material: product.material,
-        discountType: product.discountType,
-        discountPrice: product.discountPrice,
-        categoryDetails: product.category,
-        imageContainer: product.images,
-        status: product?.status
-    }));
+    const rows =[]
 
     const handleClose = () => {
         setOpen(false);
