@@ -9,7 +9,7 @@ export default function ProductDetailPage() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }, []);
 
-    const [productCategory, setProductCategory] = useState();
+    const [productCategory, setProductCategory] = useState<string | null>(null);
 
     return (
         <LayoutContainer>

@@ -11,14 +11,14 @@ import { useEffect } from "react";
 import type { AxiosResponse } from "axios";
 
 // 🔹 Get all products
-export function useProducts(category?: string) {
+export function useProducts(category?: string, page?: number, limit?: number) {
   const dispatch = useDispatch();
 
   const query = useQuery<AxiosResponse, Error>({
-    queryKey: ["products", category],
+    queryKey: ["products", category, page, limit],
     queryFn: async () => {
       return apiClient.get("api/product/all", {
-        params: category ? { category } : {},
+        params: category ? { category, page, limit } : { page, limit },
       });
     },
     retry: false,

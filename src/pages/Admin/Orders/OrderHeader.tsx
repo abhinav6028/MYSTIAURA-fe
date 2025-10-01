@@ -5,6 +5,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { Dayjs } from "dayjs";
 import { useNavigate } from "react-router-dom";
+import { useOrders } from "../../../services/api/orders/orders";
 
 export default function OrderHeader() {
     // Controlled inputs
@@ -14,9 +15,7 @@ export default function OrderHeader() {
     const [endDate, setEndDate] = useState<Dayjs | null>(null);
     const navigate = useNavigate();
 
-    const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearch(event.target.value);
-    };
+     useOrders();
 
     return (
         <div className="bg-white  rounded-md space-y-4">
