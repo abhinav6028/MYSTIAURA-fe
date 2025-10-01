@@ -84,6 +84,7 @@ function AppRoutes() {
           <Route path="users/update" element={<CreateUser />} />
           <Route path="orders" element={<Orders />} />
           <Route path="orders/create" element={<CreateOrders />} />
+          <Route path="categories/:id" element={<CategoryPage />} />
         </Route>
 
         {/* Unauthorized Page */}

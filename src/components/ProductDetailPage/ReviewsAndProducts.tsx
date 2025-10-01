@@ -10,7 +10,7 @@ import ProductGrid from "../inventory/ProductGrid";
 import ReviewDialog from "./ReviewModal";
 import { useAppSelector } from "../../store/hooks";
 
-function ReviewsAndProducts() {
+function ReviewsAndProducts({ productCategory }) {
     const state = useAppSelector((state) => state.user.singleProduct);
     const reviews = state?.reviews ?? [];
 
@@ -64,7 +64,7 @@ function ReviewsAndProducts() {
                 Similar Products
             </h1>
 
-            <ProductGrid />
+            <ProductGrid productCategory={productCategory} />
         </div>
     )
 }

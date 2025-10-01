@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import LayoutContainer from '../../components/layout/LayoutContainer'
 import ProductDetailsMain from '../../components/ProductDetailPage/ProductDetailsMain'
 import ReviewsAndProducts from '../../components/ProductDetailPage/ReviewsAndProducts'
@@ -6,13 +6,15 @@ import ReviewsAndProducts from '../../components/ProductDetailPage/ReviewsAndPro
 export default function ProductDetailPage() {
 
     useEffect(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' }); 
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }, []);
+
+    const [productCategory, setProductCategory] = useState<string | null>(null);
 
     return (
         <LayoutContainer>
-            <ProductDetailsMain />
-            <ReviewsAndProducts />
+            <ProductDetailsMain setProductCategory={setProductCategory} />
+            <ReviewsAndProducts productCategory={productCategory} />
         </LayoutContainer>
     )
 }
