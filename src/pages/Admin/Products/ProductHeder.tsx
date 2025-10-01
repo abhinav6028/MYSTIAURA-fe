@@ -14,9 +14,9 @@ const ProductHeader = () => {
     const [endDate, setEndDate] = useState<Dayjs | null>(null);
     const navigate = useNavigate();
 
-    const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearch(event.target.value);
-    };
+    // const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //     setSearch(event.target.value);
+    // };
 
     return (
         <div className="bg-white  rounded-md space-y-4">
