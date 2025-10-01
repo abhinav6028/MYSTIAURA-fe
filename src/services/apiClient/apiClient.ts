@@ -2,9 +2,9 @@
 
 import axios from "axios";
 const apiClient = axios.create({
-  // baseURL: "https://jwelery-be.onrender.com/",
+  baseURL: "https://jwelery-be.onrender.com/",
   // baseURL: "https://hnd07ldd-5000.inc1.devtunnels.ms/",
-  baseURL: "https://hnd07ldd-3000.inc1.devtunnels.ms/",
+  // baseURL: "https://hnd07ldd-3000.inc1.devtunnels.ms/",
   headers: { "Content-Type": "application/json" },
 });
 
