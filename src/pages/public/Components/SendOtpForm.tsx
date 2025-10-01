@@ -90,6 +90,7 @@ export default function SendOtpForm({ setShowForm }: SendOtpFormProps) {
 
                         {/* Login Button */}
                         <button
+                            onClick={() => { setShowForm(2) }}
                             type="submit"
                             className="w-full bg-[#660033] text-white font-semibold py-3 cursor-pointer hover:bg-[#51052b] md:mb-4 mb-2 transition"
                         >

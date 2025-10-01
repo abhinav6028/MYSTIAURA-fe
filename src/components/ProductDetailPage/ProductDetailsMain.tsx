@@ -19,7 +19,18 @@ const ProductDetailsMain = ({ setProductCategory }: { setProductCategory: (categ
     const { data: singleProduct } = useProductWithId(id as string);
     const createAddToCart = useAddToCartProduct();
 
-    setProductCategory(singleProduct?.category?.name as string);
+    setProductCategory(singleProduct?.category?.name || "");
+
+    // 👉 State for magnifier
+    const [showMagnifier, setShowMagnifier] = useState(false);
+    const [position, setPosition] = useState({ x: 0, y: 0, width: 0, height: 0 });
+
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+        const x = e.pageX - left;
+        const y = e.pageY - top;
+        setPosition({ x, y, width, height });
+    };
 
     return (
         <div className="px-4 md:px-6 lg:px-10 py-6">
@@ -27,13 +38,35 @@ const ProductDetailsMain = ({ setProductCategory }: { setProductCategory: (categ
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
                 {/* ---------- LEFT: IMAGES ---------- */}
                 <div>
-                    {/* Main image */}
-                    <div className="w-full h-64 sm:h-80 md:h-[28rem] lg:h-[35rem]">
+                    {/* Main image with magnifier */}
+                    <div
+                        className="relative w-full h-64 sm:h-80 md:h-[28rem] lg:h-[35rem] overflow-hidden"
+                        onMouseEnter={() => setShowMagnifier(true)}
+                        onMouseLeave={() => setShowMagnifier(false)}
+                        onMouseMove={handleMouseMove}
+                    >
                         <img
                             src={singleProduct?.images?.[0]?.secure_url || fallback}
                             alt={singleProduct?.name ?? "product image"}
-                            className="bg-gray-100 w-full h-full object-cover "
+                            className="bg-gray-100 w-full h-full object-cover"
                         />
+
+                        {/* Magnifier glass */}
+                        {showMagnifier && (
+                            <div
+                                className="absolute pointer-events-none rounded-full border-2 border-gray-400 shadow-lg"
+                                style={{
+                                    top: `${position.y - 75}px`,
+                                    left: `${position.x - 75}px`,
+                                    width: "150px",
+                                    height: "150px",
+                                    backgroundImage: `url(${singleProduct?.images?.[0]?.secure_url || fallback})`,
+                                    backgroundRepeat: "no-repeat",
+                                    backgroundSize: `${position.width * 2}px ${position.height * 2}px`, // zoom factor = 2x
+                                    backgroundPosition: `-${position.x * 2 - 75}px -${position.y * 2 - 75}px`,
+                                }}
+                            />
+                        )}
                     </div>
 
                     {/* Thumbnails */}
@@ -122,8 +155,8 @@ const ProductDetailsMain = ({ setProductCategory }: { setProductCategory: (categ
                                 onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                                 disabled={quantity === 1}
                                 className={`p-2 ${quantity === 1
-                                    ? "cursor-not-allowed opacity-50"
-                                    : "cursor-pointer"
+                                        ? "cursor-not-allowed opacity-50"
+                                        : "cursor-pointer"
                                     }`}
                             >
                                 <Minus size={18} />
@@ -190,7 +223,6 @@ const ProductDetailsMain = ({ setProductCategory }: { setProductCategory: (categ
                         </div>
                     </div>
 
-
                     <div className="grid grid-cols-3 gap-4 sm:gap-6 py-6 border-b border-gray-200 text-center">
                         <div className="px-1">
                             <MdOutlinePrivacyTip className="mx-auto mb-2 text-2xl sm:text-3xl lg:text-4xl" />
@@ -213,7 +245,7 @@ const ProductDetailsMain = ({ setProductCategory }: { setProductCategory: (categ
                         </div>
 
                         <div className="px-1">
-                            <LiaShippingFastSolid className="mx-auto mb-2 text-2xl sm:text-3xl lg:setttext-4xl" />
+                            <LiaShippingFastSolid className="mx-auto mb-2 text-2xl sm:text-3xl lg:text-4xl" />
                             <h6 className="font-semibold text-xs sm:text-sm lg:text-base">
                                 Free Shipping
                             </h6>
@@ -222,28 +254,6 @@ const ProductDetailsMain = ({ setProductCategory }: { setProductCategory: (categ
                             </p>
                         </div>
                     </div>
-
-
-
-
-                    {/* Info Icons */}
-                    {/* <div className="grid sm:grid-cols-3 gap-6 py-6 border-b border-gray-200 text-center">
-                        <div>
-                            <MdOutlinePrivacyTip size="2.5rem" className="mx-auto mb-2" />
-                            <h6 className="font-semibold">Secure Payments</h6>
-                            <p className="text-gray-500 text-sm">100% Safe Checkout</p>
-                        </div>
-                        <div>
-                            <CiStar size="2.5rem" className="mx-auto mb-2" />
-                            <h6 className="font-semibold">Certified Jewelry</h6>
-                            <p className="text-gray-500 text-sm">Authenticity Guaranteed</p>
-                        </div>
-                        <div>
-                            <LiaShippingFastSolid size="2.5rem" className="mx-auto mb-2" />
-                            <h6 className="font-semibold">Free Shipping</h6>
-                            <p className="text-gray-500 text-sm">On Every Order</p>
-                        </div>
-                    </div> */}
 
                     {/* Description */}
                     <div className="py-4 border-b border-gray-300">
@@ -257,16 +267,6 @@ const ProductDetailsMain = ({ setProductCategory }: { setProductCategory: (categ
                             {singleProduct?.description}
                         </p>
                     </div>
-
-                    {/* Shipping / Packaging */}
-                    {/* <div className="divide-y divide-gray-200">
-                        <div className="py-3 flex justify-between">
-                            <h3 className="font-medium">SHIPPING</h3>
-                        </div>
-                        <div className="py-3 flex justify-between">
-                            <h3 className="font-medium">PACKAGING</h3>
-                        </div>
-                    </div> */}
                 </div>
             </div>
         </div>
@@ -274,3 +274,4 @@ const ProductDetailsMain = ({ setProductCategory }: { setProductCategory: (categ
 };
 
 export default ProductDetailsMain;
+

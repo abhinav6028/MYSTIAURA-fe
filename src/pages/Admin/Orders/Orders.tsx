@@ -18,7 +18,6 @@ function Orders() {
     const [selectedrow, setSelectedRow] = useState<Product | null>(null);
     const ordersData = orders?.orders?.data?.result;
     const totalOrders = orders?.orders?.data?.total || 0;
-    console.log("totalOrders", totalOrders);
     const navigate = useNavigate();
 
     const columns: GridColDef[] = [
