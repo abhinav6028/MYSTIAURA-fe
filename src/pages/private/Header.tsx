@@ -15,6 +15,7 @@ import type { ProductCategory } from "../../types/categoryTypes";
 import { navigatePath } from "../../utils";
 import { logout } from "../../store/slices/authSlice";
 import { persistor } from "../../store";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -106,6 +107,8 @@ const Header = () => {
     { name: "Twitter", icon: Twitter },
   ];
 
+  const [showSearch, setShowSearch] = useState(false);
+
   return (
     <>
       {/* Fixed Navigation Bar */}
@@ -170,7 +173,33 @@ const Header = () => {
 
             {/* Icons */}
             <div className="flex sm:gap-2 gap-2 md:gap-4 items-center">
-              <Search className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
+              {showSearch ? (
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" strokeWidth={1} />
+                  <input
+                    type="text"
+                    placeholder="Search..."
+                    autoFocus
+                    className="pl-10 pr-3 py-1 sm:py-2 border rounded-md text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              ) : (
+                <Search
+                  onClick={() => setShowSearch(true)}
+                  className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7"
+                  strokeWidth={1}
+                />
+              )}
+
+              {/* <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" strokeWidth={1} />
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  className="pl-10 pr-3 py-1 sm:py-2 border rounded-md text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div> */}
+              {/* <Search className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} /> */}
 
               <Badge badgeContent={wishlistCount} color="primary">
 

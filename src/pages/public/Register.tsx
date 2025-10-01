@@ -6,7 +6,7 @@ import PublicPageBG from "./Components/Publicbg";
 
 const Register: React.FC = () => {
 
-  const [showForms, setShowForm] = useState(2)
+  const [showForms, setShowForm] = useState(1)
 
   return ( 
     <div className="w-full">

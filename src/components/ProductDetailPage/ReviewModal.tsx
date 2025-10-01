@@ -17,6 +17,7 @@ import * as yup from "yup";
 import { PRIMARY_COLOUR } from "../../utils";
 import { useParams } from "react-router-dom";
 import { useCreateReview } from "../../services/api/review/review";
+import { useAppSelector } from "../../store/hooks";
 
 // Validation schema
 const schema = yup.object().shape({
@@ -37,7 +38,7 @@ const ReviewDialog = () => {
     const { id } = useParams();
     const createReview = useCreateReview(id!);
 
-    
+
     const {
         handleSubmit,
         control,
@@ -50,30 +51,42 @@ const ReviewDialog = () => {
             review: "",
         },
     });
-    
+
     useEffect(() => {
-        if(open){
+        if (open) {
             reset();
         }
     }, [open, reset]);
-    
+
     const onSubmit = async (data: ReviewFormData) => {
         const response = await createReview.mutateAsync({ ...data, productId: id });
-        if(response.status === 201){
+        if (response.status === 201) {
             reset();
             setOpen(false);
         }
     };
 
+    const { isAuthenticated } = useAppSelector((state) => state.auth);
+
+
+
+
     return (
         <div>
+
             <p
-                onClick={() => setOpen(true)}
-                style={{ background: PRIMARY_COLOUR }}
+                onClick={() => {
+                    if (isAuthenticated) setOpen(true);
+                }}
+                style={{
+                    background: isAuthenticated ? PRIMARY_COLOUR : "#ccc", // greyed out
+                    pointerEvents: isAuthenticated ? "auto" : "none", // disable click
+                }}
                 className="text-white py-3 px-5 cursor-pointer"
             >
                 WRITE A REVIEW
             </p>
+
 
             <Dialog open={open} onClose={() => setOpen(false)} maxWidth="sm" fullWidth
                 PaperProps={{

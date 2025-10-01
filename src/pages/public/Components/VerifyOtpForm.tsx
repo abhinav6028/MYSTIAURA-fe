@@ -30,7 +30,7 @@ export default function VerifyOtpForm({ setShowForm }: { setShowForm: (form: num
                     <form onSubmit={handleSubmit(onSubmit)} noValidate>
                         {/* Email Field */}
                         <div className="mb-3">
-                            <label className="block text-gray-700 mb-2">Name</label>
+                            <label className="block text-gray-700 mb-2">Enter OTP</label>
                             <Controller
                                 name="otp"
                                 control={control}
