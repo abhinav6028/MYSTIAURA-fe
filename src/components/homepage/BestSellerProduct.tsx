@@ -75,7 +75,8 @@ const BestSellerProduct = () => {
                                     src={val.images[0].secure_url}
                                     alt={val.name}
                                     className="w-full h-auto object-cover"
-                                    onClick={() => navigate(`${isAuthenticated ? "/" : ""}${navigatePath}/productdetailPage/` + val._id)}
+                                    onClick={() => navigate(isAuthenticated ? `/user/productdetailPage/${val?._id}` : `/productdetailPage/${val?._id}`)}
+                                // onClick={() => navigate(`${isAuthenticated ? "/" : ""}${navigatePath}/productdetailPage/` + val._id)}
                                 />
                             </div>
 
