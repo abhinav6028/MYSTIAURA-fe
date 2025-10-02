@@ -234,7 +234,12 @@ const Header = () => {
 
               <Badge badgeContent={wishlistCount} color="primary">
 
-                <Heart onClick={() => navigate(`${isAuthenticated ? "/" : ""}${navigatePath}/wishlist`)} className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
+                <Heart onClick={() =>
+                  navigate(
+                    `${isAuthenticated ? "/" : "/user"
+                    }${navigatePath}/wishlist`
+                  )
+                } className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
 
               </Badge>
 
@@ -265,7 +270,7 @@ const Header = () => {
 
               <Badge badgeContent={cartCount} color="primary">
 
-                <ShoppingCart onClick={() => navigate(`${isAuthenticated ? "/" : ""}${navigatePath}/mycart`)} className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
+                <ShoppingCart onClick={() => navigate(`${isAuthenticated ? "/" : "/user"}${navigatePath}/mycart`)} className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
               </Badge>
 
 
