@@ -10,7 +10,8 @@ export interface UserState {
   singleProduct: SingleProduct | null;
   categories: ProductCategory[];
   selectedProductCategory: ProductCategory | null;
-  selectedDashboad: null
+  selectedDashboad: null,
+  orders: null
 }
 
 export interface SingleProductImage {

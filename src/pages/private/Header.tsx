@@ -15,7 +15,6 @@ import type { ProductCategory } from "../../types/categoryTypes";
 import { navigatePath } from "../../utils";
 import { logout } from "../../store/slices/authSlice";
 import { persistor } from "../../store";
-import { motion, AnimatePresence } from "framer-motion";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -115,14 +114,6 @@ const Header = () => {
     "Neck in Women's Jewellery",
     "Neck in Category",
     "Neck in Shop By Gender",
-  ];
-
-  const suggestedProducts = [
-    { name: "Royal Grid Gold Necklace", price: "₹574,979.00", image: "https://via.placeholder.com/150" },
-    { name: "Blunt Edge Charm Diamond Necklace set", price: "₹345,760.00", image: "https://via.placeholder.com/150" },
-    { name: "Wild Color Palette Gold", price: "₹83,126.00", image: "https://via.placeholder.com/150" },
-    { name: "Wild Color Palette Gold", price: "₹80,503.00", image: "https://via.placeholder.com/150" },
-    // Add more products as needed
   ];
 
   return (
