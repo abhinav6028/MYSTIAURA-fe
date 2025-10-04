@@ -12,10 +12,13 @@ import OrderHeader from './OrderHeader';
 import { useOrders } from '../../../services/api/orders/orders';
 
 function Orders() {
-    const { data: orders } = useOrders();
     const [open, setOpen] = useState(false);
     const deleteProduct = useDeleteProduct();
     const [selectedrow, setSelectedRow] = useState<Product | null>(null);
+    const [searchText, setSearchText] = useState("");
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(5);
+    const { data: orders } = useOrders({ page, limit, search: searchText });
     const ordersData = orders?.orders?.data?.result;
     const totalOrders = orders?.orders?.data?.total || 0;
     const navigate = useNavigate();
@@ -109,17 +112,33 @@ function Orders() {
         setOpen(false);
     };
 
+    const handlePaginationChange = (newPage: number, newPageSize: number) => {
+        if (newPageSize !== limit) {
+            setLimit(newPageSize); // update page size
+            setPage(1); // reset page to first
+          } else {
+            setPage(newPage); // normal page change
+          }
+    };
+
     return (
         <AdminLayout>
             <div className='w-full'>
-                <OrderHeader />
+                <OrderHeader
+                    search={searchText}
+                    setSearch={(val: string) => {
+                        setSearchText(val);
+                        setPage(1);
+                    }}
+                />
                 <CommonDataGrid
                     rows={rows || []}
                     columns={columns}
                     checkboxSelection
-                    pageSize={totalOrders || 10}
-                    autoHeight
+                    pageSize={limit || 10}
+                    page={page}
                     totalRecords={totalOrders}
+                    onPaginationChange={handlePaginationChange}
                 />
             </div>
 

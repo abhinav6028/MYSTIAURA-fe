@@ -7,9 +7,8 @@ import { Dayjs } from "dayjs";
 import { useNavigate } from "react-router-dom";
 import { useOrders } from "../../../services/api/orders/orders";
 
-export default function OrderHeader() {
+export default function OrderHeader({ search, setSearch }: { search: string; setSearch: (value: string) => void }) {
     // Controlled inputs
-    const [search, setSearch] = useState("");
     const [status, setStatus] = useState("");
     const [startDate, setStartDate] = useState<Dayjs | null>(null);
     const [endDate, setEndDate] = useState<Dayjs | null>(null);

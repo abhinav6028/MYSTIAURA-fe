@@ -6,9 +6,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { Dayjs } from "dayjs";
 import { useNavigate } from "react-router-dom";
 
-const ProductHeader = () => {
+const ProductHeader = ({ onSearch, search }: { onSearch: (searchText: string) => void, search: string }) => {
     // Controlled inputs
-    const [search, setSearch] = useState("");
     const [status, setStatus] = useState("");
     const [startDate, setStartDate] = useState<Dayjs | null>(null);
     const [endDate, setEndDate] = useState<Dayjs | null>(null);
@@ -37,7 +36,7 @@ const ProductHeader = () => {
                     size="small"
                     value={search}
                     sx={{ width: 300 }}
-                    onChange={(e) => setSearch(e.target.value)}
+                    onChange={(e) => onSearch(e.target.value)}
                 />
 
                 <div className="flex gap-4">

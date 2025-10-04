@@ -1,4 +1,4 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient, keepPreviousData } from "@tanstack/react-query";
 import apiClient from "../../apiClient/apiClient";
 import { useNotify } from "../../../utilsComp/useNotify";
 import type { Category, CategoryInput } from "../../../types/adminTypes";
@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setCategories } from "../../../store/slices/userSlice";
+import type { AxiosResponse } from "axios";
 
 // 🔹 Get all categories
 export function useCategories(params?: {
@@ -17,18 +18,18 @@ export function useCategories(params?: {
   search?: string;
 }) {
   const dispatch = useDispatch();
-  const query = useQuery<Category[], Error>({
-    queryKey: ["categories", params ?? {}],
+  const query = useQuery<AxiosResponse, Error>({
+    queryKey: ["categories", params?.page, params?.limit, params?.sortBy, params?.order, params?.search],
     queryFn: async () => {
       const res = await apiClient.get("/api/category", { params });
-      return res.data?.categories ?? [];
+      return res ;
     },
+    placeholderData: keepPreviousData,
     retry: false,
-    initialData: [],
   });
   
   useEffect(() => {
-    if (query.data.length > 0) {
+    if (query.data) {
       dispatch(setCategories(query.data as any));
     }
   }, [query.data, dispatch]);

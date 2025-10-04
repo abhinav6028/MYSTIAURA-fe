@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 import apiClient from "../../apiClient/apiClient";
 import { useEffect } from "react";
@@ -37,17 +37,33 @@ type OrdersResponse = {
     };
 };
 
-export function useOrders(category?: string) {
+export function useOrders(params?: {
+    page?: number;
+    limit?: number;
+    sortBy?: string;
+    order?: "asc" | "desc";
+    search?: string;
+    category?: string;
+}) {
     const dispatch = useDispatch();
 
     const query = useQuery<OrdersResponse, Error>({
-        queryKey: ["orders", category],
+        queryKey: [
+            "orders",
+            params?.page,
+            params?.limit,
+            params?.sortBy,
+            params?.order,
+            params?.search,
+            params?.category,
+        ],
         queryFn: async () => {
             const res = await apiClient.get("api/order/list", {
-                params: category ? { category } : {},
+                params,
             });
             return res.data;
         },
+        placeholderData: keepPreviousData,
         retry: false,
     });
 
