@@ -142,46 +142,55 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
     return (
 
         <>
+            {showomponet === 2 && <ReviewOrder selectedCheckAddress={selectedCheckAddress} />}
 
-            {
-                showomponet == 2 && <ReviewOrder selectedCheckAddress={selectedCheckAddress} />
-            }
-
-            {
-                showomponet == 1 &&
-
-
+            {showomponet === 1 && (
                 <LayoutContainer>
-
-                    <div className='flex items-center'>
-
-                        {
-                            !showItems &&
-                            <ArrowLeft size={30} onClick={() => navigate("/user/mycart")} className='cursor-pointer' />
-                        }
-                        <h1 style={{ fontFamily: FONT_FAMILY }} className={`text-4xl ${!showItems ? "my-3" : ''}`}>{!showItems ? "Select Address" : 'Address Section'}</h1>
-
+                    <div className="flex items-center">
+                        {showItems && (
+                            <ArrowLeft
+                                size={30}
+                                onClick={() => navigate("/user/mycart")}
+                                className="cursor-pointer"
+                            />
+                        )}
+                        <h1
+                            style={{ fontFamily: FONT_FAMILY }}
+                            className={`text-4xl ${!showItems ? "my-3" : ""}`}
+                        >
+                            {showItems ? "Select Address" : "Address Section"}
+                        </h1>
                     </div>
 
-                    <div className={`grid grid-cols-1 ${!showItems ? 'md:grid-cols-3' : 'md:grid-cols-2'} md:grid-cols-2 gap-6`}>
+                    {/* ✅ Grid with 2/3 + 1/3 layout */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {/* Left Section (Address List) */}
                         <div className="md:col-span-2">
-
-                            {
-                                !showItems &&
-
+                            {showItems && (
                                 <div className="w-full mx-auto my-3 md:my-5">
                                     <div className="flex items-center justify-between relative">
                                         {steps.map((step, index) => (
-                                            <div key={step.id} className="flex flex-col items-center relative z-10">
+                                            <div
+                                                key={step.id}
+                                                className="flex flex-col items-center relative z-10"
+                                            >
                                                 <div
-                                                    style={{ backgroundColor: index <= currentStep ? PRIMARY_COLOUR : 'white', border: `1px solid ${PRIMARY_COLOUR}` }}
-                                                    className={`md:w-12 md:h-12 w-10 h-10 flex items-center justify-center transition-colors ${index <= currentStep ? "text-white" : " text-gray-400 bg-white"
+                                                    style={{
+                                                        backgroundColor:
+                                                            index <= currentStep ? PRIMARY_COLOUR : "white",
+                                                        border: `1px solid ${PRIMARY_COLOUR}`,
+                                                    }}
+                                                    className={`md:w-12 md:h-12 w-10 h-10 flex items-center justify-center transition-colors ${index <= currentStep
+                                                        ? "text-white"
+                                                        : " text-gray-400 bg-white"
                                                         }`}
                                                 >
                                                     {step.icon}
                                                 </div>
                                                 <span
-                                                    className={`mt-3 text-sm font-medium transition-colors ${index <= currentStep ? "text-gray-900" : "text-gray-500"
+                                                    className={`mt-3 text-sm font-medium transition-colors ${index <= currentStep
+                                                        ? "text-gray-900"
+                                                        : "text-gray-500"
                                                         }`}
                                                 >
                                                     {step.title}
@@ -191,133 +200,140 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
 
                                         <div className="absolute top-6 left-0 right-0 flex justify-between px-6">
                                             {steps.slice(0, -1).map((_, index) => (
-                                                <div key={index} className={`h-px flex-1 mx-6 ${index < currentStep ? "bg-amber-700" : "bg-red-700"}`} />
+                                                <div
+                                                    key={index}
+                                                    className={`h-px flex-1 mx-6 ${index < currentStep
+                                                        ? "bg-amber-700"
+                                                        : "bg-red-700"
+                                                        }`}
+                                                />
                                             ))}
                                         </div>
                                     </div>
                                 </div>
-                            }
+                            )}
 
-                            <>
-                                <div className="flex justify-between font-bold text-lg mt-8">
-                                    <span>Other Address</span>
-                                </div>
+                            {/* Address Cards */}
+                            <div className="flex justify-between font-bold text-lg mt-8">
+                                <span>Other Address</span>
+                            </div>
 
-                                <div className="space-y-4">
-                                    {selectAdressState?.map((item) => (
-                                        <Card
-                                            key={item._id}
-                                            className="mb-4 border border-green-100 md:mt-3 mt-2"
-                                            style={{ borderRadius: 0, boxShadow: "none" }}
-                                        >
-                                            <CardContent className="flex md:flex-row md:gap-10 items-start p-4">
-                                                <div className="flex-1 space-y">
-                                                    <div className="flex items-center">
-                                                        <input
-                                                            type="radio" // ✅ make it radio
-                                                            name="selectedAddress" // ✅ group name
-                                                            checked={selectedCheckAddress?._id === item._id} // ✅ only one selected
-                                                            className="w-4 h-4 mt-2 rounded-full border border-gray-300 text-green-600 focus:ring-green-500 focus:ring-2 mb-auto"
-                                                            onChange={() => setSelectedCheckAddress(item)}
-                                                        />
+                            <div className="space-y-4">
+                                {selectAdressState?.map((item) => (
+                                    <Card
+                                        key={item._id}
+                                        className="mb-4 border border-green-100 md:mt-3 mt-2"
+                                        style={{ borderRadius: 0, boxShadow: "none" }}
+                                    >
+                                        <CardContent className="flex md:flex-row md:gap-10 items-start p-4">
+                                            <div className="flex-1 space-y">
+                                                <div className="flex items-center">
+                                                    <input
+                                                        type="radio"
+                                                        name="selectedAddress"
+                                                        checked={selectedCheckAddress?._id === item._id}
+                                                        className="w-4 h-4 mt-2 rounded-full border border-gray-300 text-green-600 focus:ring-green-500 focus:ring-2 mb-auto"
+                                                        onChange={() => setSelectedCheckAddress(item)}
+                                                    />
 
-                                                        <div className="md:ml-5 ml-3  mt--2">
-                                                            <div className='flex'>
-                                                                <h3 className="text-lg font-medium text-gray-900">{item.name}</h3>
+                                                    <div className="md:ml-5 ml-3">
+                                                        <h3 className="text-lg font-medium text-gray-900">
+                                                            {item.name}
+                                                        </h3>
 
-                                                            </div>
+                                                        {/* Address */}
+                                                        <div className="flex items-start gap-2 text-gray-600 mt-4">
+                                                            <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                                                            <span className="text-sm leading-relaxed break-words sm:w-auto w-[200px]">
+                                                                {item.addressLine1}
+                                                            </span>
+                                                        </div>
 
-                                                            {/* Address */}
-                                                            <div className="flex items-start gap-2 text-gray-600 mt-4">
-                                                                <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                                                                <span className="text-sm leading-relaxed break-words sm:w-auto w-[200px]">
-                                                                    {item.addressLine1}
-                                                                </span>
-                                                            </div>
-
-                                                            {/* Phone */}
-                                                            <div className="flex items-center gap-2 text-gray-600 my-2">
-                                                                <Phone className="w-4 h-4 flex-shrink-0" />
-                                                                <span className="text-sm">{item.phone}</span>
-                                                            </div>
+                                                        {/* Phone */}
+                                                        <div className="flex items-center gap-2 text-gray-600 my-2">
+                                                            <Phone className="w-4 h-4 flex-shrink-0" />
+                                                            <span className="text-sm">{item.phone}</span>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className="flex space-x-2 flex-shrink-0">
-                                                    {/* Edit Button */}
-                                                    <button
-                                                        className="h-8 w-8 p-0 flex items-center justify-center cursor-pointer hover:bg-gray-100 rounded"
-                                                        onClick={() => handleEdit(item)}
-                                                    >
-                                                        <Edit className="w-4 h-4 text-blue-500" />
-                                                    </button>
+                                            </div>
 
-                                                    {/* Delete Button */}
-                                                    <button
-                                                        className="h-8 w-8 p-0 flex items-center justify-center cursor-pointer hover:bg-gray-100 rounded"
-                                                        onClick={() => handleDelete(item)}
-                                                    >
-                                                        <Trash2 className="w-4 h-4 text-red-500" />
-                                                    </button>
-                                                </div>
-                                            </CardContent>
-                                        </Card>
-                                    ))}
-                                </div>
-                            </>
-                            <AddNewAddressModal open={open} setOpen={setOpen} selectedData={selectedData} />
-                            {/* */}
+                                            <div className="flex space-x-2 flex-shrink-0">
+                                                <button
+                                                    className="h-8 w-8 p-0 flex items-center justify-center cursor-pointer hover:bg-gray-100 rounded"
+                                                    onClick={() => handleEdit(item)}
+                                                >
+                                                    <Edit className="w-4 h-4 text-blue-500" />
+                                                </button>
+
+                                                <button
+                                                    className="h-8 w-8 p-0 flex items-center justify-center cursor-pointer hover:bg-gray-100 rounded"
+                                                    onClick={() => handleDelete(item)}
+                                                >
+                                                    <Trash2 className="w-4 h-4 text-red-500" />
+                                                </button>
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                ))}
+                            </div>
+
+                            <AddNewAddressModal
+                                open={open}
+                                setOpen={setOpen}
+                                selectedData={selectedData}
+                            />
                         </div>
 
-                        {/* Right Section (Summary) */}
-
                         {
-                            !showItems &&
+                            showItems &&
+                            <div>
+                                <Card
+                                    className="px-4 h-fit border border-green-100 mb-5"
+                                    sx={{ borderRadius: 0, boxShadow: "none" }}
+                                >
+                                    <CardContent>
+                                        <div
+                                            style={{ borderBottom: `1px solid ${PRIMARY_COLOUR}` }}
+                                            className="flex justify-between my-1 md:my-2 py-2 md:py-3 border-b "
+                                        >
+                                            <span>Subtotal</span>
+                                            <span>${subtotal.toFixed(2)}</span>
+                                        </div>
 
-                            <Card className=" px-4 h-fit border border-green-100 mb-5" sx={{ borderRadius: 0, boxShadow: 'none' }}>
-                                <CardContent>
-                                    <div style={{ borderBottom: `1px solid ${PRIMARY_COLOUR}` }} className="flex justify-between my-1 md:my-2 py-2 md:py-3 border-b ">
-                                        <span>Subtotal</span>
-                                        <span>${subtotal.toFixed(2)}</span>
-                                    </div>
+                                        <div className="flex justify-between mb-2 my-2">
+                                            <span>Taxes</span>
+                                            <span>${taxes.toFixed(2)}</span>
+                                        </div>
+                                        <div className="flex justify-between mb-2">
+                                            <span>Delivery Fee</span>
+                                            <span style={{ color: PRIMARY_COLOUR }}>FREE</span>
+                                        </div>
 
-                                    <div className="flex justify-between mb-2 my-2">
-                                        <span>Taxes</span>
-                                        <span>${taxes.toFixed(2)}</span>
-                                    </div>
-                                    <div className="flex justify-between mb-2">
-                                        <span>Delivery Fee</span>
-                                        <span style={{ color: PRIMARY_COLOUR }} className="">FREE</span>
-                                    </div>
-                                    <Divider className="my-2" />
-                                    <div className="flex justify-between font-bold text-lg py-3">
-                                        <span>Grand Total</span>
-                                        <span>₹{grandTotal.toFixed(2)}</span>
-                                    </div>
+                                        <Divider className="my-2" />
+                                        <div className="flex justify-between font-bold text-lg py-3">
+                                            <span>Grand Total</span>
+                                            <span>₹{grandTotal.toFixed(2)}</span>
+                                        </div>
 
-                                    <button
-                                        onClick={() => {
-                                            // handleCreate()
-                                            setShowComponent(2)
-                                        }}
-                                        disabled={selectedCheckAddress === null}
-                                        className="text-white px-6 py-3 font-semibold w-full transition
-                                    bg-primary cursor-pointer
-                                    disabled:bg-gray-400 disabled:cursor-not-allowed
-                                "
-                                    >
-                                        CONTINUE
-                                    </button>
-                                </CardContent>
-                            </Card>
+                                        <button
+                                            onClick={() => setShowComponent(2)}
+                                            disabled={selectedCheckAddress === null}
+                                            className="text-white px-6 py-3 font-semibold w-full transition
+                                            bg-primary cursor-pointer
+                                            disabled:bg-gray-400 disabled:cursor-not-allowed"
+                                        >
+                                            CONTINUE
+                                        </button>
+                                    </CardContent>
+                                </Card>
+                            </div>
                         }
+                        {/* Right Section (Order Summary) */}
 
                     </div>
-
-                </LayoutContainer >
-            }
+                </LayoutContainer>
+            )}
         </>
-
-
     )
 }

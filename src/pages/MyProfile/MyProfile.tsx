@@ -57,7 +57,7 @@ export default function MyProfile() {
 
                     <div className='w-full mt-4'>
                         <SelectAdress
-                            showItems={true}
+                            showItems={false}
                         />
 
                     </div>

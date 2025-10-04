@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useProducts } from "../../services/api/product/product";
 import type { ProductCategory } from "../../types/categoryTypes";
 import { finalPrice } from "../../utils";
+import { useAppSelector } from "../../store/hooks";
 
 const ProductGrid: React.FC = () => {
   const navigate = useNavigate();
@@ -29,6 +30,9 @@ const ProductGrid: React.FC = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [currentPage]);
 
+
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
+
   return (
     <div className="md:px-4 mb-10">
       {/* Product Grid */}
@@ -38,7 +42,7 @@ const ProductGrid: React.FC = () => {
             <div
               key={index}
               className="bg-[#f9f9f9] flex flex-col place-items relative cursor-pointer"
-              onClick={() => navigate(`/user/productdetailPage/${val?._id}`)}
+              onClick={() => navigate(isAuthenticated ? `/user/productdetailPage/${val?._id}` : `/productdetailPage/${val?._id}`)}
             >
               <div className="w-full h-80 md:h-80 flex justify-center bg-[#f9f9f9]">
                 <img
@@ -95,11 +99,10 @@ const ProductGrid: React.FC = () => {
             <button
               key={i}
               onClick={() => setCurrentPage(i + 1)}
-              className={`px-3 py-1 rounded ${
-                currentPage === i + 1
-                  ? "bg-[#660033] text-white"
-                  : "bg-gray-200"
-              }`}
+              className={`px-3 py-1 rounded ${currentPage === i + 1
+                ? "bg-[#660033] text-white"
+                : "bg-gray-200"
+                }`}
             >
               {i + 1}
             </button>

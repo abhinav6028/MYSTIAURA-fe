@@ -11,7 +11,7 @@ export function useDashBoardStatus(category?: string) {
     const query = useQuery<AxiosResponse, Error>({
         queryKey: ["dashboard", category],
         queryFn: async () => {
-            return apiClient.get("api/dashboard/stats?startDate=2025-09-01&endDate=2025-09-24", {
+            return apiClient.get("api/dashboard/stats?startDate=2025-09-01&endDate=2025-10-2", {
                 params: category ? { category } : {},
             });
         },
