@@ -8,15 +8,20 @@ import { useNavigate } from "react-router-dom";
 import { useUsers, useDeleteUser, useUpdateUser } from "../../../services/api/users/users";
 import AlertDialog from "../../../components/MuiComponents/CustomDialogBox";
 import type { User } from "../../../types/adminTypes";
+import useDebounce from "../../../utilsComp/useDeounce";
 
 const UsersTable = () => {
   const [searchText, setSearchText] = useState("");
   const navigate = useNavigate();
-  const { data: users } = useUsers({ search: searchText });
   const [open, setOpen] = useState(false);
   const deleteUser = useDeleteUser();
   const updateUser = useUpdateUser();
   const [selectedrow,setSelectedRow] = useState<User | null>(null);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(5);
+  const { data: usersData } = useUsers({ search: useDebounce(searchText), page, limit });
+  const totalUsers = usersData?.data?.total;
+  const users = usersData?.data?.users;
 
   const RoleSelectCell = (params: GridRenderCellParams) => {
     const { row, value } = params;
@@ -116,14 +121,16 @@ const UsersTable = () => {
   ];
 
   // ✅ Table rows (map backend users)
-  const rows = users?.map((user,index) => ({
+  const startIndex = (page - 1) * limit;
+  const rows = (users || []).map((user: User, index: number) => ({
     ...user,
     id: user._id,
-    sno: index + 1,
-  })) || [];
+    sno: startIndex + index + 1,
+  }));
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(event.target.value);
+    setPage(1);
   };
 
   const handleClose = () => {
@@ -134,6 +141,15 @@ const UsersTable = () => {
     if (!selectedrow) return;
     deleteUser.mutate(selectedrow?._id);
     setOpen(false);
+  };
+
+  const handlePaginationChange = (newPage: number, newPageSize: number) => {
+    if (newPageSize !== limit) {
+      setLimit(newPageSize); // update page size
+      setPage(1); // reset page to first
+    } else {
+      setPage(newPage); // normal page change
+    }
   };
 
   return (
@@ -166,8 +182,10 @@ const UsersTable = () => {
           rows={rows}
           columns={columns}
           checkboxSelection={false}
-          autoHeight
-          pageSize={5}
+          pageSize={limit || 10}
+          page={page}
+          totalRecords={totalUsers || 0}
+          onPaginationChange={handlePaginationChange}
         />
       </div>
 

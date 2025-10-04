@@ -1,8 +1,14 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient, keepPreviousData } from "@tanstack/react-query";
 import apiClient from "../../apiClient/apiClient";
 import { useNotify } from "../../../utilsComp/useNotify";
 import type { User, UserInput } from "../../../types/adminTypes";
 import { useNavigate } from "react-router-dom";
+import type { AxiosResponse } from "axios";
+
+interface UsersResponse {
+    users: User[];
+    total: number;
+}
 
 
 // 🔹 Get all users
@@ -15,12 +21,13 @@ export function useUsers(params?: {
   role?: string;
   isVerified?: boolean;
 }) {
-  return useQuery<User[], Error>({
+  return useQuery<AxiosResponse<UsersResponse>, Error>({
     queryKey: ["users", params],
     queryFn: async () => {
       const res = await apiClient.get("/api/user", { params });
-      return res?.data?.users;
+      return res;
     },
+    placeholderData: keepPreviousData,
     retry: false,
   });
 }

@@ -10,13 +10,19 @@ import { useState } from 'react';
 import type { Product } from '../../../types/adminTypes';
 import { useDeleteProduct } from '../../../services/api/product/product';
 import { useNavigate } from 'react-router-dom';
+import useDebounce from '../../../utilsComp/useDeounce';
 
 function Products() {
-    const { data: userProduct } = useProducts();
     const [open, setOpen] = useState(false);
     const deleteProduct = useDeleteProduct();
     const [selectedrow, setSelectedRow] = useState<Product | null>(null);
+    const [searchText, setSearchText] = useState("");
     const navigate = useNavigate();
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(5);
+    const { data: userProduct } = useProducts({ search: useDebounce(searchText), page, limit });
+    const products = userProduct?.data?.products?.products ?? [];
+    const totalProducts = userProduct?.data?.products?.count;
 
     const columns: GridColDef[] = [
         {
@@ -62,11 +68,9 @@ function Products() {
             ),
         },
     ];
-
-
-
-
-    const rows = userProduct?.data?.products?.products?.map((product: Product) => ({
+    
+    // const startIndex = (page - 1) * limit;
+    const rows = products?.map((product: Product) => ({
         id: product._id,
         name: product.name,
         category: product.category?.name,
@@ -92,16 +96,34 @@ function Products() {
         setOpen(false);
     };
 
+    const handlePaginationChange = (newPage: number, newPageSize: number) => {
+        if (newPageSize !== limit) {
+            setLimit(newPageSize); // update page size
+            setPage(1); // reset page to first
+          } else {
+            setPage(newPage); // normal page change
+          }
+      };
+
+
     return (
         <AdminLayout>
             <div className='w-full'>
-                <ProductHeader />
+                <ProductHeader
+                    search={searchText}
+                    onSearch={(val: string) => {
+                        setSearchText(val);
+                        setPage(1);
+                    }}
+                />
                 <CommonDataGrid
                     rows={rows || []}
                     columns={columns}
                     checkboxSelection
-                    pageSize={5}
-                    autoHeight
+                    page={page}
+                    pageSize={limit}
+                    totalRecords={totalProducts}
+                    onPaginationChange={handlePaginationChange}
                 />
             </div>
 

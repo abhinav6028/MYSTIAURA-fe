@@ -1,4 +1,4 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient, keepPreviousData } from "@tanstack/react-query";
 import apiClient from "../../apiClient/apiClient";
 import { useNotify } from "../../../utilsComp/useNotify";
 import type { IAdminFormInputs } from "../../../types/adminTypes";
@@ -9,18 +9,29 @@ import { useDispatch } from "react-redux";
 import type { BestSellerProduct, SingleProduct } from "../../../types/userTypes";
 import { useEffect } from "react";
 import type { AxiosResponse } from "axios";
-
 // 🔹 Get all products
-export function useProducts(category?: string, page?: number, limit?: number) {
+export function useProducts(params?: {
+  category?: string;
+  search?: string;
+  page?: number;
+  limit?: number;
+}) {
   const dispatch = useDispatch();
 
   const query = useQuery<AxiosResponse, Error>({
-    queryKey: ["products", category, page, limit],
+    queryKey: [
+      "products",
+      params?.page,
+      params?.limit,
+      params?.category,
+      params?.search,
+    ],
     queryFn: async () => {
       return apiClient.get("api/product/all", {
-        params: category ? { category, page, limit } : { page, limit },
+        params,
       });
     },
+    placeholderData: keepPreviousData,
     retry: false,
   });
 

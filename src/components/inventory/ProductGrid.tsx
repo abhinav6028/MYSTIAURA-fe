@@ -14,7 +14,11 @@ const ProductGrid: React.FC = () => {
   const pageSize = 8;
 
   // fetch products with pagination
-  const { data: products } = useProducts(categoryname, currentPage, pageSize);
+  const { data: products } = useProducts({
+    category: categoryname,
+    page: currentPage,
+    limit: pageSize,
+  });
   const productsData = products?.data?.products?.products || [];
   const totalProducts = products?.data?.products?.count || 0;
 

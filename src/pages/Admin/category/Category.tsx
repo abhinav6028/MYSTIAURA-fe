@@ -8,16 +8,21 @@ import { useCategories, useDeleteCategory } from "../../../services/api/category
 import { Delete, Edit } from "@mui/icons-material";
 import AlertDialog from "../../../components/MuiComponents/CustomDialogBox";
 import type { Category } from "../../../types/adminTypes";
+import useDebounce from "../../../utilsComp/useDeounce";
 
 const Category = () => {
 
     const [searchText, setSearchText] = useState("");
     const navigate = useNavigate();
-    const { data: category } = useCategories({ search: searchText });
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(5);
     const [open, setOpen] = useState(false);
     const deleteCategory = useDeleteCategory();
     const [selectedrow, setSelectedRow] = useState<Category | null>(null);
-
+    const { data: category } = useCategories({ search: useDebounce(searchText), page, limit });
+    const categories = category?.data?.categories;
+    const totalProducts = category?.data?.total;
+    
     const columns: GridColDef[] = [
         { field: "sno", headerName: "S.No", width: 90 },
         {
@@ -61,14 +66,16 @@ const Category = () => {
         },
     ];
 
-    const rows = (category || []).map((cat, index) => ({
+    const startIndex = (page - 1) * limit;
+    const rows = (categories || []).map((cat: Category, index: number) => ({
         ...cat,
         id: cat._id,
-        sno: index + 1,
+        sno: startIndex + index + 1,
     }));
 
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchText(event.target.value);
+        setPage(1); // reset to first page when search changes
     };
 
     const handleClose = () => {
@@ -80,6 +87,15 @@ const Category = () => {
         deleteCategory.mutate(selectedrow?._id);
         setOpen(false);
     };
+
+    const handlePaginationChange = (newPage: number, newPageSize: number) => {
+        if (newPageSize !== limit) {
+            setLimit(newPageSize); // update page size
+            setPage(1); // reset page to first
+          } else {
+            setPage(newPage); // normal page change
+          }
+      };
 
     return (
         <AdminLayout>
@@ -104,8 +120,10 @@ const Category = () => {
                     rows={rows}
                     columns={columns}
                     checkboxSelection={false}
-                    autoHeight
-                    pageSize={5}
+                    page={page}
+                    pageSize={limit}
+                    totalRecords={totalProducts}
+                    onPaginationChange={handlePaginationChange}
                 />
             </div>
 
