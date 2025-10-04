@@ -1,14 +1,15 @@
-import { useSelector } from "react-redux";
 import arrowSvg from "../../assets/homepage/arrow.svg";
 import selectCategory from "../../assets/homepage/selectcategory.jpg";
 import { FONT_FAMILY, navigatePath } from "../../utils";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../store/hooks";
+import { useCategories } from "../../services/api/category/category";
 
 const ShopByCategory = () => {
 
     const navigate = useNavigate();
-    const categoryList = useSelector((state: any) => state?.user?.categories);
+    const { data: categories } = useCategories();
+    const categoryList = categories?.data?.categories || [];
     const { isAuthenticated } = useAppSelector((state) => state.auth);
 
     return (

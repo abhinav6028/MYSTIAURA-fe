@@ -10,7 +10,7 @@ import { useAppSelector } from "../../store/hooks";
 import { useWishList } from "../../services/api/wishlist/wishlist";
 import { useCart } from "../../services/api/cart/cart";
 import { useCategories } from "../../services/api/category/category";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import type { ProductCategory } from "../../types/categoryTypes";
 import { navigatePath } from "../../utils";
 import { logout } from "../../store/slices/authSlice";
@@ -37,7 +37,9 @@ const Header = () => {
 
   const { isAuthenticated } = useAppSelector((state) => state.auth);
 
-  const categoryList = useSelector((state: any) => state?.user?.categories);
+  // const categoryList = useSelector((state: any) => state?.user?.categories) || [];
+  const { data: categories } = useCategories();
+  const categoryList = categories?.data?.categories || [];
 
   useEffect(() => {
     const handleScroll = () => {
