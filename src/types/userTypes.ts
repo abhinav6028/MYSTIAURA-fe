@@ -11,7 +11,14 @@ export interface UserState {
   categories: ProductCategory[];
   selectedProductCategory: ProductCategory | null;
   selectedDashboad: null,
-  orders: null
+  orders: null,
+  categoryFilter: FilterParams
+}
+
+export interface FilterParams {
+  category?: string[];
+  minPrice?: number;
+  maxPrice?: number;
 }
 
 export interface SingleProductImage {

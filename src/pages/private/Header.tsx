@@ -3,7 +3,7 @@ import { Badge } from "@mui/material";
 import logo from "../../assets/logohorizontal.svg"
 import phone from "../../assets/phone.svg"
 import { CircleUser, Heart, Search, ShoppingCart, Menu, X, Instagram, Facebook, Twitter } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 // import { useLogout } from "../../services/api/auth/auth";
 import LayoutContainer from "../../components/layout/LayoutContainer";
 import { useAppSelector } from "../../store/hooks";
@@ -28,6 +28,8 @@ const Header = () => {
   const cartCount = cartData?.totalCount ?? 0;
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const locationCheck = location.pathname.includes('user') ? "/" : "/user";
 
   const handleLogout = () => {
     dispatch(logout());
@@ -170,7 +172,7 @@ const Header = () => {
                   key={index}
                   onClick={() =>
                     navigate(
-                      `${isAuthenticated ? "/" : ""}${navigatePath}/inventory/${data?.name}`
+                      `${isAuthenticated ? locationCheck : ""}${navigatePath}/inventory/${data?.name}`
                     )
                   }
                   className="hover:text-gray-600 cursor-pointer"
@@ -236,12 +238,15 @@ const Header = () => {
 
               <Badge badgeContent={wishlistCount} color="primary">
 
-                <Heart onClick={() =>
-                  navigate(
-                    `${isAuthenticated ? "/" : "/user"
-                    }${navigatePath}/wishlist`
-                  )
-                } className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
+                <Heart
+                  onClick={() => {
+                    if (!isAuthenticated) {
+                      return;
+                    }
+
+                    navigate(`/${navigatePath}/wishlist`);
+                  }}
+                className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
 
               </Badge>
 
@@ -271,8 +276,12 @@ const Header = () => {
               }
 
               <Badge badgeContent={cartCount} color="primary">
-
-                <ShoppingCart onClick={() => navigate(`${isAuthenticated ? "/" : "/user"}${navigatePath}/mycart`)} className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
+                <ShoppingCart onClick={() => {
+                  if (!isAuthenticated) {
+                    return;
+                  }
+                  navigate(`/${navigatePath}/mycart`); 
+                }} className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
               </Badge>
 
 

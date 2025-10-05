@@ -9,12 +9,15 @@ import { useDispatch } from "react-redux";
 import type { BestSellerProduct, SingleProduct } from "../../../types/userTypes";
 import { useEffect } from "react";
 import type { AxiosResponse } from "axios";
+
 // 🔹 Get all products
 export function useProducts(params?: {
   category?: string;
   search?: string;
   page?: number;
   limit?: number;
+  minPrice?: number;
+  maxPrice?: number;
 }) {
   const dispatch = useDispatch();
 
@@ -25,10 +28,14 @@ export function useProducts(params?: {
       params?.limit,
       params?.category,
       params?.search,
+      params?.minPrice,
+      params?.maxPrice,
     ],
     queryFn: async () => {
       return apiClient.get("api/product/all", {
-        params,
+        params: {
+          ...params,
+        },
       });
     },
     placeholderData: keepPreviousData,
@@ -43,6 +50,7 @@ export function useProducts(params?: {
 
   return query;
 }
+
 
 // Product list with pagination
 export function useProductList(page: number, limit: number) {
