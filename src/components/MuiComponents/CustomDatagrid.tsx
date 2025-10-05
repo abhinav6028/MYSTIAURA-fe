@@ -34,21 +34,53 @@ const CommonDataGrid = <RowType extends { id: GridRowId }>({
         onRowClick={onRowClick}
         disableRowSelectionOnClick
         paginationMode="server"
-        paginationModel={{ page: Math.max(0, (page ?? 1) - 1), pageSize }} // 👈 controlled by parent with guard
+        paginationModel={{ page: Math.max(0, (page ?? 1) - 1), pageSize }}
         onPaginationModelChange={handlePaginationChange}
         pageSizeOptions={[5, 10, 25, 50]}
         rowCount={totalRecords ?? rows.length}
         sx={{
           border: 0,
-          "& .MuiDataGrid-cell": { fontFamily: "Poppins, sans-serif" },
+
+          // ✅ Increase row height
+          "& .MuiDataGrid-row": {
+            maxHeight: "70px !important",
+            minHeight: "70px !important",
+          },
+
+          // ✅ Increase cell height to match
+          "& .MuiDataGrid-cell": {
+            fontFamily: "Poppins, sans-serif",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            textAlign: "center",
+            lineHeight: "70px !important",
+            maxHeight: "70px !important",
+            minHeight: "70px !important",
+          },
+
+          // ✅ Cell inner content
+          "& .MuiDataGrid-cellContent": {
+            textAlign: "center",
+            width: "100%",
+          },
+
+          // ✅ Column headers
           "& .MuiDataGrid-columnHeaders": {
             fontFamily: "Poppins, sans-serif",
             fontWeight: 600,
+            textAlign: "center",
+            minHeight: "60px !important", // header height
+          },
+          "& .MuiDataGrid-columnHeaderTitle": {
+            width: "100%",
+            textAlign: "center",
           },
         }}
       />
+
     </div>
   );
 };
 
-export default CommonDataGrid;
+export default CommonDataGrid;

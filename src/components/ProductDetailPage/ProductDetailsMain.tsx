@@ -23,12 +23,17 @@ const ProductDetailsMain = () => {
     const [showMagnifier, setShowMagnifier] = useState(false);
     const [position, setPosition] = useState({ x: 0, y: 0, width: 0, height: 0 });
 
+    const [currentIndx, setCurrentIndex] = useState(0)
+
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
         const x = e.pageX - left;
         const y = e.pageY - top;
         setPosition({ x, y, width, height });
     };
+
+
+
 
     return (
         <div className="px-4 md:px-6 lg:px-10 py-6">
@@ -44,7 +49,7 @@ const ProductDetailsMain = () => {
                         onMouseMove={handleMouseMove}
                     >
                         <img
-                            src={singleProduct?.images?.[0]?.secure_url || fallback}
+                            src={singleProduct?.images?.[currentIndx]?.secure_url || fallback}
                             alt={singleProduct?.name ?? "product image"}
                             className="bg-gray-100 w-full h-full object-cover"
                         />
@@ -69,10 +74,11 @@ const ProductDetailsMain = () => {
 
                     {/* Thumbnails */}
                     <div className="mt-3 flex w-15 h-15 md:w-17 md:h-17 lg:w-20 lg:h-20 gap-3">
-                        {[1, 2, 3, 4].map((idx) => (
+                        {singleProduct?.images?.map((data, idx) => (
                             <img
+                                onClick={() => setCurrentIndex(idx)}
                                 key={idx}
-                                src={singleProduct?.images?.[0]?.secure_url || fallback}
+                                src={data?.secure_url || fallback}
                                 alt=""
                                 className="w-full aspect-square object-cover cursor-pointer bg-gray-100"
                             />
@@ -153,8 +159,8 @@ const ProductDetailsMain = () => {
                                 onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                                 disabled={quantity === 1}
                                 className={`p-2 ${quantity === 1
-                                        ? "cursor-not-allowed opacity-50"
-                                        : "cursor-pointer"
+                                    ? "cursor-not-allowed opacity-50"
+                                    : "cursor-pointer"
                                     }`}
                             >
                                 <Minus size={18} />
