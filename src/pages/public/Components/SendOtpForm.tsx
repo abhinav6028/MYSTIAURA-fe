@@ -5,7 +5,7 @@ import * as yup from "yup";
 import { useNavigate } from 'react-router-dom';
 import { useRegister } from '../../../services/api/auth/auth';
 import type { Sendotp, SendOtpFormProps } from '../../../types/authTypes';
-
+import { HiHome } from 'react-icons/hi';
 
 const schema = yup.object({
     email: yup.string().email("Invalid email").required("Email is required"),
@@ -37,6 +37,10 @@ export default function SendOtpForm({ setShowForm }: SendOtpFormProps) {
             <div className="fixed inset-0 flex md:items-center items-baseline-last justify-center bg-opacity-100 z-50">
                 <div className="bg-white w-[100%] md:w-[500px] shadow-lg p-6 relative">
                     {/* Title */}
+                    <HiHome size={40} color="#fff"
+                    onClick={() => navigate('/home')}
+                    className='cursor-pointer absolute top-[50%] right-[-20px] translate-x-1/2 z-[9999] w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-10 lg:h-10 bg-primary rounded-full p-2' />
+
                     <h2 style={{ fontFamily: 'Prata' }} className="lg:text-3xl text-2xl font-medium text-gray-900 md:mb-1">Create New Account</h2>
                     <p className="text-gray-600 sm:text-lg md:mb-4 mb-2">Please Enter Details</p>
 

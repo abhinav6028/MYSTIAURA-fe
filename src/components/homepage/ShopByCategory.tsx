@@ -24,7 +24,12 @@ const ShopByCategory = () => {
                     {categoryList?.map((val: any, index: number) => (
                         <div
                             key={index}
-                            className="flex items-center justify-between pb-4 border-b border-b-gray-200 w-full"
+                            className="flex items-center justify-between pb-4 border-b border-b-gray-200 w-full cursor-pointer"
+                            onClick={() =>
+                                navigate(
+                                    `${isAuthenticated ? '/' : ''}${navigatePath}/inventory/${val?.name}`
+                                )
+                            }
                         >
                             <h1
                                 style={{ fontFamily: FONT_FAMILY }}
@@ -34,11 +39,6 @@ const ShopByCategory = () => {
                             </h1>
                             <span
                                 className="md:w-10 md:h-10 w-8 h-8 bg-primary flex items-center justify-center rounded-full cursor-pointer"
-                                onClick={() =>
-                                    navigate(
-                                        `${isAuthenticated ? '/' : ''}${navigatePath}/inventory/${val?.name}`
-                                    )
-                                }
                             >
                                 <img src={arrowSvg} alt="" />
                             </span>

@@ -9,16 +9,22 @@ import { useAppSelector } from "../../store/hooks";
 const ProductGrid: React.FC = () => {
   const navigate = useNavigate();
   const { categoryname } = useParams();
-
-  // pagination state
+  const { categoryFilter } = useAppSelector((state) => state.user);
+  const category = Array.isArray(categoryFilter?.category) && categoryFilter.category.length > 0
+  ? categoryFilter.category.includes(categoryname || "")
+    ? categoryFilter.category.join(",") // if it includes categoryname → keep joined
+    : categoryFilter.category.join(",") // not included but not empty → still joined
+  : categoryname;
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 8;
 
   // fetch products with pagination
   const { data: products } = useProducts({
-    category: categoryname,
+    category: category,
     page: currentPage,
     limit: pageSize,
+    minPrice: categoryFilter?.minPrice,
+    maxPrice: categoryFilter?.maxPrice,
   });
   const productsData = products?.data?.products?.products || [];
   const totalProducts = products?.data?.products?.count || 0;
@@ -89,7 +95,7 @@ const ProductGrid: React.FC = () => {
           <button
             onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
             disabled={currentPage === 1}
-            className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+            className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50 cursor-pointer"
           >
             Prev
           </button>
@@ -99,7 +105,7 @@ const ProductGrid: React.FC = () => {
             <button
               key={i}
               onClick={() => setCurrentPage(i + 1)}
-              className={`px-3 py-1 rounded ${currentPage === i + 1
+              className={`px-3 py-1 cursor-pointer rounded ${currentPage === i + 1
                 ? "bg-[#660033] text-white"
                 : "bg-gray-200"
                 }`}
@@ -114,7 +120,7 @@ const ProductGrid: React.FC = () => {
               setCurrentPage((p) => Math.min(p + 1, totalPages))
             }
             disabled={currentPage === totalPages}
-            className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+            className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50 cursor-pointer"
           >
             Next
           </button>
