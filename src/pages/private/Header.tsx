@@ -29,7 +29,7 @@ const Header = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const locationCheck = location.pathname.includes('/user') ? "/" : "/user";
+  const locationCheck = location.pathname.includes('user') ? "/" : "/user";
 
   const handleLogout = () => {
     dispatch(logout());
@@ -244,7 +244,7 @@ const Header = () => {
                       return;
                     }
 
-                    navigate(`${navigatePath}/wishlist`);
+                    navigate(`/${navigatePath}/wishlist`);
                   }}
                 className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
 
@@ -280,7 +280,7 @@ const Header = () => {
                   if (!isAuthenticated) {
                     return;
                   }
-                  navigate(`${navigatePath}/mycart`); 
+                  navigate(`/${navigatePath}/mycart`); 
                 }} className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
               </Badge>
 
