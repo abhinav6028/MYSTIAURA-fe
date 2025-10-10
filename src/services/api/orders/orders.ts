@@ -1,8 +1,9 @@
-import { useQuery, keepPreviousData } from "@tanstack/react-query";
+import { useQuery, keepPreviousData, useQueryClient, useMutation } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 import apiClient from "../../apiClient/apiClient";
 import { useEffect } from "react";
 import { orders } from "../../../store/slices/userSlice";
+import { useNotify } from "../../../utilsComp/useNotify";
 
 type OrderItem = {
     _id: string;
@@ -69,9 +70,50 @@ export function useOrders(params?: {
 
     useEffect(() => {
         if (query.data) {
-            dispatch(orders(query.data.orders.data.result));
+            dispatch(orders(query?.data?.orders?.data?.result || []));
         }
     }, [query.data, dispatch]);
 
     return query;
 }
+
+// 🔹 Update order status
+export function useUpdateOrderStatus() {
+    const queryClient = useQueryClient();
+    const notify = useNotify();
+
+    return useMutation({
+        mutationFn: async (payload: { _id: string; orderStatus: string }) => {
+            const res = await apiClient.put(`api/order/status/${payload._id}`, {
+                status: payload.orderStatus,
+            });
+            return res.data;
+        },
+        onSuccess: () => {
+            notify.success("Order status updated");
+            queryClient.invalidateQueries({ queryKey: ["orders"] });
+        },
+        onError: (error: any) => {
+            notify.error(error.response?.data?.message || "Order status update failed");
+        },
+    });
+}
+
+
+export function useOrderedList() {
+
+    const query = useQuery<OrdersResponse, Error>({
+        queryKey: [
+            "orders",
+        ],
+        queryFn: async () => {
+            const res = await apiClient.get("api/order");
+            return res.data?.orders;
+        },
+        placeholderData: keepPreviousData,
+        retry: false,
+    });
+
+    return query;
+}
+

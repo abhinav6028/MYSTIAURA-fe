@@ -12,15 +12,18 @@ import {
 import { Trash, X } from "lucide-react";
 import { finalPrice, PRIMARY_COLOUR } from "../../utils";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useCart, useDeleteAllCartItem, useDeleteCartItem } from "../../services/api/cart/cart";
+import { useCart, useDeleteAllCartItem, useDeleteCartItem, useUpdateCart } from "../../services/api/cart/cart";
+import { useAppSelector } from "../../store/hooks";
 
 const MyCart = () => {
 
     const location = useLocation();
-    const { data: userCart } = useCart();
+    const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+    const { data: userCart } = useCart(isAuthenticated);
     const deleteCart = useDeleteCartItem();
     const deleteAllCart = useDeleteAllCartItem();
     const [checkAllCart, setCheckAllCart] = useState(false);
+    const updateCart = useUpdateCart()
 
     useEffect(() => {
         window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
@@ -111,6 +114,10 @@ const MyCart = () => {
                                         </label>
                                         <Select
                                             value={item.quantity}
+                                            onChange={(e) => updateCart.mutate({
+                                                productId: item.product._id,
+                                                quantity: Number(e.target.value)
+                                            })}
                                             size="small"
                                             id={`qty-${item._id}`}
                                             sx={{
@@ -122,17 +129,17 @@ const MyCart = () => {
                                                     height: "28px",
                                                     display: "flex",
                                                     alignItems: "center",
-
                                                 },
                                             }}
                                         >
-                                            {[1, 2, 3, 4, 5].map((num) => (
+                                            {Array.from({ length: item.product.stock }, (_, i) => i + 1).map((num) => (
                                                 <MenuItem key={num} value={num}>
                                                     {num}
                                                 </MenuItem>
                                             ))}
                                         </Select>
                                     </div>
+
 
                                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 text-gray-600">
                                         <span className="flex flex-wrap gap-1 text-sm md:text-base">

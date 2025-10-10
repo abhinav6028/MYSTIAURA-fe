@@ -13,31 +13,36 @@ import { useCategories } from "../../services/api/category/category";
 import { useDispatch } from "react-redux";
 import type { ProductCategory } from "../../types/categoryTypes";
 import { navigatePath } from "../../utils";
-import { logout } from "../../store/slices/authSlice";
 import { persistor } from "../../store";
+import { logout } from "../../store/slices/authSlice";
+import { clearUserState } from "../../store/slices/userSlice";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
 
-  const { data: wishlistData } = useWishList();
-  const { data: cartData } = useCart();
+  const { data: wishlistData } = useWishList(isAuthenticated);
+  const { data: cartData } = useCart(isAuthenticated);
   useCategories();
   const dispatch = useDispatch();
   const wishlistCount = wishlistData?.totalCount ?? 0;
   const cartCount = cartData?.totalCount ?? 0;
 
+  console.log("wishlistCount", wishlistCount);
+  console.log("cartCount", cartCount);
+
   const navigate = useNavigate();
   const location = useLocation();
   const locationCheck = location.pathname.includes('user') ? "/" : "/user";
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     dispatch(logout());
-    persistor.purge();
+    await persistor.purge();
+    dispatch(clearUserState());
+    localStorage.removeItem("persist:root");
     navigate("/login");
   }
-
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   // const categoryList = useSelector((state: any) => state?.user?.categories) || [];
   const { data: categories } = useCategories();
@@ -246,7 +251,7 @@ const Header = () => {
 
                     navigate(`/${navigatePath}/wishlist`);
                   }}
-                className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
+                  className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
 
               </Badge>
 
@@ -280,7 +285,7 @@ const Header = () => {
                   if (!isAuthenticated) {
                     return;
                   }
-                  navigate(`/${navigatePath}/mycart`); 
+                  navigate(`/${navigatePath}/mycart`);
                 }} className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
               </Badge>
 

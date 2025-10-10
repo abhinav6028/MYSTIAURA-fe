@@ -21,10 +21,10 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setSellerProducts: (state, action: PayloadAction<BestSellerProduct[]>) => {
-      state.bestSellerProducts = action.payload;
+      state.bestSellerProducts = action.payload || [];
     },
     setWishlistProducts: (state, action: PayloadAction<Wishlist[]>) => {
-      state.wishlistProducts = action.payload;
+      state.wishlistProducts = action.payload || [];
     },
     setAddCartList: (state, action: PayloadAction<CartData>) => {
       state.addCartList = action.payload;
@@ -50,8 +50,9 @@ const userSlice = createSlice({
     setCategoryFilter(state, action: PayloadAction<FilterParams>) {
       state.categoryFilter = action.payload;
     },
+    clearUserState: () => initialState,
   },
 });
 
-export const { setSellerProducts, setWishlistProducts, setAddCartList, setAddresses, setSingleProduct, setCategories, selectedProductCategory, selectedDashboad, orders, setCategoryFilter } = userSlice.actions;
+export const { setSellerProducts, setWishlistProducts, setAddCartList, setAddresses, setSingleProduct, setCategories, selectedProductCategory, selectedDashboad, orders, setCategoryFilter, clearUserState } = userSlice.actions;
 export default userSlice.reducer;

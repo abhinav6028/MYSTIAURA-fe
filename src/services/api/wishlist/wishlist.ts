@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 
 // --- Get Wishlist ---
-export function useWishList() {
+export function useWishList(isAuthenticated: boolean) {
   const dispatch = useDispatch();
 
   const query = useQuery<Wishlist, Error>({
@@ -17,16 +17,18 @@ export function useWishList() {
       return res.data?.data as Wishlist;
     },
     retry: false,
+    enabled: !!isAuthenticated, // <-- ensure it's a boolean
   });
 
   useEffect(() => {
-    if (query.data) {
+    if (query.data && isAuthenticated) { // only dispatch if authenticated
       dispatch(setWishlistProducts([query.data]));
     }
-  }, [query.data, dispatch]);
+  }, [query.data, dispatch, isAuthenticated]);
 
   return query;
 }
+
 
 
 // --- Add to Wishlist ---

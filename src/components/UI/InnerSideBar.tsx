@@ -1,8 +1,12 @@
 import { CircleUser, Files, LogOut } from 'lucide-react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { logout } from '../../store/slices/authSlice';
+import { persistor } from '../../store';
 
 export default function InnerSideBar() {
 
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const pathName = useLocation();
@@ -30,44 +34,54 @@ export default function InnerSideBar() {
 
     ]
 
+      const handleLogout = async () => {
+        dispatch(logout());
+        await persistor.purge();
+        navigate("/login");
+      }
 
     return (
         <>
-            <aside className="w-64 bg-white px-2 ">
-                <nav className="space-y-2 ">
+            <aside
+                className="
+    w-full sm:w-64
+    bg-white 
+    px-2 
+    fixed bottom-0 left-0 right-0 
+    sm:relative 
+    border-t sm:border-t-0
+    z-50
+  "
+            >
+                <nav
+                    className="flex sm:flex-col justify-center sm:justify-start items-center space-x-6 sm:space-x-0 sm:space-y-2 py-2 sm:py-0"
+                >
+                    {sideBartems?.map((data: any, index: any) => {
+                        const Icon = data?.Icon;
+                        const isActive = pathName.pathname === data?.path;
 
-                    {
-                        sideBartems?.map((data: any, index: any) => {
-
-                            const Icon = data?.Icon
-
-                            return (
-                                <button
-                                    key={index}
-                                    onClick={() => navigate(data?.path)}
-                                    className={`px-6 py-3 font-semibold w-full transition
-                                        ${pathName.pathname == data?.path ? 'bg-primary text-white ' : 'text-primary'}
-
-                                     hover:border bover:border-primary
-                                    cursor-pointer
-                                    disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center
-                                `}
-                                >
-                                    <Icon className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
-
-                                    <p className='ml-2'> {data?.name}</p>
-                                </button>
-                            )
-                        }
-
-
-                        )
-                    }
-
+                        return (
+                            <button
+                                key={index}
+                                onClick={async () => {
+                                    if(data?.name === "Logout") {
+                                        await handleLogout();
+                                    }
+                                    navigate(data?.path)}}
+                                className={` flex w-full flex-col sm:flex-row items-center sm:justify-start justify-center  px-5 sm:px-6 py-2 sm:py-3 font-semibold transition
+            ${isActive ? "bg-primary text-white" : "text-primary"}
+            hover:border hover:border-primary
+          `}
+                            >
+                                <Icon className="w-6 h-6" strokeWidth={1} />
+                                <p className="text-xs sm:text-base sm:ml-2 mt-1 sm:mt-0">
+                                    {data?.name}
+                                </p>
+                            </button>
+                        );
+                    })}
                 </nav>
-
             </aside>
-
         </>
     )
 }
