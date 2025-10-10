@@ -201,7 +201,7 @@ const ProductDetailsMain = () => {
 
                     {/* Buy now */}
                     <Button
-                        onClick={() => navigate("/selectadress")}
+                        onClick={() => navigate("/user/selectadress")}
                         variant="outlined"
                         sx={{
                             width: "100%",

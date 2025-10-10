@@ -9,7 +9,10 @@ import AdminLayout from '../../../components/layout/AdminLayout';
 import CommonDataGrid from '../../../components/MuiComponents/CustomDatagrid';
 import AlertDialog from '../../../components/MuiComponents/CustomDialogBox';
 import OrderHeader from './OrderHeader';
-import { useOrders } from '../../../services/api/orders/orders';
+import { useOrders, useUpdateOrderStatus } from '../../../services/api/orders/orders';
+import type { GridRenderCellParams } from '@mui/x-data-grid';
+import type { SelectChangeEvent } from '@mui/material';
+import { Select, MenuItem } from '@mui/material';
 
 function Orders() {
     const [open, setOpen] = useState(false);
@@ -19,9 +22,39 @@ function Orders() {
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
     const { data: orders } = useOrders({ page, limit, search: searchText });
-    const ordersData = orders?.orders?.data?.result;
+    const ordersData = orders?.orders?.data?.result || [];
     const totalOrders = orders?.orders?.data?.total || 0;
     const navigate = useNavigate();
+    const updateOrderStatus = useUpdateOrderStatus();
+
+    const OrderStatusCell = (params: GridRenderCellParams) => {
+        
+        const { row, value } = params;
+      
+        const handleChange = (event: SelectChangeEvent) => {
+          const newRole = event.target.value;
+      
+          updateOrderStatus.mutate({
+            _id: row.id,
+            orderStatus: newRole,
+          });
+        };
+      
+        return (
+          <Select
+            value={value || "placed"}
+            onChange={handleChange}
+            size="small"
+            fullWidth
+          >
+            <MenuItem value="placed">Placed</MenuItem>
+            <MenuItem value="delivered">Delivered</MenuItem>
+            <MenuItem value="shipped">Shipped</MenuItem>
+            <MenuItem value="confirmed">Confirmed</MenuItem>
+            <MenuItem value="cancelled">Cancelled</MenuItem>
+          </Select>
+        );
+      };
 
     const columns: GridColDef[] = [
         {
@@ -50,7 +83,7 @@ function Orders() {
             width: 160,
             valueFormatter: (value) => (value ? new Date(value as any).toLocaleString() : ""),
         },
-        { field: "orderStatus", headerName: "Order Status", width: 140 },
+        { field: "orderStatus", headerName: "Order Status", width: 140, renderCell: (params) => <OrderStatusCell {...params} /> },
         { field: "paymentStatus", headerName: "Payment", width: 110 },
         { field: "customer", headerName: "Customer", flex: 1 },
         { field: "city", headerName: "City", width: 120 },

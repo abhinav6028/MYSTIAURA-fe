@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { setAddCartList } from "../../../store/slices/userSlice";
 import type { CartData } from "../../../types/userTypes";
 
-export function useCart() {
+export function useCart(enabled: boolean) {
   const dispatch = useDispatch();
   const query =  useQuery<CartData, Error>({
     queryKey: ["cart"],
@@ -16,7 +16,8 @@ export function useCart() {
       return res.data?.data as CartData;
     },
     retry: false,
-  });
+    enabled,
+    });
 
    useEffect(() => {
     if (query.data) {
