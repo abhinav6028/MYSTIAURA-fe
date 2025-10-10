@@ -6,8 +6,6 @@ import type { OrderType } from '../../types/orderHistory';
 export default function MyOrders() {
 
     const { data: orderList } = useOrderedList();
-    console.log(orderList);
-
 
     const orders = [
         {

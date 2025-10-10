@@ -29,9 +29,6 @@ const Header = () => {
   const wishlistCount = wishlistData?.totalCount ?? 0;
   const cartCount = cartData?.totalCount ?? 0;
 
-  console.log("wishlistCount", wishlistCount);
-  console.log("cartCount", cartCount);
-
   const navigate = useNavigate();
   const location = useLocation();
   const locationCheck = location.pathname.includes('user') ? "/" : "/user";

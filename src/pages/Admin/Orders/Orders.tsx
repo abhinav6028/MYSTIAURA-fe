@@ -28,7 +28,6 @@ function Orders() {
     const updateOrderStatus = useUpdateOrderStatus();
 
     const OrderStatusCell = (params: GridRenderCellParams) => {
-        console.log(params);
         
         const { row, value } = params;
       
