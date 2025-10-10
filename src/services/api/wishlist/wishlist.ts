@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 
 // --- Get Wishlist ---
-export function useWishList(isAuthenticated: boolean) {
+export function useWishList(isAuthenticated?: boolean) {
   const dispatch = useDispatch();
 
   const query = useQuery<Wishlist, Error>({

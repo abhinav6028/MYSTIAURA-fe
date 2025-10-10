@@ -12,10 +12,10 @@ const BestSellerProduct = () => {
     const { data } = useProductList(1, 8);
     const createAddToCart = useAddToCartProduct();
     const navigate = useNavigate();
-    const createAddToWishList = useAddToWishList()
-    const { data: wishlistData } = useWishList();
-    const deleteWishListItem = useRemoveFromWishList();
     const { isAuthenticated } = useAppSelector((state) => state.auth);
+    const createAddToWishList = useAddToWishList()
+    const { data: wishlistData } = useWishList(isAuthenticated);
+    const deleteWishListItem = useRemoveFromWishList();
 
     return (
         <div className="pb-8">
@@ -39,12 +39,7 @@ const BestSellerProduct = () => {
                 </p>
             </div>
 
-
-            {/* grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4 */}
-            {/* Product Grid */}
-
             <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:px-4">
-
                 {data?.map((val) => {
                     const isWishlisted = wishlistData?.products?.some(
                         (item) => item._id === val._id
