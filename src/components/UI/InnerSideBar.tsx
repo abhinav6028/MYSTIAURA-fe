@@ -1,18 +1,12 @@
 import { CircleUser, Files, LogOut } from 'lucide-react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { logout } from '../../store/slices/authSlice';
-import { persistor } from '../../store';
+import { useLogout } from '../../hooks/useLogout';
 
 export default function InnerSideBar() {
 
-    const dispatch = useDispatch();
     const navigate = useNavigate();
-
     const pathName = useLocation();
-
-    console.log("pathName", pathName.pathname);
-
+    const logoutUser = useLogout();
 
     const sideBartems = [
 
@@ -35,8 +29,7 @@ export default function InnerSideBar() {
     ]
 
       const handleLogout = async () => {
-        dispatch(logout());
-        await persistor.purge();
+       logoutUser();
         navigate("/login");
       }
 
