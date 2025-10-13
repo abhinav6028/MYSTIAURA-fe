@@ -1,31 +1,43 @@
 // import { useEffect } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import AppRoutes from "./router/AppRoutes";
+import logo from "../src/assets/whatsapp.png"
 
 function App() {
-  // useEffect(() => {
-  //   const lenis = new window.Lenis({
-  //     duration: 0.5,
-  //     easing: (t: number) => t,
-  //     smooth: true,
-  //     smoothTouch: true,
-  //   });
-
-
-  //   const raf = (time: number) => {
-  //     lenis.raf(time);
-  //     requestAnimationFrame(raf);
-  //   };
-  //   requestAnimationFrame(raf);
-
-  //   return () => lenis.destroy();
-  // }, []);
 
   return (
     <Router>
-      {/* <PopUp /> */}
-      <AppRoutes />
-    </Router>
+      <div>
+        <div
+          className="cursor-pointer jump"
+          style={{
+            position: "fixed",
+            bottom: "20px",
+            right: "20px",
+            padding: "10px",
+            borderRadius: "50%",
+            zIndex: 1000,
+            // backgroundColor: "#25D366", // WhatsApp green
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          onClick={() => {
+            const phoneNumber = "9895380343";
+            const message = encodeURIComponent("Hello!");
+            window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank");
+          }}
+        >
+          <img
+            src={logo}
+            alt=""
+            className="h-15 w-15"
+          />
+
+        </div>
+        <AppRoutes />
+      </div>
+    </Router >
   );
 }
 export default App;

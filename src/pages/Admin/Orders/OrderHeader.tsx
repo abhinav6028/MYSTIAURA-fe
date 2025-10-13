@@ -21,7 +21,7 @@ export default function OrderHeader({ search, setSearch }: { search: string; set
             {/* Top Row: Title and Create Button */}
             <div className="flex justify-between items-center">
                 <h1 className="text-xl font-bold">Order List</h1>
-                <Button style={{ fontFamily: 'Poppins, sans-serif' }} variant="contained" color="primary" onClick={() => navigate('/admin/products/create')}>
+                <Button style={{ fontFamily: 'Poppins, sans-serif' }} variant="contained" color="primary" onClick={() => navigate('/admin/orders/create')}>
                     Create Order
                 </Button>
             </div>

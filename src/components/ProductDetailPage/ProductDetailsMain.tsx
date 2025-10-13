@@ -1,6 +1,6 @@
 import { Button, Typography } from "@mui/material";
 import { useState } from "react";
-import { Heart, Plus, Minus } from "lucide-react";
+import { Heart, Plus, Minus, Share2 } from "lucide-react";
 import { finalPrice, FONT_FAMILY, PRIMARY_COLOUR } from "../../utils";
 import { useNavigate, useParams } from "react-router-dom";
 import { useProductWithId } from "../../services/api/product/product";
@@ -30,6 +30,26 @@ const ProductDetailsMain = () => {
         const x = e.pageX - left;
         const y = e.pageY - top;
         setPosition({ x, y, width, height });
+    };
+
+    const handleShare = () => {
+        const url = window.location.href; // current page URL
+        const text = `Check out this product: ${singleProduct?.name}`;
+
+        // Web Share API (mobile & supported browsers)
+        if (navigator.share) {
+            navigator.share({
+                title: singleProduct?.name,
+                text,
+                url,
+            })
+                .then(() => console.log("Shared successfully"))
+                .catch((error) => console.error("Error sharing", error));
+        } else {
+            // Fallback: WhatsApp sharing
+            const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text + " " + url)}`;
+            window.open(whatsappUrl, "_blank");
+        }
     };
 
     return (
@@ -87,12 +107,16 @@ const ProductDetailsMain = () => {
                 <div className="flex flex-col gap-6">
                     {/* Title & Rating */}
                     <div className="border-b border-gray-200 pb-4">
-                        <h1
-                            style={{ fontFamily: FONT_FAMILY }}
-                            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold mb-2"
-                        >
-                            {singleProduct?.name}
-                        </h1>
+                        <div className="flex justify-between">
+                            <h1
+                                style={{ fontFamily: FONT_FAMILY }}
+                                className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold mb-2"
+                            >
+                                {singleProduct?.name}
+                            </h1>
+
+                            <button className="cursor-pointer" onClick={handleShare}><Share2 strokeWidth={1.25} /></button>
+                        </div>
 
                         <div className="flex items-center gap-2 text-yellow-500 mb-2">
                             <RatingStars
@@ -198,7 +222,7 @@ const ProductDetailsMain = () => {
 
                     {/* Buy now */}
                     <Button
-                        onClick={() => { navigate(`/user/selectadress/${id}`, {state: {product: singleProduct, quantity}}) }}
+                        onClick={() => { navigate(`/user/selectadress/${id}`, { state: { product: singleProduct, quantity } }) }}
                         variant="outlined"
                         sx={{
                             width: "100%",
