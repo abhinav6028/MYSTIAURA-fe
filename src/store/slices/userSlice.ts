@@ -14,6 +14,7 @@ const initialState: UserState = {
   selectedDashboad: null,
   orders: null,
   categoryFilter: {},
+  singlePaymentProduct: null,
 };
 
 const userSlice = createSlice({
@@ -50,9 +51,15 @@ const userSlice = createSlice({
     setCategoryFilter(state, action: PayloadAction<FilterParams>) {
       state.categoryFilter = action.payload;
     },
+    setSinglePaymentProduct(state, action: PayloadAction<SingleProduct | null>) {
+      state.singlePaymentProduct = action.payload;
+    },
+    clearSinglePaymentProduct(state) {
+      state.singlePaymentProduct = null;
+    },
     clearUserState: () => initialState,
   },
 });
 
-export const { setSellerProducts, setWishlistProducts, setAddCartList, setAddresses, setSingleProduct, setCategories, selectedProductCategory, selectedDashboad, orders, setCategoryFilter, clearUserState } = userSlice.actions;
+export const { setSellerProducts, setWishlistProducts, setAddCartList, setAddresses, setSingleProduct, setCategories, selectedProductCategory, selectedDashboad, orders, setCategoryFilter, clearUserState, clearSinglePaymentProduct,setSinglePaymentProduct } = userSlice.actions;
 export default userSlice.reducer;

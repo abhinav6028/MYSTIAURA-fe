@@ -59,8 +59,7 @@ function CreateProduct() {
         mode: "onBlur" // validate on blur
     });
 
-    const handleFormSubmit = (data: FormValues) => {
-        console.log("Form Values:", data);
+    const handleFormSubmit = () => {
         alert("Form submitted successfully!");
 
         // const formData = new FormData();

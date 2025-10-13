@@ -23,7 +23,7 @@ const ProductDetailsMain = () => {
     const [showMagnifier, setShowMagnifier] = useState(false);
     const [position, setPosition] = useState({ x: 0, y: 0, width: 0, height: 0 });
 
-    const [currentIndx, setCurrentIndex] = useState(0)
+    const [currentIndx, setCurrentIndex] = useState(0);
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
@@ -31,9 +31,6 @@ const ProductDetailsMain = () => {
         const y = e.pageY - top;
         setPosition({ x, y, width, height });
     };
-
-
-
 
     return (
         <div className="px-4 md:px-6 lg:px-10 py-6">
@@ -201,7 +198,7 @@ const ProductDetailsMain = () => {
 
                     {/* Buy now */}
                     <Button
-                        onClick={() => navigate("/user/selectadress")}
+                        onClick={() => { navigate(`/user/selectadress/${id}`, {state: {product: singleProduct, quantity}}) }}
                         variant="outlined"
                         sx={{
                             width: "100%",

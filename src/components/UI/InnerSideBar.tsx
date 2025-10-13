@@ -8,6 +8,7 @@ export default function InnerSideBar() {
     const pathName = useLocation();
     const logoutUser = useLogout();
 
+
     const sideBartems = [
 
         {
@@ -37,14 +38,13 @@ export default function InnerSideBar() {
         <>
             <aside
                 className="
-    w-full sm:w-64
-    bg-white 
-    px-2 
-    fixed bottom-0 left-0 right-0 
-    sm:relative 
-    border-t sm:border-t-0
-    z-50
-  "
+                    w-full sm:w-64
+                    bg-white 
+                    px-2 
+                    fixed bottom-0 left-0 right-0 
+                    sm:relative 
+                    border-t sm:border-t-0
+                    z-100"
             >
                 <nav
                     className="flex sm:flex-col justify-center sm:justify-start items-center space-x-6 sm:space-x-0 sm:space-y-2 py-2 sm:py-0"

@@ -5,12 +5,14 @@ import { useRemoveFromWishList, useWishList } from '../../services/api/wishlist/
 import { Heart } from 'lucide-react';
 import { finalPrice } from '../../utils';
 import type { WishProduct } from '../../types/userTypes';
+import { useAddToCartProduct } from '../../services/api/cart/cart';
 
 export default function WishList() {
 
     const { data } = useWishList();
 
     const deleteWishListItem = useRemoveFromWishList();
+    const createAddToCart = useAddToCartProduct();
 
     const navigate = useNavigate()
 
@@ -62,7 +64,11 @@ export default function WishList() {
                             </div>
 
                             {/* Add to Cart Button */}
-                            <button className="flex-1 bg-[#660033] text-white font-semibold md:py-3 py-2 text-sm sm:text-md hover:bg-[#51052b] transition-colors w-full sm:w-auto">
+                            <button className="flex-1 bg-[#660033] text-white font-semibold md:py-3 py-2 text-sm sm:text-md hover:bg-[#51052b] transition-colors w-full sm:w-auto"
+                                onClick={() =>
+                                    createAddToCart.mutate({ product: val._id, quantity: 1 })
+                                }
+                            >
                                 ADD TO CART
                             </button>
                         </div>

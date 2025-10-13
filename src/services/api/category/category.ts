@@ -96,7 +96,6 @@ export function useUpdateCategory() {
   return useMutation({
     mutationFn: async ({ _id, payload }: { _id: string; payload: CategoryInput }) => {
       let imageIds: string[] | string = [];
-      console.log(payload);
 
       // 1️⃣ Upload if images exist
       if (payload.image instanceof FileList) {

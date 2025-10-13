@@ -7,18 +7,6 @@ export default function MyOrders() {
 
     const { data: orderList } = useOrderedList();
 
-    const orders = [
-        {
-            status: "In progress",
-            date: "10 May 2021",
-            id: "ABC-6457325",
-            title:
-                "Blue & pink Silk Saree | Linen Kurta | Printed black & white short kurti & 2 more items",
-            price: "₹12,500",
-            image: "image url",
-        }
-    ];
-
     return (
         <LayoutContainer>
             <div className="min-h-scree md:p-6 flex">
@@ -46,56 +34,41 @@ export default function MyOrders() {
 
                     {/* Orders List */}
                     <div className="space-y-4 mt-3">
-                        {orders.map((order, idx) => (
-                            <div
-                                key={idx}
-                                className="bg-white border border-green-100 p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 hover:shadow-md transition rounded-md overflow-hidden"
-                            >
-                                {/* ✅ Responsive image */}
-                                <img
-                                    src={order.image}
-                                    alt={order.title}
-                                    className="w-full sm:w-32 h-48 sm:h-36 object-cover bg-[#f9f9f9] rounded-md"
-                                />
-
-                                {/* ✅ Order content */}
-                                <div className="flex-1">
-                                    <div className="flex flex-wrap items-center gap-2 text-sm mb-1">
-                                        <span
-                                            className={`px-3 py-1 rounded-lg text-white text-xs ${order.status === "Delivered" ? "bg-green-500" : "bg-yellow-500"
-                                                }`}
-                                        >
-                                            {order.status}
-                                        </span>
-                                        <span className="font-medium text-gray-600">{order.date}</span>
-                                    </div>
-                                    <div className="font-semibold text-gray-800 mt-2 sm:mt-3">
-                                        Order ID: {order.id}
-                                    </div>
-                                    <div className="text-gray-700 text-sm truncate">{order.title}</div>
-                                    <div className="text-red-600 font-bold mt-1">{order.price}</div>
-                                </div>
-                            </div>
-                        ))}
-
-                        {Array.isArray(orderList) && orderList?.map((order : OrderType , idx: number) => (
+                        {Array.isArray(orderList) && orderList?.map((order: OrderType, idx: number) => (
                             <div
                                 key={idx}
                                 className="bg-white border border-green-100 p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 hover:shadow-md transition rounded-md overflow-hidden"
                             >
                                 {/* ✅ Responsive image */}
 
-                                <div className='grid grid-cols-1'>
-                                    {
-                                        order.items?.map((item: any) => (
-                                            <img
-                                                src={item.product.images[0].secure_url}
-                                                alt={item.product.name}
-                                                className="w-full sm:w-32 h-48 sm:h-36 object-cover bg-[#f9f9f9] rounded-md"
-                                            />
-                                        ))
-                                    }
+                                <div
+                                    className={`grid w-full sm:w-32 h-48 sm:h-36 gap-1
+                                        ${order.items?.length === 1
+                                            ? "grid-cols-1 grid-rows-1"
+                                            : order.items?.length === 2
+                                                ? "grid-cols-1 grid-rows-2"
+                                                : order.items?.length === 3
+                                                    ? "grid-cols-2 grid-rows-2"
+                                                    : "grid-cols-2 grid-rows-2"
+                                        }
+                                    `}
+                                >
+                                    {order.items?.slice(0, 4).map((item: any, idx: number) => (
+                                        <img
+                                            key={idx}
+                                            src={item.product.images[0].secure_url}
+                                            alt={item.product.name}
+                                            className={`
+                                                object-cover bg-[#f9f9f9] rounded-md w-full h-full
+                                                ${order.items?.length === 3 && idx === 2
+                                                    ? "col-span-2" // last image spans full width
+                                                    : ""
+                                                }
+                                            `}
+                                        />
+                                    ))}
                                 </div>
+
                                 {/* ✅ Order content */}
                                 <div className="flex-1">
                                     <div className="flex flex-wrap items-center gap-2 text-sm mb-1">
