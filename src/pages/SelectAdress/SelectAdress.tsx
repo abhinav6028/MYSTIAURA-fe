@@ -121,11 +121,11 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
     const subtotal = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
     const taxes = 25;
     const deliveryFee = 0;
-    const grandTotal = subtotal + taxes + deliveryFee;
+    const grandTotal = subtotal + taxes + deliveryFee;    
 
     const currentStep = 0 // Address step is active
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
 
     const handleEdit = (item: any) => {

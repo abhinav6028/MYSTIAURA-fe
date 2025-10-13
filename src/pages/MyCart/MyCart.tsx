@@ -235,7 +235,7 @@ const MyCart = () => {
                             className="bg-amber-700 text-white normal-case mt-4 "
                         >
                             Checkout
-                        </Button>
+                        </Button>   
                     </CardContent>
                 </Card>
             </div>

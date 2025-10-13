@@ -12,7 +12,8 @@ export interface UserState {
   selectedProductCategory: ProductCategory | null;
   selectedDashboad: null,
   orders: null,
-  categoryFilter: FilterParams
+  categoryFilter: FilterParams,
+  singlePaymentProduct: SingleProduct | null,
 }
 
 export interface FilterParams {
@@ -88,6 +89,7 @@ export interface SingleProduct {
   negativeReviewCount: number;
   fiveStarCount: number;
   discountType: string;
+  quantity: number;
 }
 
 

@@ -13,6 +13,8 @@ import { PenLine, Phone } from "lucide-react";
 import { useSelector } from 'react-redux';
 import { useCheckout } from '../../services/api/checkout/checkout';
 import CheckoutButton from '../SelectAdress/RazorPay';
+import { useProductWithId } from '../../services/api/product/product';
+import { useLocation, useParams } from 'react-router-dom';
 
 
 type CartItem = {
@@ -116,6 +118,8 @@ interface ReviewOrderProps {
 export default function ReviewOrder({ selectedCheckAddress }: ReviewOrderProps) {
 
     const [cart] = useState<CartItem[]>(initialCart);
+    const id = useParams();
+    const location = useLocation();
 
     const subtotal = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
     const taxes = 25;
@@ -123,6 +127,8 @@ export default function ReviewOrder({ selectedCheckAddress }: ReviewOrderProps) 
     const grandTotal = subtotal + taxes + deliveryFee;
 
     const currentStep = 1;
+
+    const { data: singlePaymentProduct } = useProductWithId(id?.id as string);
 
     const cartItems = useSelector(
         (state: any) => state.user.addCartList ?? []
@@ -139,7 +145,7 @@ export default function ReviewOrder({ selectedCheckAddress }: ReviewOrderProps) 
     const handleCreate = () => {
 
         const payload = {
-            items: cartItems?.items,
+            items: singlePaymentProduct ? [{ product: singlePaymentProduct, quantity: location.state?.quantity || 1,price: singlePaymentProduct?.price - (singlePaymentProduct?.price * (singlePaymentProduct?.discountPrice / 100)) }] : cartItems?.items,
             shippingAddress: selectedCheckAddress,
         };
 
@@ -203,24 +209,41 @@ export default function ReviewOrder({ selectedCheckAddress }: ReviewOrderProps) 
                         </div>
 
                         <div className="space-y-4">
-                            {cartItems?.items?.map((item: any) => (
-                                <div key={item._id} style={{ borderBottom: '1px solid grey' }} className="flex items-center justify-between py-5">
+                            {singlePaymentProduct ?
+                                <div key={singlePaymentProduct._id} style={{ borderBottom: '1px solid grey' }} className="flex items-center justify-between py-5">
                                     <div className="flex gap-4">
                                         <div className="w-20 h-20 md:w-20 md:h-20 flex justify-center bg-[#f9f9f9]">
                                             <img
-                                                src={item?.product?.images ? item?.product?.images[0]?.secure_url : null}
+                                                src={singlePaymentProduct?.images ? singlePaymentProduct?.images[0]?.secure_url : undefined}
                                                 alt="Ring"
                                                 className="w-auto h-auto object-contain"
                                             />
                                         </div>
                                         <div className="flex flex-col">
-                                            <span className="md:text-lg text-sm">{item?.product?.name}</span>
-                                            <span color={PRIMARY_COLOUR} className="font-semibold my-1">${item.price}.00</span>
-                                            <span className="text-gray-500">QTY: {item.quantity}</span>
+                                            <span className="md:text-lg text-sm">{singlePaymentProduct?.name}</span>
+                                            <span color={PRIMARY_COLOUR} className="font-semibold my-1">${singlePaymentProduct?.price}.00</span>
+                                            <span className="text-gray-500">QTY: {location.state?.quantity}</span>
                                         </div>
                                     </div>
                                 </div>
-                            ))}
+                                : cartItems?.items?.map((item: any) => (
+                                    <div key={item._id} style={{ borderBottom: '1px solid grey' }} className="flex items-center justify-between py-5">
+                                        <div className="flex gap-4">
+                                            <div className="w-20 h-20 md:w-20 md:h-20 flex justify-center bg-[#f9f9f9]">
+                                                <img
+                                                    src={item?.product?.images ? item?.product?.images[0]?.secure_url : null}
+                                                    alt="Ring"
+                                                    className="w-auto h-auto object-contain"
+                                                />
+                                            </div>
+                                            <div className="flex flex-col">
+                                                <span className="md:text-lg text-sm">{item?.product?.name}</span>
+                                                <span color={PRIMARY_COLOUR} className="font-semibold my-1">${item.price}.00</span>
+                                                <span className="text-gray-500">QTY: {item.quantity}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
                         </div>
                     </>
 

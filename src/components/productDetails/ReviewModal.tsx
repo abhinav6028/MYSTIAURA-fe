@@ -51,8 +51,7 @@ const ReviewDialog = () => {
         },
     });
 
-    const onSubmit = (data: ReviewFormData) => {
-        console.log("Review Submitted:", data);
+    const onSubmit = () => {
         reset();
         setOpen(false);
     };

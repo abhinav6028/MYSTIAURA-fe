@@ -19,8 +19,6 @@ export default function DashBoard() {
     const { data: latestProducts } = useDashBoardLatestProducts()
 
     const { data: latestOrders } = useDashBoardLatestOrders()
-    console.log("latestProducts", latestOrders?.data?.data);
-
 
     const stats = [
         {

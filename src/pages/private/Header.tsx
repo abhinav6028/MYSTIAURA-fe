@@ -10,12 +10,9 @@ import { useAppSelector } from "../../store/hooks";
 import { useWishList } from "../../services/api/wishlist/wishlist";
 import { useCart } from "../../services/api/cart/cart";
 import { useCategories } from "../../services/api/category/category";
-import { useDispatch } from "react-redux";
 import type { ProductCategory } from "../../types/categoryTypes";
 import { navigatePath } from "../../utils";
-import { persistor } from "../../store";
-import { logout } from "../../store/slices/authSlice";
-import { clearUserState } from "../../store/slices/userSlice";
+import { useLogout } from "../../hooks/useLogout";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -25,7 +22,7 @@ const Header = () => {
   const { data: wishlistData } = useWishList(isAuthenticated);
   const { data: cartData } = useCart(isAuthenticated);
   useCategories();
-  const dispatch = useDispatch();
+  const logoutUser = useLogout();
   const wishlistCount = wishlistData?.totalCount ?? 0;
   const cartCount = cartData?.totalCount ?? 0;
 
@@ -34,11 +31,7 @@ const Header = () => {
   const locationCheck = location.pathname.includes('user') ? "/" : "/user";
 
   const handleLogout = async () => {
-    dispatch(logout());
-    await persistor.purge();
-    dispatch(clearUserState());
-    localStorage.removeItem("persist:root");
-    navigate("/login");
+    logoutUser();
   }
 
   // const categoryList = useSelector((state: any) => state?.user?.categories) || [];

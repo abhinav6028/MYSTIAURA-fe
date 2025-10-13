@@ -1,8 +1,8 @@
 import { Home, ShoppingCart, BarChart3, User, LogOut } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useLogout } from "../../services/api/auth/auth";
 import { TbCategory } from "react-icons/tb";
 import logo from "../../assets/logohorizontal.svg"
+import { useLogout } from "../../hooks/useLogout";
 
 const menuItems = [
   { icon: Home, label: "Main Dashboard", path: "/admin/dashboard" },
@@ -16,11 +16,11 @@ const menuItems = [
 export default function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
-  const logout = useLogout();
+  const logoutUser = useLogout();
 
   const handleItemClick = (item: typeof menuItems[number]) => {
     if (item.label === "Logout") {
-      logout();
+      logoutUser();
       navigate("/login");
     } else if (item.path) {
       navigate(item.path);

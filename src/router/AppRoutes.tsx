@@ -63,6 +63,7 @@ function AppRoutes() {
           <Route path="mycart" element={<MyCart />} />
           <Route path="wishlist" element={<WishList />} />
           <Route path="selectadress" element={<SelectAdress showItems={true} />} />
+          <Route path="selectadress/:id" element={<SelectAdress showItems={true} />} />
           {/* <Route path="selectadress" element={<SelectAdress />} /> */}
           <Route path="payment" element={<Payment />} />
           <Route path="revieworder" element={<ReviewOrder />} />
