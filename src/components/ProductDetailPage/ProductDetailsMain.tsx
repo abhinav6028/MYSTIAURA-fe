@@ -132,10 +132,7 @@ const ProductDetailsMain = () => {
                                 color="primary"
                             >
                                 ₹{" "}
-                                {finalPrice(
-                                    singleProduct?.price || 0,
-                                    singleProduct?.discountPrice || 0
-                                ).toFixed(2)}
+                                {singleProduct?.discountPrice}
                             </Typography>
 
                             {singleProduct?.price && (
@@ -144,7 +141,7 @@ const ProductDetailsMain = () => {
                                     sx={{ fontSize: { xs: "1rem", md: "1.3rem" } }}
                                     className="line-through text-gray-500"
                                 >
-                                    ₹ {singleProduct.price.toFixed(2)}
+                                    {singleProduct?.price}
                                 </Typography>
                             )}
                         </div>

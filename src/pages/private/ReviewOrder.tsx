@@ -114,8 +114,9 @@ interface Address {
 
 interface ReviewOrderProps {
     selectedCheckAddress?: Address;
+    discountAmount?: number
 }
-export default function ReviewOrder({ selectedCheckAddress }: ReviewOrderProps) {
+export default function ReviewOrder({ selectedCheckAddress, discountAmount }: ReviewOrderProps) {
 
     const [cart] = useState<CartItem[]>(initialCart);
     const id = useParams();
@@ -145,7 +146,7 @@ export default function ReviewOrder({ selectedCheckAddress }: ReviewOrderProps) 
     const handleCreate = () => {
 
         const payload = {
-            items: singlePaymentProduct ? [{ product: singlePaymentProduct, quantity: location.state?.quantity || 1,price: singlePaymentProduct?.price - (singlePaymentProduct?.price * (singlePaymentProduct?.discountPrice / 100)) }] : cartItems?.items,
+            items: singlePaymentProduct ? [{ product: singlePaymentProduct, quantity: location.state?.quantity || 1, price: singlePaymentProduct?.price - (singlePaymentProduct?.price * (singlePaymentProduct?.discountPrice / 100)) }] : cartItems?.items,
             shippingAddress: selectedCheckAddress,
         };
 
@@ -221,7 +222,7 @@ export default function ReviewOrder({ selectedCheckAddress }: ReviewOrderProps) 
                                         </div>
                                         <div className="flex flex-col">
                                             <span className="md:text-lg text-sm">{singlePaymentProduct?.name}</span>
-                                            <span color={PRIMARY_COLOUR} className="font-semibold my-1">${singlePaymentProduct?.price}.00</span>
+                                            <span color={PRIMARY_COLOUR} className="font-semibold my-1">₹{singlePaymentProduct?.discountPrice}.00</span>
                                             <span className="text-gray-500">QTY: {location.state?.quantity}</span>
                                         </div>
                                     </div>
@@ -238,7 +239,7 @@ export default function ReviewOrder({ selectedCheckAddress }: ReviewOrderProps) 
                                             </div>
                                             <div className="flex flex-col">
                                                 <span className="md:text-lg text-sm">{item?.product?.name}</span>
-                                                <span color={PRIMARY_COLOUR} className="font-semibold my-1">${item.price}.00</span>
+                                                <span color={PRIMARY_COLOUR} className="font-semibold my-1">₹{item.price}.00</span>
                                                 <span className="text-gray-500">QTY: {item.quantity}</span>
                                             </div>
                                         </div>
@@ -286,12 +287,12 @@ export default function ReviewOrder({ selectedCheckAddress }: ReviewOrderProps) 
                     <CardContent>
                         <div style={{ borderBottom: `1px solid ${PRIMARY_COLOUR}` }} className="flex justify-between my-1 md:my-2 py-2 md:py-3 border-b ">
                             <span>Subtotal</span>
-                            <span>${subtotal.toFixed(2)}</span>
+                            <span>₹{discountAmount ? discountAmount : subtotal.toFixed(2)}</span>
                         </div>
 
                         <div className="flex justify-between mb-2 my-2">
                             <span>Taxes</span>
-                            <span>${taxes.toFixed(2)}</span>
+                            <span>₹{taxes.toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between mb-2">
                             <span>Delivery Fee</span>
@@ -300,7 +301,7 @@ export default function ReviewOrder({ selectedCheckAddress }: ReviewOrderProps) 
                         <Divider className="my-2" />
                         <div className="flex justify-between font-bold text-lg py-3">
                             <span>Grand Total</span>
-                            <span>₹{grandTotal.toFixed(2)}</span>
+                            <span>₹{discountAmount ? discountAmount : grandTotal.toFixed(2)}</span>
                         </div>
 
                         <button

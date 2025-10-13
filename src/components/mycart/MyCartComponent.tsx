@@ -30,6 +30,7 @@ const MyCart = () => {
     }, [location.pathname]);
 
 
+
     const navigate = useNavigate();
 
     function getDateAfterDays(days: number) {
@@ -98,13 +99,15 @@ const MyCart = () => {
 
                                     <div className="flex flex-wrap items-center gap-2">
                                         <Typography variant="h6" className="text-[#a56c46] font-bold text-sm md:text-base">
-                                            ₹ {finalPrice(item.product.price, item.product.discountPrice).toFixed(2) || 0}
+                                            ₹ {item.product.discountPrice}
+                                            {/* {finalPrice(item.product.price, item.product.discountPrice).toFixed(2) || 0} */}
                                         </Typography>
-                                        {item.price && (
-                                            <Typography variant="body2" className="line-through text-gray-500 text-sm md:text-base">
-                                                ₹ {item.product.price.toFixed(2)}
-                                            </Typography>
-                                        )}
+                                        {/* {item.price && ( */}
+                                        <Typography variant="body2" className="line-through text-gray-500 text-sm md:text-base">
+                                            ₹ {item.product.price}
+                                            {/* {item.product.price.toFixed(2)} */}
+                                        </Typography>
+                                        {/* )} */}
                                     </div>
 
                                     {/* Qty Dropdown */}

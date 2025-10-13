@@ -14,7 +14,8 @@ import { ArrowLeft, Edit, MapPin, Phone, Trash2 } from "lucide-react";
 import AddNewAddressModal from '../../components/AddressSection/AddNewAddressModal';
 import { useAddresses, useDeleteAddress } from '../../services/api/selectAddress/selectAddress';
 import ReviewOrder from '../private/ReviewOrder';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useProductWithId } from '../../services/api/product/product';
 
 
 type CartItem = {
@@ -118,12 +119,20 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
     const { data: selectAdressState } = useAddresses();
     const deleteAdress = useDeleteAddress();
 
+    const { id } = useParams();
+
+    const { data: singleProduct } = useProductWithId(id as string);
+
+    console.log('singleProduct', singleProduct?.discountPrice);
+
+
     const subtotal = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
+
     const taxes = 25;
     const deliveryFee = 0;
-    const grandTotal = subtotal + taxes + deliveryFee;    
+    const grandTotal = subtotal + taxes + deliveryFee;
 
-    const currentStep = 0 // Address step is active
+    const currentStep = 0
 
     const navigate = useNavigate();
 
@@ -142,7 +151,9 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
     return (
 
         <>
-            {showomponet === 2 && <ReviewOrder selectedCheckAddress={selectedCheckAddress} />}
+            {showomponet === 2 && <ReviewOrder
+                discountAmount={singleProduct?.discountPrice}
+                selectedCheckAddress={selectedCheckAddress} />}
 
             {showomponet === 1 && (
                 <LayoutContainer>
@@ -298,12 +309,12 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
                                             className="flex justify-between my-1 md:my-2 py-2 md:py-3 border-b "
                                         >
                                             <span>Subtotal</span>
-                                            <span>${subtotal.toFixed(2)}</span>
+                                            <span>₹{id ? singleProduct?.discountPrice : subtotal.toFixed(2)}</span>
                                         </div>
 
                                         <div className="flex justify-between mb-2 my-2">
                                             <span>Taxes</span>
-                                            <span>${taxes.toFixed(2)}</span>
+                                            <span>₹{taxes.toFixed(2)}</span>
                                         </div>
                                         <div className="flex justify-between mb-2">
                                             <span>Delivery Fee</span>
@@ -313,7 +324,7 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
                                         <Divider className="my-2" />
                                         <div className="flex justify-between font-bold text-lg py-3">
                                             <span>Grand Total</span>
-                                            <span>₹{grandTotal.toFixed(2)}</span>
+                                            <span>₹{id ? singleProduct?.discountPrice : grandTotal.toFixed(2)}</span>
                                         </div>
 
                                         <button

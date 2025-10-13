@@ -106,10 +106,10 @@ const BestSellerProduct = () => {
                                 <h2 className="text-sm md:text-lg text-black mb-1">{val.name}</h2>
                                 <div className="flex items-baseline space-x-3">
                                     <span className="text-lg font-semibold text-[#a37557]">
-                                        ₹ {finalPrice(val.price, 10).toFixed(2)}
+                                        ₹ {val.discountPrice}
                                     </span>
                                     <span className="text-md text-gray-400 line-through">
-                                        ₹ {val.price.toFixed(2)}
+                                        ₹ {val.price}
                                     </span>
                                 </div>
                             </div>

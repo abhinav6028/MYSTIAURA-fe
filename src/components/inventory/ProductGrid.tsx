@@ -11,10 +11,10 @@ const ProductGrid: React.FC = () => {
   const { categoryname } = useParams();
   const { categoryFilter } = useAppSelector((state) => state.user);
   const category = Array.isArray(categoryFilter?.category) && categoryFilter.category.length > 0
-  ? categoryFilter.category.includes(categoryname || "")
-    ? categoryFilter.category.join(",") // if it includes categoryname → keep joined
-    : categoryFilter.category.join(",") // not included but not empty → still joined
-  : categoryname;
+    ? categoryFilter.category.includes(categoryname || "")
+      ? categoryFilter.category.join(",") // if it includes categoryname → keep joined
+      : categoryFilter.category.join(",") // not included but not empty → still joined
+    : categoryname;
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 8;
 
@@ -76,10 +76,10 @@ const ProductGrid: React.FC = () => {
                 <div className="w-full bg-white">
                   <div className="flex items-baseline space-x-3">
                     <span className="text-lg font-semibold text-[#a37557]">
-                      ₹ {finalPrice(val.price, 10).toFixed(2)}
+                      ₹ {val.discountPrice}
                     </span>
                     <span className="text-md text-gray-400 line-through">
-                      ₹ {val.price.toFixed(2)}
+                      ₹ {val.price}
                     </span>
                   </div>
                 </div>
