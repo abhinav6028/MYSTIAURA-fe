@@ -1,7 +1,7 @@
 import { Button, Typography } from "@mui/material";
 import { useState } from "react";
 import { Heart, Plus, Minus, Share2 } from "lucide-react";
-import { finalPrice, FONT_FAMILY, PRIMARY_COLOUR } from "../../utils";
+import { FONT_FAMILY, PRIMARY_COLOUR } from "../../utils";
 import { useNavigate, useParams } from "react-router-dom";
 import { useProductWithId } from "../../services/api/product/product";
 import { RatingStars } from "../../utilsComp/RatingsComp";

@@ -3,7 +3,7 @@ import { Heart } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useProducts } from "../../services/api/product/product";
 import type { ProductCategory } from "../../types/categoryTypes";
-import { finalPrice } from "../../utils";
+// import { finalPrice } from "../../utils";
 import { useAppSelector } from "../../store/hooks";
 
 const ProductGrid: React.FC = () => {

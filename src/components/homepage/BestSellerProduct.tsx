@@ -1,6 +1,6 @@
 import { ArrowUpRight, Heart } from "lucide-react";
 import subbanner from "../../assets/homepage/subbanner.png";
-import { finalPrice, FONT_FAMILY, navigatePath, PRIMARY_COLOUR } from "../../utils";
+import { FONT_FAMILY, navigatePath, PRIMARY_COLOUR } from "../../utils";
 import { useNavigate } from "react-router-dom";
 import { useProductList } from "../../services/api/product/product";
 import { useAddToCartProduct } from "../../services/api/cart/cart";

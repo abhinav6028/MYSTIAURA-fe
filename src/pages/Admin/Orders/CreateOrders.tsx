@@ -59,14 +59,36 @@ export default function CreateOrders() {
         (c: any) => c?.productCount !== 0
     );
 
+    // const {
+    //     handleSubmit,
+    //     control,
+    //     formState: { errors },
+    //     reset
+    // } = useForm<FormValues>({
+    //     resolver: yupResolver(schema),
+    //     mode: "onBlur",
+    //     defaultValues: {
+    //         items: [{ category: "", product: "", price: 0, quantity: 1 }],
+    //         customerName: "",
+    //         phone: "",
+    //         addressLine1: "",
+    //         addressLine2: "",
+    //         city: "",
+    //         state: "",
+    //         postalCode: "",
+    //         country: "",
+    //         totalAmount: 0,
+    //         status: "",
+    //     },
+    // });
+
     const {
         handleSubmit,
         control,
         formState: { errors },
-        reset,
-        watch,
+        reset
     } = useForm<FormValues>({
-        resolver: yupResolver(schema),
+        resolver: yupResolver(schema) as any,
         mode: "onBlur",
         defaultValues: {
             items: [{ category: "", product: "", price: 0, quantity: 1 }],
@@ -82,6 +104,7 @@ export default function CreateOrders() {
             status: "",
         },
     });
+
 
     const { fields, append, remove } = useFieldArray({
         control,
@@ -117,7 +140,7 @@ export default function CreateOrders() {
                 postalCode: singleProduct?.shippingAddress?.postalCode || "",
                 country: singleProduct?.shippingAddress?.country || "",
                 totalAmount: singleProduct?.totalAmount || 0,
-                status: singleProduct?.status || "In Progress",
+                status: (singleProduct as any)?.status || "In Progress", // ✅ cast here
             };
 
             reset(formValues);
@@ -126,7 +149,7 @@ export default function CreateOrders() {
 
     const onSubmit = (data: FormValues) => {
         const payLoad = {
-            items: data.items.map((item) => ({
+            items: (data.items ?? []).map((item) => ({
                 product: item.product,
                 price: item.price,
                 quantity: item.quantity,
@@ -145,7 +168,8 @@ export default function CreateOrders() {
             status: data.status,
         };
 
-        console.log("Payload with updated values:", payLoad);
+
+        // console.log("Payload with updated values:", payLoad);
 
         if (orderId && singleProduct) {
             updateOrders.mutate({ payload: payLoad, id: orderId });

@@ -10,7 +10,7 @@ import {
     MenuItem,
 } from "@mui/material";
 import { Trash, X } from "lucide-react";
-import { finalPrice, PRIMARY_COLOUR } from "../../utils";
+import {  PRIMARY_COLOUR } from "../../utils";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCart, useDeleteAllCartItem, useDeleteCartItem, useUpdateCart } from "../../services/api/cart/cart";
 import { useAppSelector } from "../../store/hooks";
