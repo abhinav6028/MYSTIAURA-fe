@@ -50,76 +50,47 @@ const Footer: React.FC = () => {
     return (
         <footer className="w-full">
             {/* Top Info Row */}
-            <div style={{ background: PRIMARY_COLOUR }} className="text-white py-6 px-10 xl:px-20">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {
-                        topInfoRow.map((val, index) => {
-                            return <div className="flex items-center gap-5" key={index}>
-                                <div>
-                                    <img src={val.image} alt="img" />
-                                </div>
-                                <div>
-                                    <p className="font-semibold text-[24px]">{val.title}</p>
-                                    <p className="text-sm">{val.content}</p>
-                                </div>
+            <div
+                style={{ background: PRIMARY_COLOUR }}
+                className="text-white py-6 px-6 sm:px-10 xl:px-20"
+            >
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center sm:text-left">
+                    {topInfoRow.map((val, index) => (
+                        <div
+                            key={index}
+                            className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-5"
+                        >
+                            <div>
+                                <img src={val.image} alt="img" className="mx-auto sm:mx-0" />
                             </div>
-                        })
-                    }
+                            <div>
+                                <p className="font-semibold text-[20px]">{val.title}</p>
+                                <p className="text-sm">{val.content}</p>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
 
             {/* Middle Contact + Subscribe */}
-            <div className="py-10 border-b px-10 xl:px-20">
+            <div className="py-10 border-b px-6 sm:px-10 xl:px-20">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-center md:text-left">
                     {/* Contact */}
-                    <div className="flex justify-center flex-col">
+                    <div className="flex flex-col justify-center items-center md:items-start">
                         <h3 className="font-bold mb-2">CONTACT US</h3>
                         <p style={{ color: PRIMARY_COLOUR }}>(405) 555-0128</p>
                     </div>
 
-                    {/* Subscribe */}
-                    {/* <div>
-                        <h3 style={{ fontFamily: FONT_FAMILY }} className="font-bold md:text-3xl text-xl mb-2">Let’s Get In Touch!</h3>
-                        <p style={{ color: PRIMARY_COLOUR }} className="text-sm mb-4">
-                            What’s inside? Exclusive sales, new arrivals & much more.
-                        </p>
-                        <div className="flex justify-center md:justify-start">
-                            <input
-                                type="email"
-                                placeholder="Email Address"
-                                className="border border-gray-300 px-3 py-3 w-2/4 focus:outline-none"
-                            />
-                            <button style={{ background: PRIMARY_COLOUR }} className=" text-white px-8">
-                                SIGN UP
-                            </button>
-                        </div>
-                    </div> */}
-
                     {/* Social */}
-                    <div className="flex flex-col justify-center items-end">
+                    <div className="flex flex-col justify-center items-center md:items-end">
                         <h3 className="font-bold mb-2">SOCIAL NETWORKS</h3>
-                        <div className="flex justify-center md:justify-start gap-4">
+                        <div className="flex justify-center md:justify-end gap-4">
                             <Facebook className="cursor-pointer" />
                             <Instagram className="cursor-pointer" />
                             <Twitter className="cursor-pointer" />
                             <YouTube className="cursor-pointer" />
                         </div>
                     </div>
-                </div>
-            </div>
-
-            {/* Bottom Links */}
-            <div className="py-6 px-10 xl:px-20 flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
-                <div className="flex gap-6">
-                    {/* <a href="#">RINGS</a>
-                    <a href="#">BRACELETS</a> */}
-                    <a href="#">ABOUT US</a>
-                    <a href="#">CONTACT US</a>
-                </div>
-                <img src={logo} alt="logo" />
-                <div className="flex gap-6">
-                    <a href="#">TERMS & CONDITIONS</a>
-                    <a href="#">PRIVACY POLICY</a>
                 </div>
             </div>
 
