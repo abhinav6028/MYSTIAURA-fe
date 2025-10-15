@@ -304,7 +304,7 @@ const Header = () => {
       </nav>
 
       {/* Mobile Menu Overlay */}
-      <div className={`fixed inset-0 z-40 lg:hidden transition-all duration-500 ${isMenuOpen
+      <div className={`fixed inset-0 z-40 bg-white lg:hidden transition-all duration-500 ${isMenuOpen
         ? 'opacity-100 pointer-events-auto'
         : 'opacity-0 pointer-events-none'
         }`}>
@@ -345,9 +345,17 @@ const Header = () => {
               );
             })}
 
-            <button onClick={() => navigate('/login')} className="bg-[#660033] text-white font-semibold md:py-2 py-2 md:px-4 cursor-pointer px-2 text-sm sm:text-md hover:bg-[#51052b] transition-colors w-full sm:w-auto">
-              LOG IN
-            </button>
+            {
+              isAuthenticated ?
+                <button onClick={handleLogout} className="bg-[#660033] text-white font-semibold md:py-2 py-2 md:px-4 cursor-pointer px-2 text-sm sm:text-md hover:bg-[#51052b] transition-colors w-full sm:w-auto">
+                  LOG OUT
+                </button>
+                :
+                <button onClick={() => navigate('/login')} className="bg-[#660033] text-white font-semibold md:py-2 py-2 md:px-4 cursor-pointer px-2 text-sm sm:text-md hover:bg-[#51052b] transition-colors w-full sm:w-auto">
+                  LOG IN
+                </button>
+            }
+
 
           </div>
 
