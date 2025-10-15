@@ -68,12 +68,12 @@ const ProductGrid: React.FC = () => {
                 </button>
               </div>
 
-              <div className="w-full bg-white px-2 sm:px-4">
+              <div className="w-full px-2 sm:px-4">
                 <h2 className="text-sm md:text-lg text-black mb-1">
                   {val?.name}
                 </h2>
 
-                <div className="w-full bg-white">
+                <div className="w-full">
                   <div className="flex items-baseline space-x-3">
                     <span className="text-lg font-semibold text-[#a37557]">
                       ₹ {val.discountPrice}

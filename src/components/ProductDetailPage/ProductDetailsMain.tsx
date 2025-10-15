@@ -168,70 +168,79 @@ const ProductDetailsMain = () => {
                     </div>
 
                     {/* Quantity / Add to cart */}
-                    <div className="grid grid-cols-[25%_60%_15%] gap-2 items-center">
-                        <span
-                            style={{ borderColor: PRIMARY_COLOUR }}
-                            className="flex items-center justify-between gap-2 border"
-                        >
-                            <button
-                                onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                                disabled={quantity === 1}
-                                className={`p-2 ${quantity === 1
-                                    ? "cursor-not-allowed opacity-50"
-                                    : "cursor-pointer"
-                                    }`}
-                            >
-                                <Minus size={18} />
-                            </button>
-                            <span className="text-sm md:text-base">{quantity}</span>
-                            <button
-                                onClick={() => setQuantity((q) => q + 1)}
-                                disabled={quantity === singleProduct?.stock}
-                                className="p-2 cursor-pointer"
-                            >
-                                <Plus size={18} />
-                            </button>
-                        </span>
 
+                    <div className="w-full space-y-3">
+                        {/* Quantity + Add to Cart + Wishlist */}
+                        <div className="flex flex-wrap items-center gap-3">
+                            {/* Quantity Selector */}
+                            <div
+                                style={{ borderColor: PRIMARY_COLOUR }}
+                                className="flex items-center justify-between border w-[120px] sm:w-[140px] md:w-[160px] h-full"
+                            >
+                                <button
+                                    onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                                    disabled={quantity === 1}
+                                    className={`p-2 ${quantity === 1 ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
+                                >
+                                    <Minus size={18} />
+                                </button>
+                                <span className="text-sm md:text-base font-medium">{quantity}</span>
+                                <button
+                                    onClick={() => setQuantity((q) => q + 1)}
+                                    disabled={quantity === singleProduct?.stock}
+                                    className="p-2 cursor-pointer"
+                                >
+                                    <Plus size={18} />
+                                </button>
+                            </div>
+
+                            {/* Add to Cart Button */}
+                            <Button
+                                sx={{
+                                    height: "44px",
+                                    fontFamily: "sans-serif",
+                                    bgcolor: PRIMARY_COLOUR,
+                                    fontSize: { xs: "0.8rem", md: "0.9rem" },
+                                    paddingInline: "24px",
+                                    flexGrow: 1,
+                                    textTransform: "none",
+                                }}
+                                onClick={() => createAddToCart.mutate({ product: id || "", quantity })}
+                            >
+                                Add To Cart
+                            </Button>
+
+                            {/* Wishlist Heart Icon */}
+                            <button
+                                style={{ borderColor: PRIMARY_COLOUR, color: PRIMARY_COLOUR }}
+                                className="border flex items-center justify-center p-2 hover:bg-gray-100 transition w-[44px] h-[44px] flex-shrink-0"
+                            >
+                                <Heart size={22} strokeWidth={1.2} />
+                            </button>
+                        </div>
+
+                        {/* Buy Now Button */}
                         <Button
-                            sx={{
-                                height: "42px",
-                                borderRadius: 0,
-                                fontFamily: "sans-serif",
-                                bgcolor: PRIMARY_COLOUR,
-                                fontSize: { xs: "0.8rem", md: "0.9rem" },
-                            }}
-                            fullWidth
                             onClick={() =>
-                                createAddToCart.mutate({ product: id || "", quantity })
+                                navigate(`/user/selectadress/${id}`, {
+                                    state: { product: singleProduct, quantity },
+                                })
                             }
+                            variant="outlined"
+                            sx={{
+                                width: "100%",
+                                height: "44px",
+                                fontFamily: "sans-serif",
+                                borderColor: PRIMARY_COLOUR,
+                                color: PRIMARY_COLOUR,
+                                textTransform: "none",
+                            }}
                         >
-                            Add To Cart
+                            BUY NOW
                         </Button>
-
-                        <span
-                            style={{ borderColor: PRIMARY_COLOUR, color: PRIMARY_COLOUR }}
-                            className="border flex items-center justify-center p-2 "
-                        >
-                            <Heart size={22} strokeWidth={1} />
-                        </span>
                     </div>
 
-                    {/* Buy now */}
-                    <Button
-                        onClick={() => { navigate(`/user/selectadress/${id}`, { state: { product: singleProduct, quantity } }) }}
-                        variant="outlined"
-                        sx={{
-                            width: "100%",
-                            height: "42px",
-                            fontFamily: "sans-serif",
-                            borderRadius: 0,
-                            borderColor: PRIMARY_COLOUR,
-                            color: PRIMARY_COLOUR,
-                        }}
-                    >
-                        BUY NOW
-                    </Button>
+
 
                     {/* SKU / Categories */}
                     <div className="grid grid-cols-2 gap-4 text-sm sm:text-base">

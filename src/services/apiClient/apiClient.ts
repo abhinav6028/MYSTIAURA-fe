@@ -3,7 +3,7 @@
 import axios from "axios";
 const apiClient = axios.create({
   baseURL: "https://jwelery-be.onrender.com/",
-  // baseURL: "https://nvl2rk2s-5000.inc1.devtunnels.ms/",
+  // baseURL: "https://s81hcxpv-5000.inc1.devtunnels.ms/",
   // baseURL: "https://hnd07ldd-3000.inc1.devtunnels.ms/",
   headers: { "Content-Type": "application/json" },
 });
@@ -19,7 +19,7 @@ apiClient.interceptors.request.use((config) => {
         const token = JSON.parse(tokenString); // real value
         config.headers.Authorization = `Bearer ${token}`;
       }
-    } 
+    }
   }
   return config;
 });
