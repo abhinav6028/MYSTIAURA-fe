@@ -23,7 +23,7 @@ function App() {
             justifyContent: "center",
           }}
           onClick={() => {
-            const phoneNumber = "9895380343";
+            const phoneNumber = "+919895380343";
             const message = encodeURIComponent("Hello!");
             window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank");
           }}
