@@ -9,7 +9,6 @@ import shipping from "../../assets/footer/shipping.svg"
 import returnSvg from "../../assets/footer/return.svg"
 import cutomerSvg from "../../assets/footer/customer.svg"
 import paymentSvg from "../../assets/footer/payment.svg"
-import logo from "../../assets/logo.svg"
 import klarnaSvg from "../../assets/footer/klarna.svg";
 import visaSvg from "../../assets/footer/visa.svg";
 import paypalSvg from "../../assets/footer/paypal.svg";
