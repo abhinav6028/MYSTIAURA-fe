@@ -156,8 +156,6 @@ const CreateNewProducts = () => {
             }
         );
     };
-
-
     return (
         <AdminLayout>
             <div className="py-2">
@@ -366,12 +364,12 @@ const CreateNewProducts = () => {
                                                 name="category"
                                                 control={control}
                                                 render={({ field, fieldState }) => {
-                                                    // map the field.value (_id string) to the actual category object
-                                                    const selectedCategory = category?.data?.find((cat: any) => cat._id === field.value) || null;
+
+                                                    const selectedCategory =  category?.data?.categories?.find((cat: any) => cat._id === field.value) || [];
 
                                                     return (
                                                         <Autocomplete
-                                                            options={category?.data || []}             // all categories
+                                                            options={category?.data?.categories || "se"}             // all categories
                                                             getOptionLabel={(option) => option.name}
                                                             isOptionEqualToValue={(option, value) => option._id === value._id}
                                                             value={selectedCategory}             // full object, not string
