@@ -24,12 +24,12 @@ const topInfoRow = [
         title: "Free Shipping",
         content: "You will love at great low prices"
     },
-    {
-        id: 2,
-        image: returnSvg,
-        title: "15 Days Returns",
-        content: "Within 15 days for an exchange"
-    },
+    // {
+    //     id: 2,
+    //     image: returnSvg,
+    //     title: "15 Days Returns",
+    //     content: "Within 15 days for an exchange"
+    // },
     {
         id: 3,
         image: cutomerSvg,
@@ -53,22 +53,23 @@ const Footer: React.FC = () => {
                 style={{ background: PRIMARY_COLOUR }}
                 className="text-white py-6 px-6 sm:px-10 xl:px-20"
             >
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center sm:text-left">
+                <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-10 px-6 py-5 text-center sm:text-left">
                     {topInfoRow.map((val, index) => (
                         <div
                             key={index}
-                            className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-5"
+                            className="flex flex-col sm:flex-row items-center sm:items-start gap-6"
                         >
                             <div>
-                                <img src={val.image} alt="img" className="mx-auto sm:mx-0" />
+                                <img src={val.image} alt="img" className="w-16 h-16 mx-auto sm:mx-0" />
                             </div>
                             <div>
-                                <p className="font-semibold text-[20px]">{val.title}</p>
-                                <p className="text-sm">{val.content}</p>
+                                <p className="font-semibold text-xl mb-1">{val.title}</p>
+                                <p className="text-sm leading-relaxed">{val.content}</p>
                             </div>
                         </div>
                     ))}
                 </div>
+
             </div>
 
             {/* Middle Contact + Subscribe */}
@@ -77,17 +78,19 @@ const Footer: React.FC = () => {
                     {/* Contact */}
                     <div className="flex flex-col justify-center items-center md:items-start">
                         <h3 className="font-bold mb-2">CONTACT US</h3>
-                        <p style={{ color: PRIMARY_COLOUR }}>(405) 555-0128</p>
+                        <p style={{ color: PRIMARY_COLOUR }}>+91 9895 380 343</p>
                     </div>
 
                     {/* Social */}
                     <div className="flex flex-col justify-center items-center md:items-end">
                         <h3 className="font-bold mb-2">SOCIAL NETWORKS</h3>
-                        <div className="flex justify-center md:justify-end gap-4">
-                            <Facebook className="cursor-pointer" />
-                            <Instagram className="cursor-pointer" />
-                            <Twitter className="cursor-pointer" />
-                            <YouTube className="cursor-pointer" />
+                        <div className="flex justify-center md:justify-start gap-4">
+                            {/* <Facebook className="cursor-pointer" /> */}
+                            <a href="">
+                                <Instagram className="cursor-pointer" />
+                            </a>
+                            {/* <Twitter className="cursor-pointer" /> */}
+                            {/* <YouTube className="cursor-pointer" /> */}
                         </div>
                     </div>
                 </div>

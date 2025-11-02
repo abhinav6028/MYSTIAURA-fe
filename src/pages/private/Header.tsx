@@ -128,7 +128,7 @@ const Header = () => {
           <div className="w-full hidden lg:flex  justify-between items-center   sm:py-2 py-2 md:py-3 lg:py-3">
             <div className="flex items-center md:gap-1 lg:gap-2 md:text-[18px] sm:text-[15px] text-[10px]">
               <img src={phone} alt="phone" className="w-3 h-3 lg:w-6 lg:h-6 md:w-6 md:h-6 sm:w-5 sm:h-5" />
-              <span className="ml:1">(307) 555-0133</span>
+              <span className="ml:1">+91 9895 380 343</span>
             </div>
             <span className="text-center flex-1 font-medium md:text-[18px] text-[10px]"> Get 50% OFF on Engagement Rings
             </span>
