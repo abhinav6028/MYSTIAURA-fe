@@ -1,6 +1,6 @@
 import { Button, Typography } from "@mui/material";
-import { useState } from "react";
-import { Heart, Plus, Minus, Share2 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Heart, Plus, Minus, Share2, ZoomIn, X } from "lucide-react";
 import { FONT_FAMILY, PRIMARY_COLOUR } from "../../utils";
 import { useNavigate, useParams } from "react-router-dom";
 import { useProductWithId } from "../../services/api/product/product";
@@ -22,7 +22,7 @@ const ProductDetailsMain = () => {
     // 👉 State for magnifier
     const [showMagnifier, setShowMagnifier] = useState(false);
     const [position, setPosition] = useState({ x: 0, y: 0, width: 0, height: 0 });
-
+    const [isMobile, setIsMobile] = useState(false);
     const [currentIndx, setCurrentIndex] = useState(0);
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -51,6 +51,17 @@ const ProductDetailsMain = () => {
             window.open(whatsappUrl, "_blank");
         }
     };
+    const [zoomed, setZoomed] = useState(false);
+
+    const imageUrl =
+        singleProduct?.images?.[currentIndx]?.secure_url || fallback;
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener("resize", checkMobile);
+        return () => window.removeEventListener("resize", checkMobile);
+    }, []);
 
     return (
         <div className="px-4 md:px-6 lg:px-10 py-6">
@@ -59,7 +70,70 @@ const ProductDetailsMain = () => {
                 {/* ---------- LEFT: IMAGES ---------- */}
                 <div>
                     {/* Main image with magnifier */}
-                    <div
+
+                    <div className="relative w-full h-64 sm:h-80 md:h-[28rem] lg:h-[35rem] overflow-hidden">
+                        {/* Product image */}
+                        <img
+                            src={imageUrl}
+                            alt={singleProduct?.name ?? "product image"}
+                            className="bg-gray-100 w-full h-full object-cover"
+                        />
+
+                        {/* Zoom icon */}
+                        <button
+                            onClick={() => setZoomed(true)}
+                            className="absolute top-3 left-3 bg-white/80 hover:bg-white text-gray-700 p-2 rounded-full transition"
+                        >
+                            <ZoomIn size={22} />
+                        </button>
+
+                        {/* Zoom overlay */}
+                        {zoomed && (
+                            <div className="fixed inset-0 z-50 bg-black flex items-center justify-center">
+                                {/* Close button */}
+                                <button
+                                    onClick={() => setZoomed(false)}
+                                    className="absolute top-4 right-4 bg-white/20 hover:bg-white/40 text-white p-2 rounded-full transition"
+                                >
+                                    <X size={24} />
+                                </button>
+
+                                {/* ✅ Mobile: scrollable natural-size image */}
+                                {isMobile ? (
+                                    <div
+                                        className="w-full h-full overflow-auto"
+                                        style={{
+                                            WebkitOverflowScrolling: "touch",
+                                        }}
+                                    >
+                                        <img
+                                            src={imageUrl}
+                                            alt="Zoomed product"
+                                            className="block"
+                                            style={{
+                                                width: "auto",
+                                                height: "auto",
+                                                maxWidth: "none",
+                                                maxHeight: "none",
+                                            }}
+                                        />
+                                    </div>
+                                ) : (
+                                    /* 🖥 Desktop: fullscreen fit */
+                                    <img
+                                        src={imageUrl}
+                                        alt="Zoomed product"
+                                        className="max-w-[90vw] max-h-[90vh] object-contain rounded-lg shadow-2xl"
+                                    />
+                                )}
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Magnifier */}
+                    {/* previous code */}
+
+                    {/* <div
                         className="relative w-full h-64 sm:h-80 md:h-[28rem] lg:h-[35rem] overflow-hidden"
                         onMouseEnter={() => setShowMagnifier(true)}
                         onMouseLeave={() => setShowMagnifier(false)}
@@ -71,7 +145,6 @@ const ProductDetailsMain = () => {
                             className="bg-gray-100 w-full h-full object-cover"
                         />
 
-                        {/* Magnifier glass */}
                         {showMagnifier && (
                             <div
                                 className="absolute pointer-events-none rounded-full border-2 border-gray-400 shadow-lg"
@@ -87,7 +160,7 @@ const ProductDetailsMain = () => {
                                 }}
                             />
                         )}
-                    </div>
+                    </div> */}
 
                     {/* Thumbnails */}
                     <div className="mt-3 flex w-15 h-15 md:w-17 md:h-17 lg:w-20 lg:h-20 gap-3">
