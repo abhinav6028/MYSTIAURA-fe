@@ -5,15 +5,14 @@ import apiClient from "../../apiClient/apiClient";
 import { useEffect } from "react";
 import { selectedDashboad } from "../../../store/slices/userSlice";
 
-export function useDashBoardStatus(category?: string) {
+export function useDashBoardStatus( startDate?: string, endDate?: string) {
+
     const dispatch = useDispatch();
 
     const query = useQuery<AxiosResponse, Error>({
-        queryKey: ["dashboard", category],
+        queryKey: ["dashboard", startDate, endDate],
         queryFn: async () => {
-            return apiClient.get("api/dashboard/stats?startDate=2025-09-01&endDate=2025-10-2", {
-                params: category ? { category } : {},
-            });
+            return apiClient.get(`api/dashboard/stats?startDate=${startDate}&endDate=${endDate}`);
         },
         retry: false,
     });
@@ -22,10 +21,32 @@ export function useDashBoardStatus(category?: string) {
         if (query.data) {
             dispatch(selectedDashboad(query.data));
         }
-    }, [query.data, dispatch]);
+    }, [query.data, dispatch, endDate]);
 
     return query;
 }
+
+// export function useDashBoardStatus(category?: string) {
+//     const dispatch = useDispatch();
+
+//     const query = useQuery<AxiosResponse, Error>({
+//         queryKey: ["dashboard", category],
+//         queryFn: async () => {
+//             return apiClient.get("api/dashboard/stats?startDate=2025-09-01&endDate=2025-10-2", {
+//                 params: category ? { category } : {},
+//             });
+//         },
+//         retry: false,
+//     });
+
+//     useEffect(() => {
+//         if (query.data) {
+//             dispatch(selectedDashboad(query.data));
+//         }
+//     }, [query.data, dispatch]);
+
+//     return query;
+// }
 
 export function useDashBoardLatestProducts(category?: string) {
     const dispatch = useDispatch();

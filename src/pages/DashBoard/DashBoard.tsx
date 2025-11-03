@@ -11,10 +11,41 @@ import { Paper } from "@mui/material";
 import { useDashBoardLatestOrders, useDashBoardLatestProducts, useDashBoardStatus } from "../../services/api/dashboard/dashboard";
 import { DataGrid, type GridColDef } from "@mui/x-data-grid";
 import type { Order, Product } from "../../types/adminTypes";
+import { useEffect, useState } from "react";
 
 export default function DashBoard() {
 
-    const { data } = useDashBoardStatus()
+
+    const [dateRange, setDateRange] = useState("7days");
+
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
+
+    // 👇 When dateRange changes, update startDate and endDate
+    useEffect(() => {
+        const today = new Date();
+
+        // 🧩 Always calculate and set both dates inside this effect
+        const formattedEnd = today.toISOString().split("T")[0];
+
+        const start = new Date(today);
+        if (dateRange === "7days") start.setDate(today.getDate() - 7);
+        if (dateRange === "30days") start.setDate(today.getDate() - 30);
+        if (dateRange === "60days") start.setDate(today.getDate() - 60);
+
+        const formattedStart = start.toISOString().split("T")[0];
+
+        // ✅ Set both in one go (ensures state updates together)
+        setStartDate(formattedStart);
+        setEndDate(formattedEnd);
+
+        console.log(`Range: ${dateRange} | startDate: ${formattedStart} | endDate: ${formattedEnd}`);
+    }, [dateRange]);
+
+    console.log("startDate", startDate);
+    console.log("endDate>>>>>>>>>>>>", endDate);
+
+    const { data } = useDashBoardStatus(startDate, endDate)
 
     const { data: latestProducts } = useDashBoardLatestProducts()
 
@@ -116,7 +147,7 @@ export default function DashBoard() {
         { field: "stock", headerName: "Stock", flex: 1 },
         { field: "price", headerName: "Price", flex: 1 },
         { field: "status", headerName: "Status", flex: 1 },
-      
+
     ];
 
     const rows = latestProducts?.data?.data.map((product: Product) => ({
@@ -155,6 +186,40 @@ export default function DashBoard() {
 
     return (
         <div className='bg-[#F6F6F6]'>
+
+            <div className="w-full py-4 px-4 flex justify-end ">
+                <select
+                    id="dateRange"
+                    value={dateRange}
+                    onChange={(e) => setDateRange(e.target.value)}
+                    className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-transparent bg-white"
+                >
+                    <option value="7days">Last 7 Days</option>
+                    <option value="30days">Last 30 Days</option>
+                    <option value="60days">Last 60 Days</option>
+                    <option value="Custome">Custome</option>
+                </select>
+                {dateRange === "Custome" && (
+                    <div className="flex items-center gap-2">
+                        <label className="text-sm font-medium">Start:</label>
+                        <input
+                            type="date"
+                            value={startDate}
+                            onChange={(e) => setStartDate(e.target.value)}
+                            className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300 bg-white"
+                        />
+
+                        <label className="text-sm font-medium">End:</label>
+                        <input
+                            type="date"
+                            value={endDate}
+                            onChange={(e) => setEndDate(e.target.value)}
+                            className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300 bg-white"
+                        />
+                    </div>
+                )}
+            </div>
+
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 p-4">
                 {stats.map((item, i) => (
                     <div
