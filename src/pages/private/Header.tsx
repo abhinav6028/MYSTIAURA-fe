@@ -354,7 +354,7 @@ const Header = () => {
                     transitionDelay: isMenuOpen ? `${index * 100}ms` : '0ms'
                   }}
                 >
-                  <a href="#" className="hover:text-gray-600">{item.name}.....</a>
+                  <a href="#" className="hover:text-gray-600">{item.name}</a>
                   {/* <span className="relative z-10">{item.name}</span> */}
                 </a>
               );
