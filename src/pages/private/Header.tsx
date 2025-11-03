@@ -30,6 +30,8 @@ const Header = () => {
   const location = useLocation();
   const locationCheck = location.pathname.includes('user') ? "/" : "/user";
 
+
+
   const handleLogout = async () => {
     logoutUser();
   }
@@ -333,13 +335,26 @@ const Header = () => {
                 <a
                   key={item.name}
                   href={item.name}
-                  onClick={() => handleItemClick()}
+                  // handleItemClick
+
+                  onClick={() => {
+                    navigate(
+                      `${isAuthenticated ? locationCheck : ""}${navigatePath}/inventory/${item?.name}`
+                    )
+                    handleItemClick()
+                  }
+                  }
+                  // onClick={() => {
+
+                  //   handleItemClick()
+                  // }
+                  // }
                   className={`flex items-center space-x-4 px-4 py-2 rounded-xl text-lg transition-all duration-300 group relative overflow-hidden`}
                   style={{
                     transitionDelay: isMenuOpen ? `${index * 100}ms` : '0ms'
                   }}
                 >
-                  <a href="#" className="hover:text-gray-600">{item.name}</a>
+                  <a href="#" className="hover:text-gray-600">{item.name}.....</a>
                   {/* <span className="relative z-10">{item.name}</span> */}
                 </a>
               );
