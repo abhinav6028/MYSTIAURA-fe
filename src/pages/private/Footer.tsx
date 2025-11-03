@@ -1,12 +1,12 @@
 import React from "react";
 import {
-    Facebook,
+    // Facebook,
     Instagram,
-    YouTube,
-    Twitter,
+    // YouTube,
+    // Twitter,
 } from "@mui/icons-material";
 import shipping from "../../assets/footer/shipping.svg"
-import returnSvg from "../../assets/footer/return.svg"
+// import returnSvg from "../../assets/footer/return.svg"
 import cutomerSvg from "../../assets/footer/customer.svg"
 import paymentSvg from "../../assets/footer/payment.svg"
 import klarnaSvg from "../../assets/footer/klarna.svg";

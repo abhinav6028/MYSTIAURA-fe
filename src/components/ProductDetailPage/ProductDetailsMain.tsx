@@ -20,17 +20,17 @@ const ProductDetailsMain = () => {
     const createAddToCart = useAddToCartProduct();
 
     // 👉 State for magnifier
-    const [showMagnifier, setShowMagnifier] = useState(false);
-    const [position, setPosition] = useState({ x: 0, y: 0, width: 0, height: 0 });
+    // const [showMagnifier, setShowMagnifier] = useState(false);
+    // const [position, setPosition] = useState({ x: 0, y: 0, width: 0, height: 0 });
     const [isMobile, setIsMobile] = useState(false);
     const [currentIndx, setCurrentIndex] = useState(0);
 
-    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
-        const x = e.pageX - left;
-        const y = e.pageY - top;
-        setPosition({ x, y, width, height });
-    };
+    // const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    //     const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+    //     const x = e.pageX - left;
+    //     const y = e.pageY - top;
+    //     setPosition({ x, y, width, height });
+    // };
 
     const handleShare = () => {
         const url = window.location.href; // current page URL
