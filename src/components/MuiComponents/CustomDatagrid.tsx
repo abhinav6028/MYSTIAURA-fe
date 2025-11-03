@@ -41,46 +41,50 @@ const CommonDataGrid = <RowType extends { id: GridRowId }>({
         sx={{
           border: 0,
 
-          // ✅ Increase row height
+          // ✅ Row height auto-adjusts to content
           "& .MuiDataGrid-row": {
-            maxHeight: "70px !important",
             minHeight: "70px !important",
+            maxHeight: "none !important",
           },
 
-          // ✅ Increase cell height to match
+          // ✅ Allow multiline wrapping
           "& .MuiDataGrid-cell": {
             fontFamily: "Poppins, sans-serif",
+            whiteSpace: "normal !important", // allow wrapping
+            wordBreak: "break-word !important",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             textAlign: "center",
-            lineHeight: "70px !important",
-            maxHeight: "70px !important",
-            minHeight: "70px !important",
+            lineHeight: "normal !important", // remove fixed line height
+            padding: "8px",
           },
 
-          // ✅ Cell inner content
           "& .MuiDataGrid-cellContent": {
             textAlign: "center",
             width: "100%",
+            whiteSpace: "normal !important",
+            wordBreak: "break-word !important",
           },
 
-          // ✅ Column headers
           "& .MuiDataGrid-columnHeaders": {
             fontFamily: "Poppins, sans-serif",
             fontWeight: 600,
             textAlign: "center",
-            minHeight: "60px !important", // header height
+            minHeight: "60px !important",
           },
+
           "& .MuiDataGrid-columnHeaderTitle": {
             width: "100%",
             textAlign: "center",
+            whiteSpace: "normal !important",
           },
         }}
+
       />
 
     </div>
   );
 };
 
-export default CommonDataGrid;
+export default CommonDataGrid;

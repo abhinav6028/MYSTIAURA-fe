@@ -364,12 +364,12 @@ const CreateNewProducts = () => {
                                                 name="category"
                                                 control={control}
                                                 render={({ field, fieldState }) => {
-
-                                                    const selectedCategory =  category?.data?.categories?.find((cat: any) => cat._id === field.value) || [];
+                                                    // map the field.value (_id string) to the actual category object
+                                                    const selectedCategory = category?.data?.categories?.find((cat: any) => cat._id === field.value) || null;
 
                                                     return (
                                                         <Autocomplete
-                                                            options={category?.data?.categories || "se"}             // all categories
+                                                            options={category?.data?.categories || []}             // all categories
                                                             getOptionLabel={(option) => option.name}
                                                             isOptionEqualToValue={(option, value) => option._id === value._id}
                                                             value={selectedCategory}             // full object, not string
