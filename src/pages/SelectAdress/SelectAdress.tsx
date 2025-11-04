@@ -16,6 +16,8 @@ import { useAddresses, useDeleteAddress } from '../../services/api/selectAddress
 import ReviewOrder from '../private/ReviewOrder';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useProductWithId } from '../../services/api/product/product';
+import { useCart } from '../../services/api/cart/cart';
+import { useAppSelector } from '../../store/hooks';
 
 
 type CartItem = {
@@ -112,6 +114,13 @@ type SelectAddressProps = {
 
 export default function SelectAdress({ showItems }: SelectAddressProps) {
 
+    const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+
+    const { data: userCart } = useCart(isAuthenticated);
+
+
+
+
     const [cart] = useState<CartItem[]>(initialCart);
     const [open, setOpen] = useState(false);
     const [selectedData, setSelectedData] = useState<any>(null);
@@ -123,19 +132,15 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
 
     const { data: singleProduct } = useProductWithId(id as string);
 
-    console.log('singleProduct', singleProduct?.discountPrice);
 
-
-    const subtotal = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
-
-    const taxes = 25;
-    const deliveryFee = 0;
-    const grandTotal = subtotal + taxes + deliveryFee;
+    // const subtotal = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
+    // const taxes = 25;
+    // const deliveryFee = 0;
+    // const grandTotal = subtotal + taxes + deliveryFee;
 
     const currentStep = 0
 
     const navigate = useNavigate();
-
 
     const handleEdit = (item: any) => {
         setOpen(true);
@@ -147,6 +152,10 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
     }
 
     const [showomponet, setShowComponent] = useState(1)
+
+    console.log("cart", cart);
+
+
 
     return (
 
@@ -309,12 +318,12 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
                                             className="flex justify-between my-1 md:my-2 py-2 md:py-3 border-b "
                                         >
                                             <span>Subtotal</span>
-                                            <span>₹{id ? singleProduct?.discountPrice : subtotal.toFixed(2)}</span>
+                                            <span>₹{id ? singleProduct?.discountPrice : userCart?.totalPrice ? userCart?.totalPrice : 0}</span>
                                         </div>
 
                                         <div className="flex justify-between mb-2 my-2">
                                             <span>Taxes</span>
-                                            <span>₹{taxes.toFixed(2)}</span>
+                                            <span>₹0</span>
                                         </div>
                                         <div className="flex justify-between mb-2">
                                             <span>Delivery Fee</span>
@@ -324,7 +333,7 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
                                         <Divider className="my-2" />
                                         <div className="flex justify-between font-bold text-lg py-3">
                                             <span>Grand Total</span>
-                                            <span>₹{id ? singleProduct?.discountPrice : grandTotal.toFixed(2)}</span>
+                                            <span>₹{id ? singleProduct?.discountPrice : userCart?.totalPrice ? userCart?.totalPrice : 0}</span>
                                         </div>
 
                                         <button

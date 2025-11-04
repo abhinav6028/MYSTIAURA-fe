@@ -1,7 +1,7 @@
 import LayoutContainer from '../../components/layout/LayoutContainer'
 import { FONT_FAMILY, PRIMARY_COLOUR } from '../../utils'
-import bestSeller from "../../assets/homepage/bestseller2 (1).png";
-import bestSeller2 from "../../assets/homepage/bestseller2 (4).png";
+// import bestSeller from "../../assets/homepage/bestseller2 (1).png";
+// import bestSeller2 from "../../assets/homepage/bestseller2 (4).png";
 
 import { useState } from "react";
 import {
@@ -15,44 +15,46 @@ import { useCheckout } from '../../services/api/checkout/checkout';
 import CheckoutButton from '../SelectAdress/RazorPay';
 import { useProductWithId } from '../../services/api/product/product';
 import { useLocation, useParams } from 'react-router-dom';
+import { useAppSelector } from '../../store/hooks';
+import { useCart } from '../../services/api/cart/cart';
 
 
-type CartItem = {
-    id: number;
-    name: string;
-    price: number;
-    oldPrice?: number;
-    color: string;
-    qty: number;
-    image: string;
-    returnDays: number;
-    deliveryDate: string;
-};
+// type CartItem = {
+//     id: number;
+//     name: string;
+//     price: number;
+//     oldPrice?: number;
+//     color: string;
+//     qty: number;
+//     image: string;
+//     returnDays: number;
+//     deliveryDate: string;
+// };
 
-const initialCart: CartItem[] = [
-    {
-        id: 1,
-        name: "Diamond Pearl Engagement Ring",
-        price: 160,
-        oldPrice: 170,
-        color: "Silver",
-        qty: 1,
-        image: bestSeller,
-        returnDays: 15,
-        deliveryDate: "Feb 25, 2025",
-    },
-    {
-        id: 2,
-        name: "Rose Gold Lotus Necklace",
-        price: 200,
-        oldPrice: 220,
-        color: "Gold",
-        qty: 1,
-        image: bestSeller2,
-        returnDays: 15,
-        deliveryDate: "Feb 25, 2025",
-    },
-];
+// const initialCart: CartItem[] = [
+//     {
+//         id: 1,
+//         name: "Diamond Pearl Engagement Ring",
+//         price: 160,
+//         oldPrice: 170,
+//         color: "Silver",
+//         qty: 1,
+//         image: bestSeller,
+//         returnDays: 15,
+//         deliveryDate: "Feb 25, 2025",
+//     },
+//     {
+//         id: 2,
+//         name: "Rose Gold Lotus Necklace",
+//         price: 200,
+//         oldPrice: 220,
+//         color: "Gold",
+//         qty: 1,
+//         image: bestSeller2,
+//         returnDays: 15,
+//         deliveryDate: "Feb 25, 2025",
+//     },
+// ];
 
 interface Step {
     id: string
@@ -118,14 +120,18 @@ interface ReviewOrderProps {
 }
 export default function ReviewOrder({ selectedCheckAddress, discountAmount }: ReviewOrderProps) {
 
-    const [cart] = useState<CartItem[]>(initialCart);
+    // const [cart] = useState<CartItem[]>(initialCart);
     const id = useParams();
     const location = useLocation();
 
-    const subtotal = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
+    const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+
+    const { data: userCart } = useCart(isAuthenticated);
+
+    // const subtotal = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
     const taxes = 25;
-    const deliveryFee = 0;
-    const grandTotal = subtotal + taxes + deliveryFee;
+    // const deliveryFee = 0;
+    // const grandTotal = subtotal + taxes + deliveryFee;
 
     const currentStep = 1;
 
@@ -287,7 +293,7 @@ export default function ReviewOrder({ selectedCheckAddress, discountAmount }: Re
                     <CardContent>
                         <div style={{ borderBottom: `1px solid ${PRIMARY_COLOUR}` }} className="flex justify-between my-1 md:my-2 py-2 md:py-3 border-b ">
                             <span>Subtotal</span>
-                            <span>₹{discountAmount ? discountAmount : subtotal.toFixed(2)}</span>
+                            <span>₹{discountAmount ? discountAmount : userCart?.totalPrice ? userCart?.totalPrice : 0}</span>
                         </div>
 
                         <div className="flex justify-between mb-2 my-2">
@@ -301,7 +307,7 @@ export default function ReviewOrder({ selectedCheckAddress, discountAmount }: Re
                         <Divider className="my-2" />
                         <div className="flex justify-between font-bold text-lg py-3">
                             <span>Grand Total</span>
-                            <span>₹{discountAmount ? discountAmount : grandTotal.toFixed(2)}</span>
+                            <span>₹{discountAmount ? discountAmount : userCart?.totalPrice ? userCart?.totalPrice : 0}</span>
                         </div>
 
                         <button

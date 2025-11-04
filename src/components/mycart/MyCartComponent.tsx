@@ -10,7 +10,7 @@ import {
     MenuItem,
 } from "@mui/material";
 import { Trash, X } from "lucide-react";
-import {  PRIMARY_COLOUR } from "../../utils";
+import { PRIMARY_COLOUR } from "../../utils";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCart, useDeleteAllCartItem, useDeleteCartItem, useUpdateCart } from "../../services/api/cart/cart";
 import { useAppSelector } from "../../store/hooks";
@@ -29,6 +29,7 @@ const MyCart = () => {
         window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     }, [location.pathname]);
 
+    console.log("userCart", userCart);
 
 
     const navigate = useNavigate();
@@ -174,7 +175,7 @@ const MyCart = () => {
                     <CardContent>
                         <div style={{ borderBottom: `1px solid ${PRIMARY_COLOUR}` }} className="flex justify-between my-1 md:my-2 py-2 md:py-3 border-b ">
                             <span>Subtotal</span>
-                            <span>₹ {userCart?.totalPrice.toFixed(2) || 0}</span>
+                            <span>₹ {userCart ? userCart?.totalPrice.toFixed(2) : 0}</span>
                         </div>
 
                         {/* Discount Code */}

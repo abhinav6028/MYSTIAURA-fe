@@ -129,7 +129,7 @@ export default function ReviewOrder() {
     return (
 
         <LayoutContainer>
-            <h1 style={{ fontFamily: FONT_FAMILY }} className="text-4xl my-3">Review Order</h1>
+            <h1 style={{ fontFamily: FONT_FAMILY }} className="text-4xl my-3"></h1>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 

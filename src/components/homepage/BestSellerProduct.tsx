@@ -47,8 +47,10 @@ const BestSellerProduct = () => {
 
                     return (
                         <div
+                            data-aos="fade-up"
+                            data-aos-duration="3000"
                             key={val._id}
-                            className="bg-[#f9f9f9] flex flex-col items-center relative cursor-pointer"
+                            className="bg-[#f9f9f9] flex flex-col items - center relative cursor - pointer"
                         >
                             {/* Heart for small screens */}
                             {/* <div className="absolute top-2 left-2 sm:hidden w-8 h-8 flex items-center justify-center bg-white rounded-full">
@@ -126,7 +128,7 @@ const BestSellerProduct = () => {
                     className="w-full h-80 md:h-[40rem] object-cover"
                 />
             </div>
-        </div>
+        </div >
     )
 }
 

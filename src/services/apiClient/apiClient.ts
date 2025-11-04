@@ -2,8 +2,8 @@
 
 import axios from "axios";
 const apiClient = axios.create({
-  // baseURL: "https://jwelery-be.onrender.com/",
-  baseURL: "https://api.mystiaura.net/",
+  baseURL: "https://nvl2rk2s-5000.inc1.devtunnels.ms/",
+  // baseURL: "https://api.mystiaura.net/",
   // baseURL: "https://hnd07ldd-3000.inc1.devtunnels.ms/",
   headers: { "Content-Type": "application/json" },
 });
