@@ -1,9 +1,12 @@
 // import { useEffect } from "react";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, useLocation } from "react-router-dom";
 import AppRoutes from "./router/AppRoutes";
 import logo from "../src/assets/whatsapp.png"
+import { useEffect } from "react";
 
 function App() {
+
+
 
   return (
     <Router>

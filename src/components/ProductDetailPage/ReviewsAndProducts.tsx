@@ -18,7 +18,7 @@ function ReviewsAndProducts() {
 
     const { pathname } = useLocation();
 
-   
+
     useEffect(() => {
         window.scrollTo({
             top: 0,

@@ -1,6 +1,6 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import PublicRoute from "./PublicRoutes";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import PrivateRoute from "./PrivateRoutes";
 import Products from "../pages/Admin/Products/Products";
 // import CreateProduct from "../pages/Admin/Products/CreateProduct";
@@ -31,6 +31,16 @@ const CategoryForm = lazy(() => import("../pages/Admin/category/CategoryForm"));
 const CreateUser = lazy(() => import("../pages/Admin/Users/CreateUser"));
 
 function AppRoutes() {
+
+  const { pathname } = useLocation();
+
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [pathname]);
 
   return (
     <Suspense fallback={<Loading />}>
