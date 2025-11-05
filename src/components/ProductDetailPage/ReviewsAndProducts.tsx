@@ -9,10 +9,22 @@ import { FONT_FAMILY, formatDate } from "../../utils";
 import ProductGrid from "../inventory/ProductGrid";
 import ReviewDialog from "./ReviewModal";
 import { useAppSelector } from "../../store/hooks";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 function ReviewsAndProducts() {
     const state = useAppSelector((state) => state.user.singleProduct);
     const reviews = state?.reviews ?? [];
+
+    const { pathname } = useLocation();
+
+   
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
+    }, [pathname]);
 
     return (
         <div className="py-8">

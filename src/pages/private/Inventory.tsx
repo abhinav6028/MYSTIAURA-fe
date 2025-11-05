@@ -27,12 +27,10 @@ const ProductListingPage: React.FC = () => {
 
   return (
     <div className="flex" ref={scrollRef}>
-      {/* Sidebar for desktop */}
       <div className="hidden lg:block">
         <SidebarFilters />
       </div>
 
-      {/* Sidebar for mobile */}
       <div
         className={`fixed top-0 left-0 h-full w-64 bg-white z-50 shadow-lg transform ${
           isSidebarVisible ? "translate-x-0" : "-translate-x-full"
@@ -47,7 +45,6 @@ const ProductListingPage: React.FC = () => {
         <SidebarFilters />
       </div>
 
-      {/* Overlay when sidebar is open */}
       {isSidebarVisible && (
         <div
           className="fixed inset-0  bg-opacity-50 z-40 lg:hidden"
