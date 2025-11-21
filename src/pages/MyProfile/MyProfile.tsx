@@ -14,7 +14,6 @@ const profileSchema = yup.object({
     .string()
     .required("Mobile number is required")
     .matches(/^\d{10}$/, "Mobile number must be exactly 10 digits"), // ✅ same as AddNewAddressModal
-  address: yup.string().optional(),
 });
 
 // ----------------- Type for form -----------------
@@ -34,7 +33,6 @@ export default function MyProfile() {
     defaultValues: {
       name: "",
       mobile: "",
-      address: "",
     },
   });
 
@@ -44,7 +42,7 @@ export default function MyProfile() {
       reset({
         name: data.name || "",
         mobile: data.mobile || "",
-        address: data.address || "",
+        // address: data.address || "",
       });
     }
   }, [data, reset]);
