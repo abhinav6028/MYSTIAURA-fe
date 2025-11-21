@@ -6,6 +6,7 @@ import logo from "../src/assets/whatsapp.png"
 
 function App() {
 
+  console.log("AAAAAAAAAAAAAAA");
 
 
   return (

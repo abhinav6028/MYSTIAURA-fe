@@ -29,9 +29,6 @@ const MyCart = () => {
         window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     }, [location.pathname]);
 
-    console.log("userCart", userCart);
-
-
     const navigate = useNavigate();
 
     function getDateAfterDays(days: number) {
@@ -49,6 +46,8 @@ const MyCart = () => {
 
     return (
         <div className={`grid grid-cols-1 ${userCart?.items?.length === 0 ? "grid-cols-1" : "md:grid-cols-3"}  gap-6 my-10`}>
+
+           
             {/* Left Section */}
 
             <div className="md:col-span-2">
