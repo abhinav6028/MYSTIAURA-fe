@@ -17,6 +17,7 @@ import MyOrders from "../pages/OrderHistory/OrderHistory";
 import MyProfile from "../pages/MyProfile/MyProfile";
 
 import Loading from "../components/loading";
+import LoginSuccess from "../pages/LoginSuccess/LoginSuccess";
 
 const Login = lazy(() => import("../pages/public/Login"));
 const Register = lazy(() => import("../pages/public/Register"));
@@ -49,6 +50,7 @@ function AppRoutes() {
         <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
         <Route path="/login/:id" element={<PublicRoute><Login /></PublicRoute>} />
         <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
+        <Route path="/login-success" element={<PublicRoute><LoginSuccess /></PublicRoute>} />
 
         <Route path="/" element={<PublicRoute><Dashboard /></PublicRoute>} >
           <Route index path="/" element={<HomePage />} />

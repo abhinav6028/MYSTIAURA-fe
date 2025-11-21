@@ -1,67 +1,126 @@
-import LayoutContainer from '../../components/layout/LayoutContainer'
+import { useEffect } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { TextField, Button } from "@mui/material";
+import LayoutContainer from '../../components/layout/LayoutContainer';
 import InnerSideBar from '../../components/UI/InnerSideBar';
-import SelectAdress from '../SelectAdress/SelectAdress';
+import { useUserProfile, useUpdateUserProfile } from '../../services/api/users/users';
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
+// ----------------- Validation Schema -----------------
+const profileSchema = yup.object({
+  name: yup.string().required("Name is required"),
+  mobile: yup
+    .string()
+    .required("Mobile number is required")
+    .matches(/^\d{10}$/, "Mobile number must be exactly 10 digits"), // ✅ same as AddNewAddressModal
+  address: yup.string().optional(),
+});
+
+// ----------------- Type for form -----------------
+type ProfileFormValues = yup.InferType<typeof profileSchema>;
 
 export default function MyProfile() {
+  const { data, isLoading } = useUserProfile();
+  const updateProfile = useUpdateUserProfile();
 
-    return (
-        <LayoutContainer>
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm<ProfileFormValues>({
+    resolver: yupResolver(profileSchema),
+    defaultValues: {
+      name: "",
+      mobile: "",
+      address: "",
+    },
+  });
 
-            <div className=" p-0 md:p-6 lg:p-6 flex">
+  // Prefill form when user data is fetched
+  useEffect(() => {
+    if (data) {
+      reset({
+        name: data.name || "",
+        mobile: data.mobile || "",
+        address: data.address || "",
+      });
+    }
+  }, [data, reset]);
 
-                <InnerSideBar />
+  const onSubmit = (formData: ProfileFormValues) => {
+    // Send updated data to backend
+    updateProfile.mutate(formData);
+  };
 
-                <main className="flex-1 ml-6 w-full">
+  if (isLoading) return <div>Loading...</div>;
 
-                    {/* <LayoutContainer> */}
-                    <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        {/* Name */}
-                        <div className="mb-3">  
-                            <label className="block text-gray-700 mb-2 text-sm sm:text-base">Name</label>
-                            <input
-                                type="text"
-                                placeholder="Alexa Williams"
-                                className="w-full border border-gray-300  px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-                            />
-                        </div>
+  return (
+    <LayoutContainer>
+      <div className="p-0 md:p-6 lg:p-6 flex">
+        <InnerSideBar />
+        <main className="flex items-center justify-center w-full">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col gap-4 w-full md:w-[70%] p-4"
+          >
+            {/* Name */}
+            <Controller
+              name="name"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label="Name"
+                  fullWidth
+                  variant="outlined"
+                  error={!!errors.name}
+                  helperText={errors.name?.message}
+                />
+              )}
+            />
 
-                        {/* Email */}
-                        <div className="mb-3">
-                            <label className="block text-gray-700 mb-2 text-sm sm:text-base">Email</label>
-                            <input
-                                type="email"
-                                placeholder="alexa.williams@example.com"
-                                className="w-full border border-gray-300  px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-                            />
-                        </div>
-                    </div>
+            {/* Mobile */}
+            <Controller
+              name="mobile"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label="Mobile"
+                  type="tel"
+                  fullWidth
+                  variant="outlined"
+                  error={!!errors.mobile}
+                  helperText={errors.mobile?.message}
+                />
+              )}
+            />
 
-                    <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        {/* Phone */}
-                        <div className="mb-3">
-                            <label className="block text-gray-700 mb-2 text-sm sm:text-base">Phone</label>
-                            <input
-                                type="tel"
-                                placeholder="+1 234 567 890"
-                                className="w-full border border-gray-300  px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-                            />
-                        </div>
-                    </div>
-                    {/* </LayoutContainer> */}
+            {/* Address */}
+            {/* <Controller
+              name="address"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label="Address"
+                  fullWidth
+                  variant="outlined"
+                  error={!!errors.address}
+                  helperText={errors.address?.message}
+                />
+              )}
+            /> */}
 
-
-                    <div className='w-full mt-4'>
-                        <SelectAdress
-                            showItems={false}
-                        />
-
-                    </div>
-
-
-                </main>
-            </div>
-
-        </LayoutContainer>
-    )
+            {/* Submit Button */}
+            <Button type="submit" variant="contained" className="mt-4">
+              Update Profile
+            </Button>
+          </form>
+        </main>
+      </div>
+    </LayoutContainer>
+  );
 }

@@ -14,11 +14,12 @@ import { HiHome } from 'react-icons/hi';
 
 
 export default function LoginForm({ setShowForm }: SendOtpFormProps) {
-
+    
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const loginUser = useLogin();
-    const loginMutation = useLoginWithGoogle();
+    // const loginMutation = useLoginWithGoogle();
+     const { login } = useLoginWithGoogle();
 
 
     const schema = yup.object({
@@ -157,7 +158,8 @@ export default function LoginForm({ setShowForm }: SendOtpFormProps) {
                                 <button
                                     type="button"
                                     className="w-full border flex items-center justify-center gap-2 border-[PRIMARY_COLOUR] text-[#660033] font-semibold py-3 hover:border-[#51052b] cursor-pointer hover:text-[#51052b] transition"
-                                    onClick={() => loginMutation.mutate()}
+                                    // onClick={() => loginMutation.mutate()}
+                                    onClick={login}
                                 >
                                     <Google className="w-5 h-5" />
                                     LOGIN WITH GOOGLE
