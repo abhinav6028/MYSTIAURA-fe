@@ -1,7 +1,7 @@
 import LayoutContainer from '../../components/layout/LayoutContainer'
 import { FONT_FAMILY, PRIMARY_COLOUR } from '../../utils'
-import bestSeller from "../../assets/homepage/bestseller2 (1).png";
-import bestSeller2 from "../../assets/homepage/bestseller2 (4).png";
+// import bestSeller from "../../assets/homepage/bestseller2 (1).png";
+// import bestSeller2 from "../../assets/homepage/bestseller2 (4).png";
 
 import { useState } from "react";
 import {
@@ -20,42 +20,42 @@ import { useCart } from '../../services/api/cart/cart';
 import { useAppSelector } from '../../store/hooks';
 
 
-type CartItem = {
-    id: number;
-    name: string;
-    price: number;
-    oldPrice?: number;
-    color: string;
-    qty: number;
-    image: string;
-    returnDays: number;
-    deliveryDate: string;
-};
+// type CartItem = {
+//     id: number;
+//     name: string;
+//     price: number;
+//     oldPrice?: number;
+//     color: string;
+//     qty: number;
+//     image: string;
+//     returnDays: number;
+//     deliveryDate: string;
+// };
 
-const initialCart: CartItem[] = [
-    {
-        id: 1,
-        name: "Diamond Pearl Engagement Ring",
-        price: 160,
-        oldPrice: 170,
-        color: "Silver",
-        qty: 1,
-        image: bestSeller,
-        returnDays: 15,
-        deliveryDate: "Feb 25, 2025",
-    },
-    {
-        id: 2,
-        name: "Rose Gold Lotus Necklace",
-        price: 200,
-        oldPrice: 220,
-        color: "Gold",
-        qty: 1,
-        image: bestSeller2,
-        returnDays: 15,
-        deliveryDate: "Feb 25, 2025",
-    },
-];
+// const initialCart: CartItem[] = [
+//     {
+//         id: 1,
+//         name: "Diamond Pearl Engagement Ring",
+//         price: 160,
+//         oldPrice: 170,
+//         color: "Silver",
+//         qty: 1,
+//         image: bestSeller,
+//         returnDays: 15,
+//         deliveryDate: "Feb 25, 2025",
+//     },
+//     {
+//         id: 2,
+//         name: "Rose Gold Lotus Necklace",
+//         price: 200,
+//         oldPrice: 220,
+//         color: "Gold",
+//         qty: 1,
+//         image: bestSeller2,
+//         returnDays: 15,
+//         deliveryDate: "Feb 25, 2025",
+//     },
+// ];
 
 interface Step {
     id: string
@@ -118,10 +118,7 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
 
     const { data: userCart } = useCart(isAuthenticated);
 
-
-
-
-    const [cart] = useState<CartItem[]>(initialCart);
+    // const [cart] = useState<CartItem[]>(initialCart);
     const [open, setOpen] = useState(false);
     const [selectedData, setSelectedData] = useState<any>(null);
     const [selectedCheckAddress, setSelectedCheckAddress] = useState<any>(null);
@@ -131,12 +128,6 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
     const { id } = useParams();
 
     const { data: singleProduct } = useProductWithId(id as string);
-
-
-    // const subtotal = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
-    // const taxes = 25;
-    // const deliveryFee = 0;
-    // const grandTotal = subtotal + taxes + deliveryFee;
 
     const currentStep = 0
 
@@ -152,10 +143,6 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
     }
 
     const [showomponet, setShowComponent] = useState(1)
-
-    console.log("cart", cart);
-
-
 
     return (
 

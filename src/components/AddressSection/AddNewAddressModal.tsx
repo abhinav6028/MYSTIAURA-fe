@@ -1,4 +1,4 @@
-import { useEffect, type Dispatch, type SetStateAction } from "react";
+import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -7,6 +7,7 @@ import {
   TextField,
   Button,
   IconButton,
+  Autocomplete,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useForm, Controller, type SubmitHandler } from "react-hook-form";
@@ -15,6 +16,8 @@ import * as yup from "yup";
 import { PRIMARY_COLOUR } from "../../utils";
 import { Plus } from "lucide-react";
 import { useCreateAddress, useUpdateAddress } from "../../services/api/selectAddress/selectAddress";
+import { Country, State, type ICountry, type IState } from "country-state-city";
+
 
 // ----------------- Form Types -----------------
 // Raw input from UI (what the user types)
@@ -66,6 +69,9 @@ const AddNewAddressModal = ({ open, setOpen, selectedData }: { open: boolean, se
   const createAddressMutation = useCreateAddress();
   const updateAddressMutation = useUpdateAddress();
 
+  const [countries, setCountries] = useState<ICountry[]>([]);
+  const [states, setStates] = useState<IState[]>([]);
+
   const { handleSubmit, control, formState: { errors }, reset } = useForm<AddressFormInput, any, AddressFormOutput>({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -79,6 +85,10 @@ const AddNewAddressModal = ({ open, setOpen, selectedData }: { open: boolean, se
       phone: "",
     },
   });
+
+  useEffect(() => {
+    setCountries(Country.getAllCountries());
+  }, []);
 
   useEffect(() => {
     if (selectedData) {
@@ -95,6 +105,8 @@ const AddNewAddressModal = ({ open, setOpen, selectedData }: { open: boolean, se
   }, [open, reset]);
 
   const onSubmit: SubmitHandler<any> = (data) => {
+    // console.log("data", data);
+
     if (selectedData) {
       updateAddressMutation.mutate({ ...data, _id: selectedData._id }, {
         onSuccess: () => {
@@ -240,52 +252,82 @@ const AddNewAddressModal = ({ open, setOpen, selectedData }: { open: boolean, se
               )}
             />
 
-            {/* State */}
-            <Controller
-              name="state"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  label="State"
-                  size="small"
-                  fullWidth
-                  margin="dense"
-                  error={!!errors.state}
-                  helperText={errors.state?.message}
-                  variant="outlined"
-                  sx={{
-                    "& .MuiInputBase-root": {
-                      width: { xs: "110%", sm: "100%" }, // wider on xs, normal on sm+
-                    },
-                    ml: { xs: -1, sm: 0 }, // shift only on small screens
-                    "& .MuiOutlinedInput-root": { borderRadius: 0 },
-                  }}
-                />
-              )}
-            />
-
             {/* Country */}
             <Controller
               name="country"
               control={control}
               render={({ field }) => (
-                <TextField
-                  {...field}
-                  label="Country"
-                  size="small"
-                  fullWidth
-                  margin="dense"
-                  error={!!errors.country}
-                  helperText={errors.country?.message}
-                  variant="outlined"
-                  sx={{
-                    "& .MuiInputBase-root": {
-                      width: { xs: "110%", sm: "100%" }, // wider on xs, normal on sm+
-                    },
-                    ml: { xs: -1, sm: 0 }, // shift only on small screens
-                    "& .MuiOutlinedInput-root": { borderRadius: 0 },
+                <Autocomplete
+                  options={countries}
+                  getOptionLabel={(option) => option.name}
+                  value={countries.find((c) => c.name === field.value) || null}
+                  onChange={(_, selectedCountry) => {
+                    // store country NAME
+                    field.onChange(selectedCountry?.name || "");
+
+                    if (selectedCountry) {
+                      // load states using ISO Code (CORRECT)
+                      const stateList = State.getStatesOfCountry(selectedCountry.isoCode);
+                      setStates(stateList);
+                    }
+
+                    // reset state
+                    reset((prev) => ({ ...prev, state: "" }));
                   }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Country"
+                      size="small"
+                      fullWidth
+                      margin="dense"
+                      error={!!errors.country}
+                      helperText={errors.country?.message}
+                      sx={{
+                        "& .MuiInputBase-root": {
+                          width: { xs: "110%", sm: "100%" },
+                        },
+                        ml: { xs: -1, sm: 0 },
+                        "& .MuiOutlinedInput-root": { borderRadius: 0 },
+                      }}
+                    />
+                  )}
+                />
+              )}
+            />
+
+
+            {/* State */}
+            <Controller
+              name="state"
+              control={control}
+              render={({ field }) => (
+                <Autocomplete
+                  options={states}
+                  getOptionLabel={(option) => option.name}
+                  value={states.find((s) => s.name === field.value) || null}
+                  onChange={(_, selectedState) => {
+                    // store state NAME instead of isoCode
+                    field.onChange(selectedState?.name || "");
+                  }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="State"
+                      size="small"
+                      fullWidth
+                      margin="dense"
+                      error={!!errors.state}
+                      helperText={errors.state?.message}
+                      sx={{
+                        "& .MuiInputBase-root": {
+                          width: { xs: "110%", sm: "100%" },
+                        },
+                        ml: { xs: -1, sm: 0 },
+                        "& .MuiOutlinedInput-root": { borderRadius: 0 },
+                      }}
+                    />
+                  )}
                 />
               )}
             />
