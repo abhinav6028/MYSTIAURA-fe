@@ -14,6 +14,8 @@ const loadRazorpayScript = (): Promise<boolean> => {
 interface RazorPayDetail { orderId: string; amount: number; currency: string; }
 
 export default function CheckoutButton({ razorPayDetail }: { razorPayDetail: RazorPayDetail }) {
+
+
     const handlePayment = async () => {
         const loaded = await loadRazorpayScript();
 
@@ -40,6 +42,9 @@ export default function CheckoutButton({ razorPayDetail }: { razorPayDetail: Raz
             },
             theme: { color: "#3399cc" },
         };
+
+        console.log("options", options);
+
 
         const rzp = new window.Razorpay(options);
         rzp.open();

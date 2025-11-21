@@ -26,8 +26,6 @@ export default function SendOtpForm({ setShowForm }: SendOtpFormProps) {
 
     const onSubmit = (data: Sendotp) => {
 
-        console.log("DATAAAAAAAAAA", data);
-
         registerMutation.mutate(data, {
             onSuccess: () => {
                 setShowForm(3);

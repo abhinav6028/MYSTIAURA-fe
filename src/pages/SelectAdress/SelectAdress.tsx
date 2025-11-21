@@ -142,12 +142,26 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
         deleteAdress.mutate(item._id);
     }
 
-    const [showomponet, setShowComponent] = useState(1)
+    const [showomponet, setShowComponent] = useState(1);
+
+    // country "India"
+    const deleveryCharge = selectedCheckAddress ?
+        selectedCheckAddress?.country === "India"
+            ? selectedCheckAddress?.state === "Kerala"
+                ? 50
+                : 100
+            : 300 : 0
+
+    // const deleveryCharge = selectedCheckAddress == "India" ?  selectedCheckAddress ? selectedCheckAddress?.state == "Kerala" ? 50 : 100 : 0 : 300
+
+    console.log("deleveryCharge", deleveryCharge);
+
 
     return (
 
         <>
             {showomponet === 2 && <ReviewOrder
+                deleveryCharge={deleveryCharge}
                 discountAmount={singleProduct?.discountPrice}
                 selectedCheckAddress={selectedCheckAddress} />}
 
@@ -314,13 +328,13 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
                                         </div>
                                         <div className="flex justify-between mb-2">
                                             <span>Delivery Fee</span>
-                                            <span style={{ color: PRIMARY_COLOUR }}>FREE</span>
+                                            <span style={{ color: PRIMARY_COLOUR }}>{deleveryCharge}</span>
                                         </div>
 
                                         <Divider className="my-2" />
                                         <div className="flex justify-between font-bold text-lg py-3">
                                             <span>Grand Total</span>
-                                            <span>₹{id ? singleProduct?.discountPrice : userCart?.totalPrice ? userCart?.totalPrice : 0}</span>
+                                            <span>₹{id ? singleProduct?.discountPrice ? singleProduct?.discountPrice + deleveryCharge : '' : userCart?.totalPrice ? userCart?.totalPrice + deleveryCharge : 0}</span>
                                         </div>
 
                                         <button

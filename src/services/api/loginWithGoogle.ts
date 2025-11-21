@@ -30,7 +30,8 @@ export function useLoginWithGoogle1() {
 export function useLoginWithGoogle() {
   // This hook only returns a function to trigger Google login
   const login = () => {
-    window.location.href = "http://localhost:5000/api/auth/google";
+    
+    window.location.href = "https://nvl2rk2s-5000.inc1.devtunnels.ms/api/auth/google";
   };
 
   return { login };

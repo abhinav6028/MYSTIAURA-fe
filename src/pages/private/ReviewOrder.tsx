@@ -116,9 +116,10 @@ interface Address {
 
 interface ReviewOrderProps {
     selectedCheckAddress?: Address;
-    discountAmount?: number
+    discountAmount?: number;
+    deleveryCharge?: number
 }
-export default function ReviewOrder({ selectedCheckAddress, discountAmount }: ReviewOrderProps) {
+export default function ReviewOrder({ selectedCheckAddress, discountAmount, deleveryCharge }: ReviewOrderProps) {
 
     // const [cart] = useState<CartItem[]>(initialCart);
     const id = useParams();
@@ -132,6 +133,9 @@ export default function ReviewOrder({ selectedCheckAddress, discountAmount }: Re
     const taxes = 25;
     // const deliveryFee = 0;
     // const grandTotal = subtotal + taxes + deliveryFee;
+
+    // console.log("deleveryCharge", deleveryCharge);
+
 
     const currentStep = 1;
 
@@ -154,6 +158,7 @@ export default function ReviewOrder({ selectedCheckAddress, discountAmount }: Re
         const payload = {
             items: singlePaymentProduct ? [{ product: singlePaymentProduct, quantity: location.state?.quantity || 1, price: singlePaymentProduct?.price - (singlePaymentProduct?.price * (singlePaymentProduct?.discountPrice / 100)) }] : cartItems?.items,
             shippingAddress: selectedCheckAddress,
+            shipping_charge: deleveryCharge
         };
 
         createCheckout.mutate(payload, {
@@ -161,7 +166,7 @@ export default function ReviewOrder({ selectedCheckAddress, discountAmount }: Re
                 // data is the response from your API
                 setRazorPayDetail({
                     orderId: data?.order?.payment?.razorpayOrderId,
-                    amount: data?.order?.totalAmount,
+                    amount: data?.order?.totalAmount + deleveryCharge,
                     currency: data?.razorpayOrder?.currency
                 });
             },
@@ -302,12 +307,12 @@ export default function ReviewOrder({ selectedCheckAddress, discountAmount }: Re
                         </div>
                         <div className="flex justify-between mb-2">
                             <span>Delivery Fee</span>
-                            <span style={{ color: PRIMARY_COLOUR }} className="">FREE</span>
+                            <span style={{ color: PRIMARY_COLOUR }} className="">{deleveryCharge}</span>
                         </div>
                         <Divider className="my-2" />
                         <div className="flex justify-between font-bold text-lg py-3">
                             <span>Grand Total</span>
-                            <span>₹{discountAmount ? discountAmount : userCart?.totalPrice ? userCart?.totalPrice : 0}</span>
+                            <span>₹{discountAmount ? discountAmount + (deleveryCharge ?? 0) : userCart?.totalPrice ? userCart?.totalPrice + (deleveryCharge ?? 0) : 0}</span>
                         </div>
 
                         <button
