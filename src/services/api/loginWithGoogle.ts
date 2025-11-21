@@ -4,12 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../../store/slices/authSlice";
 
-export function useLoginWithGoogle() {
+export function useLoginWithGoogle1() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     return useMutation({
         mutationFn: async () => {
-            const res = await apiClient.get("/api/auth/google");
+            const res = await apiClient.get("/api/auth/google/callback");
             return res.data;
         },
         onSuccess: (res) => {
@@ -27,3 +27,11 @@ export function useLoginWithGoogle() {
     });
 }
 
+export function useLoginWithGoogle() {
+  // This hook only returns a function to trigger Google login
+  const login = () => {
+    window.location.href = "http://localhost:5000/api/auth/google";
+  };
+
+  return { login };
+}

@@ -108,3 +108,37 @@ export function useDeleteUser() {
     },
   });
 }
+
+// user own profile edit section
+
+// userdata fetch
+export function useUserProfile() {
+  return useQuery({
+    queryKey: ["userProfile"],
+    queryFn: async () => {
+      const res = await apiClient.get("/api/user/profile");
+      return res.data.data; // should return { name, email, phone, address }
+    },
+  });
+}
+
+export function useUpdateUserProfile() {
+  const queryClient = useQueryClient();
+  const notify = useNotify();
+
+  return useMutation({
+    mutationFn: async (payload: any) => {
+      const res = await apiClient.put("/api/user/profile", payload);
+      return res.data;
+    },
+    onSuccess: (res) => {
+      notify.success(res?.message || "Profile updated successfully");
+      queryClient.invalidateQueries({ queryKey: ["userProfile"] });
+    },
+    onError: (error: any) => {
+      notify.error(error.response?.data?.message || "Failed to update profile");
+    },
+  });
+}
+
+
