@@ -11,6 +11,7 @@ import type { Product } from '../../../types/adminTypes';
 import { useDeleteProduct } from '../../../services/api/product/product';
 import { useNavigate } from 'react-router-dom';
 import useDebounce from '../../../utilsComp/useDeounce';
+import type { Dayjs } from 'dayjs';
 
 function Products() {
     const [open, setOpen] = useState(false);
@@ -20,7 +21,18 @@ function Products() {
     const navigate = useNavigate();
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
-    const { data: userProduct } = useProducts({ search: useDebounce(searchText), page, limit });
+    const [status, setStatus] = useState<string>('');
+    const [startDate, setStartDate] = useState<Dayjs | null>(null);
+    const [endDate, setEndDate] = useState<Dayjs | null>(null);
+
+    const { data: userProduct } = useProducts({
+        search: useDebounce(searchText),
+        page,
+        limit,
+        status: status || undefined,  // Only include if status is not empty
+        startDate: startDate?.format('YYYY-MM-DD'),  // Format as 'YYYY-MM-DD'
+        endDate: endDate?.format('YYYY-MM-DD')       // Format as 'YYYY-MM-DD'
+    });
     const products = userProduct?.data?.products?.products ?? [];
     const totalProducts = userProduct?.data?.products?.count;
 
@@ -68,7 +80,7 @@ function Products() {
             ),
         },
     ];
-    
+
     // const startIndex = (page - 1) * limit;
     const rows = products?.map((product: Product) => ({
         id: product._id,
@@ -100,10 +112,10 @@ function Products() {
         if (newPageSize !== limit) {
             setLimit(newPageSize); // update page size
             setPage(1); // reset page to first
-          } else {
+        } else {
             setPage(newPage); // normal page change
-          }
-      };
+        }
+    };
 
 
     return (
@@ -115,6 +127,12 @@ function Products() {
                         setSearchText(val);
                         setPage(1);
                     }}
+                    status={status}
+                    startDate={startDate}
+                    endDate={endDate}
+                    setStartDate={setStartDate}
+                    setEndDate={setEndDate}
+                    setStatus={setStatus}
                 />
                 <CommonDataGrid
                     rows={rows || []}
