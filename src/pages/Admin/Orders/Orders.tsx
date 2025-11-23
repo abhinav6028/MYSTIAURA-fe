@@ -13,6 +13,7 @@ import { useOrders, useUpdateOrderStatus } from '../../../services/api/orders/or
 import type { GridRenderCellParams } from '@mui/x-data-grid';
 import type { SelectChangeEvent } from '@mui/material';
 import { Select, MenuItem } from '@mui/material';
+import type { Dayjs } from 'dayjs';
 
 function Orders() {
     const [open, setOpen] = useState(false);
@@ -22,8 +23,17 @@ function Orders() {
     const [status, setStatus] = useState("created_at");
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
-    const { data: orders } = useOrders({ page, limit, search: searchText, sort_by: status });
-    const ordersData = orders?.orders?.data?.result || [];
+    const [startDate, setStartDate] = useState<Dayjs | null>(null);
+    const [endDate, setEndDate] = useState<Dayjs | null>(null);
+    const { data: orders } = useOrders({
+        page,
+        limit,
+        search: searchText,
+        sort_by: status,
+        startDate: startDate?.format('YYYY-MM-DD'),
+        endDate: endDate?.format('YYYY-MM-DD')
+    });
+     const ordersData = orders?.orders?.data?.result || [];
     const totalOrders = orders?.orders?.data?.total || 0;
     const navigate = useNavigate();
     const updateOrderStatus = useUpdateOrderStatus();
@@ -167,6 +177,10 @@ function Orders() {
                         setPage(1);
                         // status, setStatus
                     }}
+                    startDate={startDate}
+                    endDate={endDate}
+                    setStartDate={setStartDate}
+                    setEndDate={setEndDate}
                 />
                 <CommonDataGrid
                     rows={rows || []}

@@ -18,6 +18,9 @@ export function useProducts(params?: {
   limit?: number;
   minPrice?: number;
   maxPrice?: number;
+  status?: string;        // Add status
+  startDate?: string;     // Add startDate
+  endDate?: string;       // Add endDate
 }) {
   const dispatch = useDispatch();
 
@@ -30,12 +33,21 @@ export function useProducts(params?: {
       params?.search,
       params?.minPrice,
       params?.maxPrice,
+      params?.status,      // Add status to queryKey
+      params?.startDate,   // Add startDate to queryKey
+      params?.endDate      // Add endDate to queryKey
     ],
     queryFn: async () => {
+      // Create a new params object to avoid mutating the original
+      const queryParams = { ...params };
+      // Remove undefined values
+      Object.keys(queryParams).forEach(key => 
+        queryParams[key as keyof typeof queryParams] === undefined && 
+        delete queryParams[key as keyof typeof queryParams]
+      );
+      
       return apiClient.get("api/product/all", {
-        params: {
-          ...params,
-        },
+        params: queryParams,
       });
     },
     placeholderData: keepPreviousData,
@@ -43,8 +55,9 @@ export function useProducts(params?: {
   });
 
   useEffect(() => {
-    if (query.data) {
-      dispatch(selectedProductCategory(query.data));
+    if (query.data?.data) {  // Make sure data exists before dispatching
+      // Only dispatch the data part, not the entire Axios response
+      dispatch(selectedProductCategory(query.data.data));
     }
   }, [query.data, dispatch]);
 

@@ -1,27 +1,21 @@
-import { useState } from "react";
 import { TextField, Button, MenuItem, Select, InputLabel, FormControl } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { Dayjs } from "dayjs";
 import { useNavigate } from "react-router-dom";
-// import { useOrders } from "../../../services/api/orders/orders";
 
-export default function OrderHeader({ search, setSearch, setStatus, status }: {
+export default function OrderHeader({ search, setSearch, setStatus, status, startDate, endDate,setStartDate,setEndDate }: {
     search: string;
     setSearch: (value: string) => void;
     setStatus: (value: string) => void;
     status: string
+    startDate: Dayjs | null;
+    endDate: Dayjs | null;
+    setStartDate: (value: Dayjs | null) => void;
+    setEndDate: (value: Dayjs | null) => void;
 }) {
-    // Controlled inputs
-    // const [status, setStatus] = useState("");
-    const [startDate, setStartDate] = useState<Dayjs | null>(null);
-    const [endDate, setEndDate] = useState<Dayjs | null>(null);
-    const navigate = useNavigate();
-
-
-
-    //  useOrders();
+    const navigate = useNavigate();   
 
     return (
         <div className="bg-white  rounded-md space-y-4">
@@ -75,7 +69,7 @@ export default function OrderHeader({ search, setSearch, setStatus, status }: {
                             label="Status"
                             sx={{ minWidth: 120 }}
                         >
-                            <MenuItem value="">All</MenuItem>
+                            <MenuItem value="created_at">All</MenuItem>
                             <MenuItem value="paid">Paid</MenuItem>
                             <MenuItem value="pending">Pending</MenuItem>
                             <MenuItem value="failed">Failed</MenuItem>

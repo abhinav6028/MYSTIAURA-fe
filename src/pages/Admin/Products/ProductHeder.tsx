@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { TextField, Button, MenuItem, Select, InputLabel, FormControl } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -6,11 +5,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { Dayjs } from "dayjs";
 import { useNavigate } from "react-router-dom";
 
-const ProductHeader = ({ onSearch, search }: { onSearch: (searchText: string) => void, search: string }) => {
-    // Controlled inputs
-    const [status, setStatus] = useState("");
-    const [startDate, setStartDate] = useState<Dayjs | null>(null);
-    const [endDate, setEndDate] = useState<Dayjs | null>(null);
+const ProductHeader = ({ onSearch, search, status, startDate, endDate,setStartDate,setEndDate,setStatus }: { onSearch: (searchText: string) => void, search: string, status: string, startDate: Dayjs | null, endDate: Dayjs | null,setStartDate: (newValue: Dayjs | null) => void,setEndDate: (newValue: Dayjs | null) => void,setStatus: (newValue: string) => void }) => {
     const navigate = useNavigate();
 
     // const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {

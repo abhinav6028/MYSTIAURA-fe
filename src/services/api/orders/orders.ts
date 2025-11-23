@@ -165,6 +165,8 @@ export function useOrders(params?: {
     order?: "asc" | "desc";
     search?: string;
     category?: string;
+    startDate?: string;  // Add this line
+    endDate?: string;    // Add this line
 }) {
     const dispatch = useDispatch();
 
@@ -177,10 +179,20 @@ export function useOrders(params?: {
             params?.order,
             params?.search,
             params?.category,
+            params?.startDate,  // Add this line
+            params?.endDate,    // Add this line
         ],
         queryFn: async () => {
+            // Create a new params object to avoid mutating the original
+            const queryParams = { ...params };
+            // Remove undefined values
+            Object.keys(queryParams).forEach(key => 
+                queryParams[key as keyof typeof queryParams] === undefined && 
+                delete queryParams[key as keyof typeof queryParams]
+            );
+            
             const res = await apiClient.get("api/order/list", {
-                params,
+                params: queryParams,
             });
             return res.data;
         },
