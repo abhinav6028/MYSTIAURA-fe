@@ -7,12 +7,19 @@ import { Dayjs } from "dayjs";
 import { useNavigate } from "react-router-dom";
 // import { useOrders } from "../../../services/api/orders/orders";
 
-export default function OrderHeader({ search, setSearch }: { search: string; setSearch: (value: string) => void }) {
+export default function OrderHeader({ search, setSearch, setStatus, status }: {
+    search: string;
+    setSearch: (value: string) => void;
+    setStatus: (value: string) => void;
+    status: string
+}) {
     // Controlled inputs
-    const [status, setStatus] = useState("");
+    // const [status, setStatus] = useState("");
     const [startDate, setStartDate] = useState<Dayjs | null>(null);
     const [endDate, setEndDate] = useState<Dayjs | null>(null);
     const navigate = useNavigate();
+
+
 
     //  useOrders();
 
@@ -61,7 +68,7 @@ export default function OrderHeader({ search, setSearch }: { search: string; set
 
                     {/* Status Dropdown */}
                     <FormControl size="small">
-                        <InputLabel>Status</InputLabel>
+                        <InputLabel>Payment</InputLabel>
                         <Select
                             value={status}
                             onChange={(e) => setStatus(e.target.value)}
@@ -69,9 +76,10 @@ export default function OrderHeader({ search, setSearch }: { search: string; set
                             sx={{ minWidth: 120 }}
                         >
                             <MenuItem value="">All</MenuItem>
-                            <MenuItem value="active">Active</MenuItem>
-                            <MenuItem value="inactive">Inactive</MenuItem>
+                            <MenuItem value="paid">Paid</MenuItem>
                             <MenuItem value="pending">Pending</MenuItem>
+                            <MenuItem value="failed">Failed</MenuItem>
+                            <MenuItem value="refunded">Refunded</MenuItem>
                         </Select>
                     </FormControl>
                 </div>

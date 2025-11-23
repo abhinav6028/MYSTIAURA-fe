@@ -161,7 +161,7 @@ export function useCreateOrders() {
 export function useOrders(params?: {
     page?: number;
     limit?: number;
-    sortBy?: string;
+    sort_by?: string;
     order?: "asc" | "desc";
     search?: string;
     category?: string;
@@ -173,7 +173,7 @@ export function useOrders(params?: {
             "orders",
             params?.page,
             params?.limit,
-            params?.sortBy,
+            params?.sort_by,
             params?.order,
             params?.search,
             params?.category,

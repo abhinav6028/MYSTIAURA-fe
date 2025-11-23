@@ -19,42 +19,43 @@ function Orders() {
     const deleteProduct = useDeleteProduct();
     const [selectedrow, setSelectedRow] = useState<Product | null>(null);
     const [searchText, setSearchText] = useState("");
+    const [status, setStatus] = useState("created_at");
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
-    const { data: orders } = useOrders({ page, limit, search: searchText });
+    const { data: orders } = useOrders({ page, limit, search: searchText, sort_by: status });
     const ordersData = orders?.orders?.data?.result || [];
     const totalOrders = orders?.orders?.data?.total || 0;
     const navigate = useNavigate();
     const updateOrderStatus = useUpdateOrderStatus();
 
     const OrderStatusCell = (params: GridRenderCellParams) => {
-        
+
         const { row, value } = params;
-      
+
         const handleChange = (event: SelectChangeEvent) => {
-          const newRole = event.target.value;
-      
-          updateOrderStatus.mutate({
-            _id: row.id,
-            orderStatus: newRole,
-          });
+            const newRole = event.target.value;
+
+            updateOrderStatus.mutate({
+                _id: row.id,
+                orderStatus: newRole,
+            });
         };
-      
+
         return (
-          <Select
-            value={value || "placed"}
-            onChange={handleChange}
-            size="small"
-            fullWidth
-          >
-            <MenuItem value="placed">Placed</MenuItem>
-            <MenuItem value="delivered">Delivered</MenuItem>
-            <MenuItem value="shipped">Shipped</MenuItem>
-            <MenuItem value="confirmed">Confirmed</MenuItem>
-            <MenuItem value="cancelled">Cancelled</MenuItem>
-          </Select>
+            <Select
+                value={value || "placed"}
+                onChange={handleChange}
+                size="small"
+                fullWidth
+            >
+                <MenuItem value="placed">Placed</MenuItem>
+                <MenuItem value="delivered">Delivered</MenuItem>
+                <MenuItem value="shipped">Shipped</MenuItem>
+                <MenuItem value="confirmed">Confirmed</MenuItem>
+                <MenuItem value="cancelled">Cancelled</MenuItem>
+            </Select>
         );
-      };
+    };
 
     const columns: GridColDef[] = [
         {
@@ -149,9 +150,9 @@ function Orders() {
         if (newPageSize !== limit) {
             setLimit(newPageSize); // update page size
             setPage(1); // reset page to first
-          } else {
+        } else {
             setPage(newPage); // normal page change
-          }
+        }
     };
 
     return (
@@ -159,9 +160,12 @@ function Orders() {
             <div className='w-full'>
                 <OrderHeader
                     search={searchText}
+                    setStatus={setStatus}
+                    status={status}
                     setSearch={(val: string) => {
                         setSearchText(val);
                         setPage(1);
+                        // status, setStatus
                     }}
                 />
                 <CommonDataGrid
