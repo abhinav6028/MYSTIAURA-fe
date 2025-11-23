@@ -161,12 +161,12 @@ export function useCreateOrders() {
 export function useOrders(params?: {
     page?: number;
     limit?: number;
-    sort_by?: string;
+    payment_status?: string;
     order?: "asc" | "desc";
     search?: string;
     category?: string;
-    startDate?: string;  // Add this line
-    endDate?: string;    // Add this line
+    start_date?: string;  // Add this line
+    end_date?: string;    // Add this line
 }) {
     const dispatch = useDispatch();
 
@@ -175,12 +175,12 @@ export function useOrders(params?: {
             "orders",
             params?.page,
             params?.limit,
-            params?.sort_by,
+            params?.payment_status,
             params?.order,
             params?.search,
             params?.category,
-            params?.startDate,  // Add this line
-            params?.endDate,    // Add this line
+            params?.start_date,  // Add this line
+            params?.end_date,    // Add this line
         ],
         queryFn: async () => {
             // Create a new params object to avoid mutating the original

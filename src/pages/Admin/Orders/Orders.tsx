@@ -20,7 +20,7 @@ function Orders() {
     const deleteProduct = useDeleteProduct();
     const [selectedrow, setSelectedRow] = useState<Product | null>(null);
     const [searchText, setSearchText] = useState("");
-    const [status, setStatus] = useState("created_at");
+    const [status, setStatus] = useState("");
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
     const [startDate, setStartDate] = useState<Dayjs | null>(null);
@@ -29,9 +29,9 @@ function Orders() {
         page,
         limit,
         search: searchText,
-        sort_by: status,
-        startDate: startDate?.format('YYYY-MM-DD'),
-        endDate: endDate?.format('YYYY-MM-DD')
+        payment_status: status,
+        start_date: startDate?.format('YYYY-MM-DD'),
+        end_date: endDate?.format('YYYY-MM-DD')
     });
      const ordersData = orders?.orders?.data?.result || [];
     const totalOrders = orders?.orders?.data?.total || 0;

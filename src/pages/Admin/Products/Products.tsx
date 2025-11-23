@@ -30,8 +30,8 @@ function Products() {
         page,
         limit,
         status: status || undefined,  // Only include if status is not empty
-        startDate: startDate?.format('YYYY-MM-DD'),  // Format as 'YYYY-MM-DD'
-        endDate: endDate?.format('YYYY-MM-DD')       // Format as 'YYYY-MM-DD'
+        start_date: startDate?.format('YYYY-MM-DD'),  // Format as 'YYYY-MM-DD'
+        end_date: endDate?.format('YYYY-MM-DD')       // Format as 'YYYY-MM-DD'
     });
     const products = userProduct?.data?.products?.products ?? [];
     const totalProducts = userProduct?.data?.products?.count;

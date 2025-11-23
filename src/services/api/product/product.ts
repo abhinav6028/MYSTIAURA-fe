@@ -18,9 +18,9 @@ export function useProducts(params?: {
   limit?: number;
   minPrice?: number;
   maxPrice?: number;
-  status?: string;        // Add status
-  startDate?: string;     // Add startDate
-  endDate?: string;       // Add endDate
+  status?: string;        // Add    status
+  start_date?: string;     // Add startDate
+  end_date?: string;       // Add endDate
 }) {
   const dispatch = useDispatch();
 
@@ -34,8 +34,8 @@ export function useProducts(params?: {
       params?.minPrice,
       params?.maxPrice,
       params?.status,      // Add status to queryKey
-      params?.startDate,   // Add startDate to queryKey
-      params?.endDate      // Add endDate to queryKey
+      params?.start_date,   // Add startDate to queryKey
+      params?.end_date      // Add endDate to queryKey
     ],
     queryFn: async () => {
       // Create a new params object to avoid mutating the original
