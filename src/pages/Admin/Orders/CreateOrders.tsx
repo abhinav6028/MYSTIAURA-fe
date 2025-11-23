@@ -178,6 +178,10 @@ export default function CreateOrders() {
         }
     };
 
+    console.log("selectedCategories", selectedCategories);
+
+
+
     // Component to handle products for each category
     const ProductDropdown = ({ index }: { index: number }) => {
         const selectedCategory = selectedCategories[index] || "";
@@ -187,6 +191,9 @@ export default function CreateOrders() {
         });
 
         const filteredProducts = products?.data?.products?.products || [];
+
+        // console.log("filteredProducts", filteredProducts);
+
 
         return (
             <Controller
@@ -493,6 +500,23 @@ export default function CreateOrders() {
 
                                 {/* Product - Now using separate component */}
                                 <ProductDropdown index={index} />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                                 {/* Quantity */}
                                 <Controller

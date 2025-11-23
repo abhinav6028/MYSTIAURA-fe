@@ -5,12 +5,20 @@ import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../store/hooks";
 import { useCategories } from "../../services/api/category/category";
 
+interface Category {
+    _id: string;
+    name: string;
+    productCount: number;
+}
+
 const ShopByCategory = () => {
 
     const navigate = useNavigate();
     const { data: categories } = useCategories();
-    const categoryList = categories?.data?.categories || [];
+    // const categoryList = categories?.data?.categories || [];
     const { isAuthenticated } = useAppSelector((state) => state.auth);
+    const categoryList = categories?.data?.categories?.filter((cat: Category) => cat.productCount !== 0) || []
+
 
     return (
         <div className="py-10">
@@ -63,42 +71,3 @@ const ShopByCategory = () => {
 
 export default ShopByCategory;
 
-
-
-
-// <div className="py-10 px-4 sm:px-6 lg:px-20">
-//     <h1
-//         style={{ fontFamily: FONT_FAMILY }}
-//         className="text-3xl sm:text-4xl mb-8 text-center sm:text-left"
-//     >
-//         Shop By Category
-//     </h1>
-
-//     <div className="grid grid-cols-1 lg:grid-cols-[65%_35%]">
-//         {/* Categories List */}
-//         <div className="flex flex-col justify-between space-y-4">
-//             {categories?.map((val) => (
-//                 <div
-//                     key={val.name}
-//                     className="flex items-center justify-between pb-4 border-b border-gray-200"
-//                 >
-//                     <h1 style={{ fontFamily: FONT_FAMILY }} className="text-xl sm:text-2xl">
-//                         {val.name}
-//                     </h1>
-//                     <span className="w-10 h-10 bg-primary flex items-center justify-center rounded-full">
-//                         <img src={arrowSvg} alt="" />
-//                     </span>
-//                 </div>
-//             ))}
-//         </div>
-
-//         {/* Category Image */}
-//         <div className="w-full h-64 sm:h-80 md:h-96 lg:h-[25rem] overflow-hidden rounded-lg">
-//             <img
-//                 src={selectCategory}
-//                 alt=""
-//                 className="w-full h-full object-cover"
-//             />
-//         </div>
-//     </div>
-// </div>

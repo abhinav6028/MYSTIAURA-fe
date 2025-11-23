@@ -14,6 +14,13 @@ import type { ProductCategory } from "../../types/categoryTypes";
 import { navigatePath } from "../../utils";
 import { useLogout } from "../../hooks/useLogout";
 
+
+interface Category {
+  _id: string;
+  name: string;
+  productCount: number;
+}
+
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -38,7 +45,7 @@ const Header = () => {
 
   // const categoryList = useSelector((state: any) => state?.user?.categories) || [];
   const { data: categories } = useCategories();
-  const categoryList = categories?.data?.categories || [];
+  const categoryList = categories?.data?.categories?.filter((cat: Category) => cat.productCount !== 0) || []
 
   useEffect(() => {
     const handleScroll = () => {
@@ -344,11 +351,6 @@ const Header = () => {
                     handleItemClick()
                   }
                   }
-                  // onClick={() => {
-
-                  //   handleItemClick()
-                  // }
-                  // }
                   className={`flex items-center space-x-4 px-4 py-2 rounded-xl text-lg transition-all duration-300 group relative overflow-hidden`}
                   style={{
                     transitionDelay: isMenuOpen ? `${index * 100}ms` : '0ms'
