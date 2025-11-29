@@ -7,6 +7,8 @@ export default function MyOrders() {
 
     const { data: orderList } = useOrderedList();
 
+    // const dwUrl = "https://res.cloudinary.com/dge7us2fl/image/upload/v1764339211/invoices/eqj4l3342pv9owynfdx9.pdf"
+
     return (
         <LayoutContainer>
             <div className="min-h-scree md:p-6 flex">
@@ -89,8 +91,37 @@ export default function MyOrders() {
                                     </div>
                                     <div className="text-gray-700 text-sm truncate">{order.items?.map((item: any) => item.product.name).join(" | ")}</div>
                                     <div className="text-red-600 font-bold mt-1">₹{order.totalAmount}</div>
+
                                 </div>
+
+                                {
+                                    order?.invoice_url &&
+
+                                    <div>
+                                        <button
+                                            onClick={() => {
+                                                const dwUrl = order?.invoice_url;
+
+                                                const link = document.createElement("a");
+                                                link.href = dwUrl;
+                                                link.download = "invoice.pdf"; // Name of the file when saved
+                                                document.body.appendChild(link);
+                                                link.click();
+                                                document.body.removeChild(link);
+                                            }}
+                                            className="bg-[#660033] text-white font-semibold py-2 px-3 cursor-pointer hover:bg-[#51052b] transition"
+                                        >
+                                            INVOICE
+                                        </button>
+                                        {/* <button
+                                        className=" bg-[#660033] text-white font-semibold py-2 px-3 cursor-pointer hover:bg-[#51052b] transition"
+                                    >
+                                        INVOICE
+                                    </button> */}
+                                    </div>
+                                }
                             </div>
+
                         ))}
                     </div>
                 </main>
