@@ -3,7 +3,7 @@
 import axios from "axios";
 const apiClient = axios.create({
   // baseURL: "https://0tz95t3g-5000.inc1.devtunnels.ms/",
-  // baseURL: "https://api.mystiaura.net/",
+  baseURL: "https://api.mystiaura.net/",
   headers: { "Content-Type": "application/json" },
 });
 
