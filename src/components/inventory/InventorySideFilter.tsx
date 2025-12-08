@@ -143,7 +143,7 @@ const SidebarFilters: React.FC = () => {
               setPriceRange(value);
             }}
           />
-          <Typography sx={{ width: "100%", fontFamily: "Poppins, sans-serif" }} variant="body2">Price: $0 - ${priceRange}</Typography>
+          <Typography sx={{ width: "100%", fontFamily: "Poppins, sans-serif" }} variant="body2">Price: ₹0 - ₹{priceRange}</Typography>
         </AccordionDetails>
       </Accordion>
 

@@ -86,7 +86,7 @@ const Footer: React.FC = () => {
                         <h3 className="font-bold mb-2">SOCIAL NETWORKS</h3>
                         <div className="flex justify-center md:justify-start gap-4">
                             {/* <Facebook className="cursor-pointer" /> */}
-                            <a href="">
+                            <a href="https://www.instagram.com/mysti__aura?igsh=Y2Y5eTY3OGg3OWNw">
                                 <Instagram className="cursor-pointer" />
                             </a>
                             {/* <Twitter className="cursor-pointer" /> */}
