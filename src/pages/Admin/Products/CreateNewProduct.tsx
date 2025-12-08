@@ -22,6 +22,7 @@ const schema = yup.object({
     discountPrice: yup.number().required("Discount price is required").min(0),
     stock: yup.number().required("Stock is required").min(0),
     discountType: yup.string().required("Discount type is required"),
+    isFeatured:yup.boolean().required("isFeatured type is required")
 }).required();
 
 const CreateNewProducts = () => {
@@ -37,6 +38,7 @@ const CreateNewProducts = () => {
             stock: 0,
             discountType: "chinese-new-year",
             category: "jacket",
+            isFeatured:false
         },
     });
     const navigate = useNavigate();
@@ -64,6 +66,7 @@ const CreateNewProducts = () => {
             setValue("stock", singleProduct.stock || 0);
             setValue("discountType", singleProduct.discountType || "chinese-new-year");
             setValue("category", singleProduct.category?._id || "jacket");
+            setValue("isFeatured",singleProduct.isFeatured);
         }
 
         if (singleProduct?.images) {
@@ -347,6 +350,32 @@ const CreateNewProducts = () => {
                                                         )}
                                                     />
                                                 </div>
+                                                 <div className="mt-4">
+    <label className="block text-sm font-medium text-gray-600 mb-1">
+        Featured
+    </label>
+
+    <Controller
+        name="isFeatured"
+        control={control}
+        defaultValue={false}
+        render={({ field }) => (
+            <button
+                type="button"
+                onClick={() => field.onChange(!field.value)}
+                className={`relative inline-flex h-6 w-11 items-center rounded-full transition ${
+                    field.value ? "bg-blue-600" : "bg-gray-300"
+                }`}
+            >
+                <span
+                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition ${
+                        field.value ? "translate-x-6" : "translate-x-1"
+                    }`}
+                />
+            </button>
+        )}
+    />
+</div>
                                             </div>
                                         </div>
                                     </div>
