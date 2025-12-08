@@ -63,6 +63,7 @@ export interface IAdminFormInputs {
   discountType: string;
   category: string;
   images?: File[];
+  isFeatured:boolean
 }
 
 export interface CategoryImage {
