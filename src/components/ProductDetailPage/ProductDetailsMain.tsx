@@ -177,7 +177,7 @@ const ProductDetailsMain = () => {
                 </div>
 
                 {/* ---------- RIGHT: DETAILS ---------- */}
-                <div className="flex flex-col gap-6">
+                <div className="flex flex-col gap-3">
                     {/* Title & Rating */}
                     <div className="border-b border-gray-200 pb-4">
                         <div className="flex justify-between">
@@ -241,7 +241,7 @@ const ProductDetailsMain = () => {
                     </div>
 
                     {/* Quantity / Add to cart */}
-
+                    <p>Tax included. Shipping calculated at checkout.</p>
                     <div className="w-full space-y-3">
                         {/* Quantity + Add to Cart + Wishlist */}
                         <div className="flex flex-wrap items-center gap-3">
@@ -348,7 +348,7 @@ const ProductDetailsMain = () => {
                             </p>
                         </div>
 
-                        <div className="px-1">
+                        {/* <div className="px-1">
                             <LiaShippingFastSolid className="mx-auto mb-2 text-2xl sm:text-3xl lg:text-4xl" />
                             <h6 className="font-semibold text-xs sm:text-sm lg:text-base">
                                 Free Shipping
@@ -356,7 +356,7 @@ const ProductDetailsMain = () => {
                             <p className="text-gray-500 text-[10px] sm:text-xs">
                                 On Every Order
                             </p>
-                        </div>
+                        </div> */}
                     </div>
 
                     {/* Description */}

@@ -19,7 +19,7 @@ import useDebounce from "../../utilsComp/useDeounce";
 
 const SidebarFilters: React.FC = () => {
 
-  const [priceRange, setPriceRange] = React.useState(2000);
+  const [priceRange, setPriceRange] = React.useState(4000);
   const [selectedCategories, setSelectedCategories] = React.useState<string[]>([]);
   const { data: categories } = useCategories();
   const categoriesCollection = categories?.data?.categories || [];
