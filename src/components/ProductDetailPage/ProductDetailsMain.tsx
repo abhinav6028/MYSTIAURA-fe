@@ -5,7 +5,6 @@ import { FONT_FAMILY, PRIMARY_COLOUR } from "../../utils";
 import { useNavigate, useParams } from "react-router-dom";
 import { useProductWithId } from "../../services/api/product/product";
 import { RatingStars } from "../../utilsComp/RatingsComp";
-import { LiaShippingFastSolid } from "react-icons/lia";
 import { CiStar } from "react-icons/ci";
 import { MdOutlinePrivacyTip } from "react-icons/md";
 import { useAddToCartProduct } from "../../services/api/cart/cart";
