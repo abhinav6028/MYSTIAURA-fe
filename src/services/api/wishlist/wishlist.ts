@@ -17,7 +17,7 @@ export function useWishList(isAuthenticated?: boolean) {
       return res.data?.data as Wishlist;
     },
     retry: false,
-    enabled: !!isAuthenticated, // <-- ensure it's a boolean
+    // enabled: !!isAuthenticated, 
   });
 
   useEffect(() => {
@@ -37,7 +37,20 @@ export function useAddToWishList() {
   const notify = useNotify();
 
   return useMutation({
-    mutationFn: async (payload: { productid: string }) => {
+    mutationFn: async (payload: { productid: any, isAuthenticated: boolean }) => {
+      if (!payload.isAuthenticated) {
+        const existingWishlist = JSON.parse(
+          localStorage.getItem("wishlist_temp") ?? "[]"
+        );
+
+        existingWishlist.push(payload.productid);
+
+        localStorage.setItem(
+          "wishlist_temp",
+          JSON.stringify(existingWishlist)
+        );
+        return;
+      }
       const res = await apiClient.post("/api/wishList/add", payload);
       return res.data;
     },
@@ -57,13 +70,34 @@ export function useRemoveFromWishList() {
   const notify = useNotify();
 
   return useMutation({
-    mutationFn: async (productId: string) => {
+    mutationFn: async ({ productId, isAuthenticated }: { productId: string, isAuthenticated?: boolean }) => {
+      if (!isAuthenticated) {
+        // For guest users - remove from localStorage
+        const existingWishlist: string[] = JSON.parse(
+          localStorage.getItem("wishlist_temp") ?? "[]"
+        );
+        console.log("existingWishlist",existingWishlist);
+        
+        
+        // Filter out the product ID
+        const updatedWishlist = existingWishlist.filter((id: any) => id?._id !== productId);
+        
+        localStorage.setItem("wishlist_temp", JSON.stringify(updatedWishlist));
+        return { success: true, message: "Removed from wishlist" };
+      }
+      
+      // For authenticated users - call the API
       const res = await apiClient.delete(`api/wishList/remove/${productId}`);
       return res.data;
     },
-    onSuccess: () => {
-      // notify.success(res?.message || "Removed from wishlist");
-      queryClient.invalidateQueries({ queryKey: ["wishlist"] });
+    onSuccess: (data, variables) => {
+      if (variables.isAuthenticated) {
+        queryClient.invalidateQueries({ queryKey: ["wishlist"] });
+      } else {
+        // Force re-render for guest users
+        window.dispatchEvent(new Event("storage"));
+      }
+      notify.success(data?.message || "Removed from wishlist");
     },
     onError: (error: any) => {
       notify.error(error.response?.data?.message || "Failed to remove from wishlist");

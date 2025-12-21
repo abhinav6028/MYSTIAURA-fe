@@ -44,9 +44,25 @@ const MyCart = () => {
     useEffect(() => {
         if (!isAuthenticated || !userCart?.items?.length) {
             const localCart = JSON.parse(
-                localStorage.getItem("guest_cart") || "[]"
+                localStorage.getItem("cart_temp") || "[]"
             );
-            setGuestCart(localCart);
+            // Map the cart items to match the expected structure
+            const mappedCart = localCart.map((item: any) => ({
+                _id: item._id,
+                product: {
+                    ...item.product,
+                    _id: item.product._id,
+                    name: item.product.name,
+                    price: item.product.price,
+                    discountPrice: item.product.discountPrice || item.product.price,
+                    images: item.product.images || [],
+                    stock: item.product.stock || 1,
+                    ratings: item.product.ratings || { average: 0, count: 0 },
+                    category: item.product.category || { _id: '', name: 'Uncategorized' }
+                },
+                quantity: item.quantity || 1
+            }));
+            setGuestCart(mappedCart);
         }
     }, [isAuthenticated, userCart]);
 

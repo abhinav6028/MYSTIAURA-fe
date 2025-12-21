@@ -9,6 +9,7 @@ export interface CartResponse {
   quantity?: number;
   totalCount?: number;
   __v: number;
+  isAuthenticated?: boolean;
 }
 
 export interface CartItem {
