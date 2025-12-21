@@ -124,6 +124,13 @@ const Header = () => {
     "Neck in Shop By Gender",
   ];
 
+  const localCart = JSON.parse(
+    localStorage.getItem("guest_cart") || "[]"
+  );
+
+  console.log("localCart", localCart.length);
+
+
   return (
     <>
       {/* Fixed Navigation Bar */}
@@ -139,8 +146,8 @@ const Header = () => {
               <img src={phone} alt="phone" className="w-3 h-3 lg:w-6 lg:h-6 md:w-6 md:h-6 sm:w-5 sm:h-5" />
               <span className="ml:1">+91 9895 380 343</span>
             </div>
-            <span className="text-center flex-1 font-medium md:text-[18px] text-[10px]"> Get 50% OFF on Engagement Rings
-            </span>
+            {/* <span className="text-center flex-1 font-medium md:text-[18px] text-[10px]"> Get 50% OFF on Engagement Rings
+            </span> */}
             <div className="flex items-center sm:gap-2 md:gap-3 lg:gap-4">
               {/* Language Dropdown */}
 
@@ -244,11 +251,11 @@ const Header = () => {
 
                 <Heart
                   onClick={() => {
-                    if (!isAuthenticated) {
-                      return;
-                    }
+                    // if (!isAuthenticated) {
+                    //   return;
+                    // }
 
-                    navigate(`/${navigatePath}/wishlist`);
+                    navigate(`/wishlist`);
                   }}
                   className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
 
@@ -278,13 +285,13 @@ const Header = () => {
                   )}
                 </div>
               }
-
-              <Badge badgeContent={cartCount} color="primary">
+              {/* localCart.length */}
+              <Badge badgeContent={isAuthenticated ? cartCount : localCart.length} color="primary">
                 <ShoppingCart onClick={() => {
-                  if (!isAuthenticated) {
-                    return;
-                  }
-                  navigate(`/${navigatePath}/mycart`);
+                  // if (!isAuthenticated) {
+                  //   return;
+                  // }
+                  navigate(`/mycart`);
                 }} className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
               </Badge>
 

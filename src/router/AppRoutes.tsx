@@ -43,6 +43,8 @@ function AppRoutes() {
     });
   }, [pathname]);
 
+
+
   return (
     <Suspense fallback={<Loading />}>
       <Routes>
@@ -61,6 +63,10 @@ function AppRoutes() {
           <Route path="payment" element={<Payment />} />
           <Route path="revieworder" element={<ReviewOrder />} />
           <Route path="inventory/:id" element={<ProductListingPage />} />
+
+          <Route path="mycart" element={<MyCart />} />
+          <Route path="wishlist" element={<WishList />} />
+
         </Route >
 
         {/* Private Routes */}
@@ -72,8 +78,7 @@ function AppRoutes() {
           <Route path="inventory/:categoryname" element={<ProductListingPage />} />
           <Route path="productdetailPage/:id" element={<ProductDetailPage />} />
           <Route path="categories/:id" element={<CategoryPage />} />
-          <Route path="mycart" element={<MyCart />} />
-          <Route path="wishlist" element={<WishList />} />
+
           <Route path="selectadress" element={<SelectAdress showItems={true} />} />
           <Route path="selectadress/:id" element={<SelectAdress showItems={true} />} />
           {/* <Route path="selectadress" element={<SelectAdress />} /> */}

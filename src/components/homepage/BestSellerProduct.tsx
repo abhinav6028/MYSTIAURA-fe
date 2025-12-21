@@ -17,6 +17,55 @@ const BestSellerProduct = () => {
     const { data: wishlistData } = useWishList(isAuthenticated);
     const deleteWishListItem = useRemoveFromWishList();
 
+    console.log("isAuthenticated", isAuthenticated);
+
+    const addToGuestCart = (product: any) => {
+        const cartKey = "guest_wish";
+
+        const existingCart = JSON.parse(
+            localStorage.getItem(cartKey) || "[]"
+        );
+
+        const productIndex = existingCart.findIndex(
+            (item: any) => item._id === product._id
+        );
+
+        if (productIndex !== -1) {
+            existingCart[productIndex].quantity =
+                (existingCart[productIndex].quantity || 1) + 1;
+        } else {
+            existingCart.push({
+                ...product,   // FULL PRODUCT DATA
+                quantity: 1,
+            });
+        }
+
+        localStorage.setItem(cartKey, JSON.stringify(existingCart));
+    };
+
+    const addToGuestWish = (product: any) => {
+        const cartKey = "guest_cart";
+
+        const existingCart = JSON.parse(
+            localStorage.getItem(cartKey) || "[]"
+        );
+
+        const productIndex = existingCart.findIndex(
+            (item: any) => item._id === product._id
+        );
+
+        if (productIndex !== -1) {
+            existingCart[productIndex].quantity =
+                (existingCart[productIndex].quantity || 1) + 1;
+        } else {
+            existingCart.push({
+                ...product,   // FULL PRODUCT DATA
+                quantity: 1,
+            });
+        }
+
+        localStorage.setItem(cartKey, JSON.stringify(existingCart));
+    };
     return (
         <div className="pb-8">
             {/* Header */}
@@ -52,19 +101,6 @@ const BestSellerProduct = () => {
                             key={val._id}
                             className="bg-[#f9f9f9] flex flex-col items - center relative cursor - pointer"
                         >
-                            {/* Heart for small screens */}
-                            {/* <div className="absolute top-2 left-2 sm:hidden w-8 h-8 flex items-center justify-center bg-white rounded-full">
-                                <Heart
-                                    onClick={() =>
-                                        createAddToWishList.mutate({ productid: val._id })
-                                    }
-                                    size={30}
-                                    fill={isWishlisted ? "#660033" : "none"}
-                                    color='#660033'
-                                    className={`cursor-pointer ${isWishlisted ? "text-red-500" : "text-gray-600"
-                                        }`}
-                                />
-                            </div> */}
 
                             {/* Image */}
                             <div className="w-full h-80 md:h-80 flex justify-center bg-[#f9f9f9] p-4">
@@ -81,10 +117,18 @@ const BestSellerProduct = () => {
                             <div className="w-full flex sm:flex-row items-center px-2 sm:px-4 pb-4 gap-2 sm:gap-2 mt-2 sm:mt-0">
                                 <div className="w-12 h-12 items-center justify-center bg-white flex-shrink-0 flex">
                                     <Heart
-
-                                        onClick={() =>
-                                            isWishlisted ? deleteWishListItem.mutate(val?._id) : createAddToWishList.mutate({ productid: val._id })
-                                        }
+                                        // addToGuestCart
+                                        onClick={() => {
+                                            if (isAuthenticated) {
+                                                isWishlisted ? deleteWishListItem.mutate(val?._id) : createAddToWishList.mutate({ productid: val._id })
+                                                // createAddToCart.mutate({ product: val._id, quantity: 1 });
+                                            } else {
+                                                addToGuestWish(val);
+                                            }
+                                        }}
+                                        // onClick={() =>
+                                        //     isWishlisted ? deleteWishListItem.mutate(val?._id) : createAddToWishList.mutate({ productid: val._id })
+                                        // }
                                         size={20}
                                         fill={isWishlisted ? "#660033" : "none"}
                                         color='#660033'
@@ -95,9 +139,16 @@ const BestSellerProduct = () => {
 
                                 <button
                                     className="flex-1 bg-[#660033] text-white font-semibold md:py-3 py-2 text-sm sm:text-md hover:bg-[#51052b] transition-colors w-full sm:w-auto"
-                                    onClick={() =>
-                                        createAddToCart.mutate({ product: val._id, quantity: 1 })
-                                    }
+                                    onClick={() => {
+                                        if (isAuthenticated) {
+                                            createAddToCart.mutate({ product: val._id, quantity: 1 });
+                                        } else {
+                                            addToGuestCart(val);
+                                        }
+                                    }}
+                                // onClick={() =>
+                                //     createAddToCart.mutate({ product: val._id, quantity: 1 })
+                                // }
                                 >
                                     ADD TO CART
                                 </button>
