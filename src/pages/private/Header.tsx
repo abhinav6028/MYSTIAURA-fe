@@ -29,8 +29,11 @@ const Header = () => {
   const { data: wishlistData } = useWishList(isAuthenticated);
   const { data: cartData } = useCart(isAuthenticated);
   useCategories();
+  const wishlistProductFromLocalStorage = JSON.parse(
+    localStorage.getItem("wishlist_temp") ?? "[]"
+  );
   const logoutUser = useLogout();
-  const wishlistCount = wishlistData?.totalCount ?? 0;
+  const wishlistCount = isAuthenticated ? wishlistData?.totalCount : wishlistProductFromLocalStorage?.length;
   const cartCount = cartData?.totalCount ?? 0;
 
   const navigate = useNavigate();
@@ -254,14 +257,13 @@ const Header = () => {
                     // if (!isAuthenticated) {
                     //   return;
                     // }
+                    console.log("navigatePath:", navigatePath);
 
-                    navigate(`/wishlist`);
+                    navigate(isAuthenticated ? `/${navigatePath}/wishlist` : "/wishlist");
                   }}
                   className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
 
               </Badge>
-
-
 
               {
                 isAuthenticated &&

@@ -9,7 +9,7 @@ import type { CartData } from "../../../types/userTypes";
 
 export function useCart(enabled: boolean) {
   const dispatch = useDispatch();
-  const query =  useQuery<CartData, Error>({
+  const query = useQuery<CartData, Error>({
     queryKey: ["cart"],
     queryFn: async () => {
       const res = await apiClient.get("api/cart");
@@ -17,9 +17,9 @@ export function useCart(enabled: boolean) {
     },
     retry: false,
     enabled,
-    });
+  });
 
-   useEffect(() => {
+  useEffect(() => {
     if (query.data) {
       dispatch(setAddCartList(query.data));
     }
@@ -34,8 +34,26 @@ export function useAddToCartProduct() {
   const notify = useNotify();
 
   return useMutation({
-    mutationFn: async (payload: Partial<CartResponse>) => {
-      const res = await apiClient.post("api/cart/add", payload);
+    mutationFn: async (payload: any) => {
+      const { isAuthenticated, ...restPayload } = payload;
+      if (!payload.isAuthenticated) {
+        let existingWishlist = JSON.parse(
+          localStorage.getItem("cart_temp") ?? "[]"
+        );
+
+
+        console.log(existingWishlist);
+        
+        existingWishlist = existingWishlist?.filter((item: any) => item?.product?._id !== restPayload?.product?._id) || [];
+        existingWishlist.push(restPayload);
+
+        localStorage.setItem(
+          "cart_temp",
+          JSON.stringify(existingWishlist)
+        );
+        return;
+      }
+      const res = await apiClient.post("api/cart/add", restPayload);
       return res.data;
     },
     onSuccess: (_res) => {
