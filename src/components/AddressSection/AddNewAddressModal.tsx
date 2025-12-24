@@ -17,6 +17,7 @@ import { PRIMARY_COLOUR } from "../../utils";
 import { Plus } from "lucide-react";
 import { useCreateAddress, useUpdateAddress } from "../../services/api/selectAddress/selectAddress";
 import { Country, State, type ICountry, type IState } from "country-state-city";
+import { useAppSelector } from "../../store/hooks";
 
 
 // ----------------- Form Types -----------------
@@ -69,6 +70,9 @@ const AddNewAddressModal = ({ open, setOpen, selectedData }: { open: boolean, se
   const createAddressMutation = useCreateAddress();
   const updateAddressMutation = useUpdateAddress();
 
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+
+
   const [countries, setCountries] = useState<ICountry[]>([]);
   const [states, setStates] = useState<IState[]>([]);
 
@@ -106,23 +110,45 @@ const AddNewAddressModal = ({ open, setOpen, selectedData }: { open: boolean, se
 
   const onSubmit: SubmitHandler<any> = (data) => {
     // console.log("data", data);
-
-    if (selectedData) {
-      updateAddressMutation.mutate({ ...data, _id: selectedData._id }, {
-        onSuccess: () => {
-          reset();
-          setOpen(false);
-        },
-      });
+    if (isAuthenticated) {
+      if (selectedData) {
+        updateAddressMutation.mutate({ ...data, _id: selectedData._id }, {
+          onSuccess: () => {
+            reset();
+            setOpen(false);
+          },
+        });
+      } else {
+        createAddressMutation.mutate(data, {
+          onSuccess: () => {
+            reset();
+            setOpen(false);
+          },
+        });
+      }
     } else {
-      createAddressMutation.mutate(data, {
-        onSuccess: () => {
-          reset();
-          setOpen(false);
-        },
-      });
+
+      console.log("data", data);
+
+      // 1️⃣ Get existing addresses (or empty array)
+      const existingAddresses = JSON.parse(
+        localStorage.getItem("localAdress") || "[]"
+      );
+
+      // 2️⃣ Add new object
+      existingAddresses.push(data);
+
+      // 3️⃣ Save back to localStorage
+      localStorage.setItem(
+        "localAdress",
+        JSON.stringify(existingAddresses)
+      );  
     }
+
   };
+
+  console.log("isAuthenticated", isAuthenticated);
+
 
   return (
     <div>
