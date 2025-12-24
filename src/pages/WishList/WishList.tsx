@@ -16,10 +16,6 @@ export default function WishList() {
 
     const navigate = useNavigate()
 
-    const localWishList = JSON.parse(
-        localStorage.getItem("guest_cart") || "[]"
-    );
-
     // useWishList
     return (
         <LayoutContainer>
