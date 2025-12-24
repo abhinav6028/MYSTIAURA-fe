@@ -142,7 +142,8 @@ const AddNewAddressModal = ({ open, setOpen, selectedData }: { open: boolean, se
       localStorage.setItem(
         "localAdress",
         JSON.stringify(existingAddresses)
-      );  
+      );
+      setOpen(false);
     }
 
   };

@@ -323,7 +323,7 @@
 
 
 import LayoutContainer from '../../components/layout/LayoutContainer'
-import { FONT_FAMILY, PRIMARY_COLOUR } from '../../utils'
+import { FONT_FAMILY } from '../../utils'
 
 import { useEffect, useState } from "react";
 import {
@@ -390,15 +390,44 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
         setOpen(true);
     };
 
+
     const handleDelete = (item: any) => {
+        // If deleted item is currently selected → clear selection
+        if (selectedCheckAddress?._id === item._id) {
+            setSelectedCheckAddress(null);
+        }
+
         if (isAuthenticated) {
-            deleteAdress.mutate(item._id);
+            // 🔹 API delete
+            deleteAdress.mutate(item._id, {
+                onSuccess: () => {
+                    // optional: optimistic UI update
+                    setAddressList((prev) =>
+                        prev.filter(addr => addr._id !== item._id)
+                    );
+                }
+            });
         } else {
-            const updated = addressList.filter(addr => addr._id !== item._id);
+            // 🔹 LocalStorage delete
+            const updated = addressList.filter(
+                addr => addr._id !== item._id
+            );
+
             localStorage.setItem("localAdress", JSON.stringify(updated));
             setAddressList(updated);
         }
     };
+
+
+    // const handleDelete = (item: any) => {
+    //     if (isAuthenticated) {
+    //         deleteAdress.mutate(item._id);
+    //     } else {
+    //         const updated = addressList.filter(addr => addr._id !== item._id);
+    //         localStorage.setItem("localAdress", JSON.stringify(updated));
+    //         setAddressList(updated);
+    //     }
+    // };
 
     // ------------------ Delivery Charge ------------------
     const deliveryCharge = selectedCheckAddress
@@ -519,8 +548,13 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
                                         <div className="flex justify-between font-bold py-3">
                                             <span>Grand Total</span>
                                             <span>
-                                                ₹{(id ? singleProduct?.discountPrice : userCart?.totalPrice || 0) + deliveryCharge}
+                                                ₹{((id
+                                                    ? singleProduct?.discountPrice ?? 0
+                                                    : userCart?.totalPrice ?? 0) + deliveryCharge)}
                                             </span>
+                                            {/* <span>
+                                                ₹{(id ? singleProduct?.discountPrice : userCart?.totalPrice || 0 ) + deliveryCharge}
+                                            </span> */}
                                         </div>
 
                                         <button
