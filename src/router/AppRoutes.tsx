@@ -18,6 +18,8 @@ import MyProfile from "../pages/MyProfile/MyProfile";
 
 import Loading from "../components/loading";
 import LoginSuccess from "../pages/LoginSuccess/LoginSuccess";
+import PrivacyPolicy from "../pages/PrivacyPolicy/PrivacyPolicy";
+import TermsAndCondition from "../pages/TermsAndCondition/TermsAndCondition";
 
 const Login = lazy(() => import("../pages/public/Login"));
 const Register = lazy(() => import("../pages/public/Register"));
@@ -52,6 +54,8 @@ function AppRoutes() {
         <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
         <Route path="/login/:id" element={<PublicRoute><Login /></PublicRoute>} />
         <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
+        <Route path="/privacy-policy" element={<PublicRoute><PrivacyPolicy /></PublicRoute>} />
+        <Route path="/terms-condition" element={<PublicRoute><TermsAndCondition /></PublicRoute>} />
         <Route path="/login-success" element={<PublicRoute><LoginSuccess /></PublicRoute>} />
 
         <Route path="/" element={<PublicRoute><Dashboard /></PublicRoute>} >
