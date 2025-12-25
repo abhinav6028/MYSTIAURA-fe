@@ -3,14 +3,12 @@ import subbanner from "../../assets/homepage/subbanner.png";
 import { FONT_FAMILY, navigatePath, PRIMARY_COLOUR } from "../../utils";
 import { useNavigate } from "react-router-dom";
 import { useProductList } from "../../services/api/product/product";
-import { useAddToCartProduct } from "../../services/api/cart/cart";
 import { useAddToWishList, useRemoveFromWishList, useWishList } from "../../services/api/wishlist/wishlist";
 import { useAppSelector } from "../../store/hooks";
 
 const BestSellerProduct = () => {
 
     const { data } = useProductList(1, 8);
-    const createAddToCart = useAddToCartProduct();
     const navigate = useNavigate();
     const { isAuthenticated } = useAppSelector((state) => state.auth);
     const createAddToWishList = useAddToWishList()
@@ -19,29 +17,7 @@ const BestSellerProduct = () => {
 
     console.log("isAuthenticated", isAuthenticated);
 
-    const addToGuestCart = (product: any) => {
-        const cartKey = "guest_wish";
-
-        const existingCart = JSON.parse(
-            localStorage.getItem(cartKey) || "[]"
-        );
-
-        const productIndex = existingCart.findIndex(
-            (item: any) => item._id === product._id
-        );
-
-        if (productIndex !== -1) {
-            existingCart[productIndex].quantity =
-                (existingCart[productIndex].quantity || 1) + 1;
-        } else {
-            existingCart.push({
-                ...product,   // FULL PRODUCT DATA
-                quantity: 1,
-            });
-        }
-
-        localStorage.setItem(cartKey, JSON.stringify(existingCart));
-    };
+   
 
     const addToGuestWish = (product: any) => {
         const cartKey = "guest_cart";
@@ -118,14 +94,14 @@ const BestSellerProduct = () => {
                                 <div className="w-12 h-12 items-center justify-center bg-white flex-shrink-0 flex">
                                     <Heart
                                         // addToGuestCart
-                                        onClick={() => {
-                                            if (isAuthenticated) {
-                                                isWishlisted ? deleteWishListItem.mutate(val?._id) : createAddToWishList.mutate({ productid: val._id })
-                                                // createAddToCart.mutate({ product: val._id, quantity: 1 });
-                                            } else {
-                                                addToGuestWish(val);
-                                            }
-                                        }}
+                                        // onClick={() => {
+                                        //     if (isAuthenticated) {
+                                        //         isWishlisted ? deleteWishListItem.mutate(val?._id) : createAddToWishList.mutate({ productid: val._id })
+                                        //         // createAddToCart.mutate({ product: val._id, quantity: 1 });
+                                        //     } else {
+                                        //         addToGuestWish(val);
+                                        //     }
+                                        // }}
                                         // onClick={() =>
                                         //     isWishlisted ? deleteWishListItem.mutate(val?._id) : createAddToWishList.mutate({ productid: val._id })
                                         // }
@@ -141,11 +117,20 @@ const BestSellerProduct = () => {
                                     className="flex-1 bg-[#660033] text-white font-semibold md:py-3 py-2 text-sm sm:text-md hover:bg-[#51052b] transition-colors w-full sm:w-auto"
                                     onClick={() => {
                                         if (isAuthenticated) {
-                                            createAddToCart.mutate({ product: val._id, quantity: 1 });
+                                            isWishlisted ? deleteWishListItem.mutate(val?._id) : createAddToWishList.mutate({ productid: val._id })
+                                            // createAddToCart.mutate({ product: val._id, quantity: 1 });
                                         } else {
-                                            addToGuestCart(val);
+                                            addToGuestWish(val);
                                         }
                                     }}
+
+                                // onClick={() => {
+                                //     if (isAuthenticated) {
+                                //         createAddToCart.mutate({ product: val._id, quantity: 1 });
+                                //     } else {
+                                //         addToGuestCart(val);
+                                //     }
+                                // }}
                                 // onClick={() =>
                                 //     createAddToCart.mutate({ product: val._id, quantity: 1 })
                                 // }

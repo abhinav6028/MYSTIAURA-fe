@@ -38,14 +38,19 @@ export function useProducts(params?: {
       params?.end_date      // Add endDate to queryKey
     ],
     queryFn: async () => {
+      console.log("category.............", params?.category);
+
       // Create a new params object to avoid mutating the original
       const queryParams = { ...params };
       // Remove undefined values
-      Object.keys(queryParams).forEach(key => 
-        queryParams[key as keyof typeof queryParams] === undefined && 
+      Object.keys(queryParams).forEach(key =>
+        queryParams[key as keyof typeof queryParams] === undefined &&
         delete queryParams[key as keyof typeof queryParams]
       );
-      
+
+      console.log("queryParams", queryParams);
+
+
       return apiClient.get("api/product/all", {
         params: queryParams,
       });

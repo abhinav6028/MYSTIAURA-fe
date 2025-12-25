@@ -23,15 +23,20 @@ const SidebarFilters: React.FC = () => {
   const [selectedCategories, setSelectedCategories] = React.useState<string[]>([]);
   const { data: categories } = useCategories();
   const categoriesCollection = categories?.data?.categories || [];
-  const {categoryname } = useParams();
+  const { categoryname } = useParams();
 
   useEffect(() => {
     if (categoryname) {
+      console.log("categoryname", categoryname);
+
       setSelectedCategories([categoryname]);
     }
   }, [categoryname]);
 
-  const dispatch = useDispatch(); 
+
+
+
+  const dispatch = useDispatch();
   dispatch(setCategoryFilter({
     category: selectedCategories,
     minPrice: 0,
