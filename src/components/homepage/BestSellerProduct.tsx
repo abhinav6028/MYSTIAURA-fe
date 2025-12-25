@@ -3,14 +3,12 @@ import subbanner from "../../assets/homepage/subbanner.png";
 import { FONT_FAMILY, navigatePath, PRIMARY_COLOUR } from "../../utils";
 import { useNavigate } from "react-router-dom";
 import { useProductList } from "../../services/api/product/product";
-import { useAddToCartProduct } from "../../services/api/cart/cart";
 import { useAddToWishList, useRemoveFromWishList, useWishList } from "../../services/api/wishlist/wishlist";
 import { useAppSelector } from "../../store/hooks";
 
 const BestSellerProduct = () => {
 
     const { data } = useProductList(1, 8);
-    const createAddToCart = useAddToCartProduct();
     const navigate = useNavigate();
     const { isAuthenticated } = useAppSelector((state) => state.auth);
     const createAddToWishList = useAddToWishList()
@@ -19,29 +17,7 @@ const BestSellerProduct = () => {
 
     console.log("isAuthenticated", isAuthenticated);
 
-    const addToGuestCart = (product: any) => {
-        const cartKey = "guest_wish";
-
-        const existingCart = JSON.parse(
-            localStorage.getItem(cartKey) || "[]"
-        );
-
-        const productIndex = existingCart.findIndex(
-            (item: any) => item._id === product._id
-        );
-
-        if (productIndex !== -1) {
-            existingCart[productIndex].quantity =
-                (existingCart[productIndex].quantity || 1) + 1;
-        } else {
-            existingCart.push({
-                ...product,   // FULL PRODUCT DATA
-                quantity: 1,
-            });
-        }
-
-        localStorage.setItem(cartKey, JSON.stringify(existingCart));
-    };
+   
 
     const addToGuestWish = (product: any) => {
         const cartKey = "guest_cart";
