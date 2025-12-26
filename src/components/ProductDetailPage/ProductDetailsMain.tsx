@@ -241,6 +241,7 @@ const ProductDetailsMain = () => {
 
                     {/* Quantity / Add to cart */}
                     <p>Tax included. Shipping calculated at checkout.</p>
+                    <p></p>
                     <div className="w-full space-y-3">
                         {/* Quantity + Add to Cart + Wishlist */}
                         <div className="flex flex-wrap items-center gap-3">

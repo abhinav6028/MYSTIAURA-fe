@@ -119,7 +119,7 @@ const Header = () => {
   const [query, setQuery] = useState("");
   const popularSearches = [
     "Neck in Jewellery",
-    "Neck in Women's Jewellery",  
+    "Neck in Women's Jewellery",
     "Neck in Category",
     "Neck in Shop By Gender",
   ];
@@ -146,8 +146,8 @@ const Header = () => {
               <img src={phone} alt="phone" className="w-3 h-3 lg:w-6 lg:h-6 md:w-6 md:h-6 sm:w-5 sm:h-5" />
               <span className="ml:1">+91 9895 380 343</span>
             </div>
-            {/* <span className="text-center flex-1 font-medium md:text-[18px] text-[10px]"> Get 50% OFF on Engagement Rings
-            </span> */}
+            <span className="text-center flex-1 font-medium md:text-[18px] text-[10px]"> Shop for ₹300 or more and get free delivery!
+            </span>
             <div className="flex items-center sm:gap-2 md:gap-3 lg:gap-4">
               {/* Language Dropdown */}
 
