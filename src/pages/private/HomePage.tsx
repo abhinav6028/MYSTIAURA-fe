@@ -1,7 +1,7 @@
 import BestSellerProduct from "../../components/homepage/BestSellerProduct";
 import GetInspired from "../../components/homepage/GetInspired";
-import HeroBannerSection from "../../components/homepage/HeroBannerSection"
-import SectionSix from "../../components/homepage/SectionSix";
+// import HeroBannerSection from "../../components/homepage/HeroBannerSection"
+// import SectionSix from "../../components/homepage/SectionSix";
 import ShopByCategory from "../../components/homepage/ShopByCategory";
 import StunningBanner from "../../components/homepage/StunningBanner";
 import Testimonial from "../../components/homepage/Testimonial";
@@ -12,12 +12,12 @@ const HomePage = () => {
     return (
         <div>
             <LayoutContainer>
-                <HeroBannerSection />
+                {/* <HeroBannerSection /> */}
                 <ShopByCategory />
                 {/* <ShopByShape /> */}
                 <BestSellerProduct />
             </LayoutContainer>
-            <SectionSix />
+            {/* <SectionSix /> */}
             <LayoutContainer>
                 {/* <PopularProducts /> */}
                 <StunningBanner />
