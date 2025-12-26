@@ -8,6 +8,7 @@ import { RatingStars } from "../../utilsComp/RatingsComp";
 import { CiStar } from "react-icons/ci";
 import { MdOutlinePrivacyTip } from "react-icons/md";
 import { useAddToCartProduct } from "../../services/api/cart/cart";
+import { useAppSelector } from "../../store/hooks";
 const fallback = "../assets/fallback.png";
 
 const ProductDetailsMain = () => {
@@ -55,12 +56,20 @@ const ProductDetailsMain = () => {
     const imageUrl =
         singleProduct?.images?.[currentIndx]?.secure_url || fallback;
 
+    const isAuthenticated = useAppSelector(
+        (state) => state.auth.isAuthenticated
+    );
+
     useEffect(() => {
         const checkMobile = () => setIsMobile(window.innerWidth < 768);
         checkMobile();
         window.addEventListener("resize", checkMobile);
         return () => window.removeEventListener("resize", checkMobile);
     }, []);
+
+
+
+
 
     return (
         <div className="px-4 md:px-6 lg:px-10 py-6">
@@ -278,7 +287,27 @@ const ProductDetailsMain = () => {
                                     flexGrow: 1,
                                     textTransform: "none",
                                 }}
-                                onClick={() => createAddToCart.mutate({ product: id || "", quantity })}
+                                // isAuthenticated
+                                onClick={() => {
+                                    if (isAuthenticated) {
+                                        createAddToCart.mutate({ product: id || "", quantity })
+                                    } else {
+                                        const localCart = JSON.parse(
+                                            localStorage.getItem("guest_cart") || "[]"
+                                        );
+
+                                        localCart.push(singleProduct)
+
+                                        console.log("localCart", localCart);
+                                        // localStorage?.setItem("guest_cart", localCart)
+                                        localStorage.setItem(
+                                            "guest_cart",
+                                            JSON.stringify(localCart)
+                                        );
+                                    }
+                                }
+                                }
+
                             >
                                 Add To Cart
                             </Button>

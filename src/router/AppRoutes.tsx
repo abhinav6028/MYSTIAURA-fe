@@ -45,8 +45,6 @@ function AppRoutes() {
     });
   }, [pathname]);
 
-
-
   return (
     <Suspense fallback={<Loading />}>
       <Routes>
@@ -68,7 +66,7 @@ function AppRoutes() {
           <Route path="revieworder" element={<ReviewOrder />} />
           <Route path="inventory/:id" element={<ProductListingPage />} />
 
-          <Route path="mycart" element={<MyCart />} />
+          <Route path="mycart" element={<MyCart  />} />
           <Route path="wishlist" element={<WishList />} />
 
           <Route path="selectadress" element={<SelectAdress showItems={true} />} />
