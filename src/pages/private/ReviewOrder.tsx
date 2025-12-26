@@ -326,7 +326,11 @@ export default function ReviewOrder({ selectedCheckAddress, discountAmount, dele
                         <div className="flex justify-between font-bold text-lg py-3">
                             <span>Grand Total</span>
                             <span>₹{
-                                !isAuthenticated ? localCart + deleveryCharge :
+                                !isAuthenticated ? localCart.reduce(
+                                    (sum: number, i: any) =>
+                                        sum + i.discountPrice * i.quantity,
+                                    0
+                                ) + deleveryCharge :
                                     discountAmount ? discountAmount + (deleveryCharge ?? 0) : userCart?.totalPrice ? userCart?.totalPrice + (deleveryCharge ?? 0) : 0
                             }
                             </span>
