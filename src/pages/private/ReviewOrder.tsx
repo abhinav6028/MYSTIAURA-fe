@@ -176,6 +176,13 @@ export default function ReviewOrder({ selectedCheckAddress, discountAmount, dele
         });
     };
 
+    const localCart = JSON.parse(
+        localStorage.getItem("guest_cart") || "[]"
+    );
+
+    console.log("localCart", localCart);
+
+
 
     return (
 
@@ -298,7 +305,13 @@ export default function ReviewOrder({ selectedCheckAddress, discountAmount, dele
                     <CardContent>
                         <div style={{ borderBottom: `1px solid ${PRIMARY_COLOUR}` }} className="flex justify-between my-1 md:my-2 py-2 md:py-3 border-b ">
                             <span>Subtotal</span>
-                            <span>₹{discountAmount ? discountAmount : userCart?.totalPrice ? userCart?.totalPrice : 0}</span>
+                            <span>₹{
+                                !isAuthenticated ? localCart.reduce(
+                                    (sum: number, i: any) => sum + i.discountPrice * i.quantity,
+                                    0
+                                ) :
+                                    discountAmount ? discountAmount : userCart?.totalPrice ? userCart?.totalPrice : 0
+                            }</span>
                         </div>
 
                         <div className="flex justify-between mb-2 my-2">
@@ -312,7 +325,11 @@ export default function ReviewOrder({ selectedCheckAddress, discountAmount, dele
                         <Divider className="my-2" />
                         <div className="flex justify-between font-bold text-lg py-3">
                             <span>Grand Total</span>
-                            <span>₹{discountAmount ? discountAmount + (deleveryCharge ?? 0) : userCart?.totalPrice ? userCart?.totalPrice + (deleveryCharge ?? 0) : 0}</span>
+                            <span>₹{
+                                !isAuthenticated ? localCart + deleveryCharge :
+                                    discountAmount ? discountAmount + (deleveryCharge ?? 0) : userCart?.totalPrice ? userCart?.totalPrice + (deleveryCharge ?? 0) : 0
+                            }
+                            </span>
                         </div>
 
                         <button

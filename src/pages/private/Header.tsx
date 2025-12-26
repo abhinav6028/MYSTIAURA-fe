@@ -119,7 +119,7 @@ const Header = () => {
   const [query, setQuery] = useState("");
   const popularSearches = [
     "Neck in Jewellery",
-    "Neck in Women's Jewellery",
+    "Neck in Women's Jewellery",  
     "Neck in Category",
     "Neck in Shop By Gender",
   ];

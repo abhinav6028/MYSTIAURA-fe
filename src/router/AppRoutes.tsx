@@ -70,7 +70,7 @@ function AppRoutes() {
 
           <Route path="mycart" element={<MyCart />} />
           <Route path="wishlist" element={<WishList />} />
-          
+
           <Route path="selectadress" element={<SelectAdress showItems={true} />} />
           <Route path="selectadress/:id" element={<SelectAdress showItems={true} />} />
           {/* <Route path="selectadress" element={<SelectAdress />} /> */}
@@ -91,7 +91,16 @@ function AppRoutes() {
           <Route path="productdetailPage/:id" element={<ProductDetailPage />} />
           <Route path="categories/:id" element={<CategoryPage />} />
 
+          <Route path="mycart" element={<MyCart />} />
+          <Route path="wishlist" element={<WishList />} />
 
+          <Route path="selectadress" element={<SelectAdress showItems={true} />} />
+          <Route path="selectadress/:id" element={<SelectAdress showItems={true} />} />
+          {/* <Route path="selectadress" element={<SelectAdress />} /> */}
+          <Route path="payment" element={<Payment />} />
+          <Route path="revieworder" element={<ReviewOrder />} />
+          <Route path="myorders" element={<MyOrders />} />
+          <Route path="myprofile" element={<MyProfile />} />
         </Route>
 
         {/* Admin Routes */}

@@ -362,6 +362,7 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
     const { id } = useParams();
     const { data: singleProduct } = useProductWithId(id as string);
 
+
     const navigate = useNavigate();
 
     // ------------------ Helpers ------------------
@@ -439,6 +440,21 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
         : 0;
 
     // ------------------ Render ------------------
+    const localCart = JSON.parse(
+        localStorage.getItem("guest_cart") || "[]"
+    );
+
+    // console.log("localCart", localCart.reduce(
+    //     (sum: number, i: any) =>
+    //         sum + i.discountPrice * i.quantity,
+    //     0
+    // ));
+
+    console.log("selected", selectedCheckAddress);
+
+
+
+    // isAuthenticated
     return (
         <>
             {showComponent === 2 && (
@@ -487,6 +503,7 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
                                                     type="radio"
                                                     name="selectedAddress"
                                                     checked={selectedCheckAddress?._id === item._id}
+                                                    onClick={() => setSelectedCheckAddress(item)}
                                                     onChange={() => setSelectedCheckAddress(item)}
                                                     className="mt-2"
                                                 />
@@ -534,8 +551,22 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
                                         <div className="flex justify-between py-2">
                                             <span>Subtotal</span>
                                             <span>
-                                                ₹{id ? singleProduct?.discountPrice : userCart?.totalPrice || 0}
+                                                ₹{
+                                                    isAuthenticated
+                                                        ? (id
+                                                            ? singleProduct?.discountPrice ?? 0
+                                                            : userCart?.totalPrice ?? 0)
+                                                        : localCart.reduce(
+                                                            (sum: number, i: any) =>
+                                                                sum + i.discountPrice * i.quantity,
+                                                            0
+                                                        )
+                                                }
                                             </span>
+
+                                            {/* <span>
+                                                ₹{id ? singleProduct?.discountPrice : userCart?.totalPrice || 0}..
+                                            </span> */}
                                         </div>
 
                                         <div className="flex justify-between py-2">
@@ -548,10 +579,28 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
                                         <div className="flex justify-between font-bold py-3">
                                             <span>Grand Total</span>
                                             <span>
+                                                ₹{
+                                                    isAuthenticated
+                                                        ? (
+                                                            (id
+                                                                ? singleProduct?.discountPrice ?? 0
+                                                                : userCart?.totalPrice ?? 0
+                                                            ) + deliveryCharge
+                                                        )
+                                                        : (
+                                                            localCart.reduce(
+                                                                (sum: number, i: any) =>
+                                                                    sum + i.discountPrice * i.quantity,
+                                                                0
+                                                            ) + deliveryCharge
+                                                        )
+                                                }
+                                            </span>
+                                            {/* <span>
                                                 ₹{((id
                                                     ? singleProduct?.discountPrice ?? 0
-                                                    : userCart?.totalPrice ?? 0) + deliveryCharge)}
-                                            </span>
+                                                    : userCart?.totalPrice ?? 0) + deliveryCharge)}..
+                                            </span> */}
                                             {/* <span>
                                                 ₹{(id ? singleProduct?.discountPrice : userCart?.totalPrice || 0 ) + deliveryCharge}
                                             </span> */}
