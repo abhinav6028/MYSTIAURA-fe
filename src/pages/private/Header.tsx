@@ -254,8 +254,8 @@ const Header = () => {
                     // if (!isAuthenticated) {
                     //   return;
                     // }
-
-                    navigate(`/wishlist`);
+                    navigate(isAuthenticated ? "/users/wishlist" : "/wishlist");
+                    // navigate(`/wishlist`);
                   }}
                   className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
 
@@ -291,7 +291,8 @@ const Header = () => {
                   // if (!isAuthenticated) {
                   //   return;
                   // }
-                  navigate(`/mycart`);
+                  // navigate(`{isAuthenticated ? "users/mycart" : "/mycart"}`);
+                  navigate(isAuthenticated ? "/users/mycart" : "/mycart");
                 }} className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
               </Badge>
 
