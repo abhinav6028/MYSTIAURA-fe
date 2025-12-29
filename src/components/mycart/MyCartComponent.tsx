@@ -233,8 +233,9 @@ const MyCart = () => {
 
                         <Divider />
 
+                        {/* isAuthenticated */}
                         <button
-                            onClick={() => navigate("/selectadress")}
+                            onClick={() => navigate(isAuthenticated ? "user/selectadress" : "/selectadress")}
                             // disabled={!isAuthenticated}
                             className="text-white px-6 py-3 font-semibold w-full bg-primary disabled:bg-gray-400"
                         >
