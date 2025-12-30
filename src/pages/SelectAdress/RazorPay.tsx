@@ -1,4 +1,5 @@
 import apiClient from "../../services/apiClient/apiClient";
+import { useAppSelector } from "../../store/hooks";
 import { RAZORPAYKEY_ID } from "../../utils";
 
 const loadRazorpayScript = (): Promise<boolean> => {
@@ -15,6 +16,9 @@ interface RazorPayDetail { orderId: string; amount: number; currency: string; }
 
 export default function CheckoutButton({ razorPayDetail }: { razorPayDetail: RazorPayDetail }) {
 
+    const isAuthenticated = useAppSelector(
+        (state) => state.auth.isAuthenticated
+    );
 
     const handlePayment = async () => {
         const loaded = await loadRazorpayScript();
@@ -33,7 +37,7 @@ export default function CheckoutButton({ razorPayDetail }: { razorPayDetail: Raz
             order_id: razorPayDetail.orderId,
             handler: async function (response: any) {
                 const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = response;
-                await apiClient.post("/api/order/verify-payment", { razorpay_order_id, razorpay_payment_id, razorpay_signature });
+                await apiClient.post(isAuthenticated ? "/api/order/verify-payment" : '/api/order/guest/verify-payment', { razorpay_order_id, razorpay_payment_id, razorpay_signature });
             },
             prefill: {
                 name: "MYSTIAURA JEWELS",
@@ -43,7 +47,6 @@ export default function CheckoutButton({ razorPayDetail }: { razorPayDetail: Raz
             theme: { color: "#3399cc" },
         };
 
-        console.log("options", options);
 
 
         const rzp = new window.Razorpay(options);

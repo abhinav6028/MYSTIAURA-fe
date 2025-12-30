@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useProductList } from "../../services/api/product/product";
 import { useAddToWishList, useRemoveFromWishList, useWishList } from "../../services/api/wishlist/wishlist";
 import { useAppSelector } from "../../store/hooks";
+import { useAddToCartProduct } from "../../services/api/cart/cart";
 
 const BestSellerProduct = () => {
 
@@ -14,6 +15,7 @@ const BestSellerProduct = () => {
     const createAddToWishList = useAddToWishList()
     const { data: wishlistData } = useWishList(isAuthenticated);
     const deleteWishListItem = useRemoveFromWishList();
+     const createAddToCart = useAddToCartProduct();
 
     console.log("isAuthenticated", isAuthenticated);
 
@@ -94,14 +96,14 @@ const BestSellerProduct = () => {
                                 <div className="w-12 h-12 items-center justify-center bg-white flex-shrink-0 flex">
                                     <Heart
                                         // addToGuestCart
-                                        // onClick={() => {
-                                        //     if (isAuthenticated) {
-                                        //         isWishlisted ? deleteWishListItem.mutate(val?._id) : createAddToWishList.mutate({ productid: val._id })
-                                        //         // createAddToCart.mutate({ product: val._id, quantity: 1 });
-                                        //     } else {
-                                        //         addToGuestWish(val);
-                                        //     }
-                                        // }}
+                                        onClick={() => {
+                                            if (isAuthenticated) {
+                                                isWishlisted ? deleteWishListItem.mutate(val?._id) : createAddToWishList.mutate({ productid: val._id })
+                                                // createAddToCart.mutate({ product: val._id, quantity: 1 });
+                                            } else {
+                                                addToGuestWish(val);
+                                            }
+                                        }}
                                         // onClick={() =>
                                         //     isWishlisted ? deleteWishListItem.mutate(val?._id) : createAddToWishList.mutate({ productid: val._id })
                                         // }
@@ -117,7 +119,7 @@ const BestSellerProduct = () => {
                                     className="flex-1 bg-[#660033] text-white font-semibold md:py-3 py-2 text-sm sm:text-md hover:bg-[#51052b] transition-colors w-full sm:w-auto"
                                     onClick={() => {
                                         if (isAuthenticated) {
-                                            isWishlisted ? deleteWishListItem.mutate(val?._id) : createAddToWishList.mutate({ productid: val._id })
+                                            isWishlisted ? deleteWishListItem.mutate(val?._id) : createAddToCart.mutate({ product: val._id, quantity: 1 })
                                             // createAddToCart.mutate({ product: val._id, quantity: 1 });
                                         } else {
                                             addToGuestWish(val);

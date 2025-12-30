@@ -153,10 +153,14 @@ export default function ReviewOrder({ selectedCheckAddress, discountAmount, dele
         currency: ""
     });
 
+    const localCart = JSON.parse(
+        localStorage.getItem("guest_cart") || "[]"
+    );
+
     const handleCreate = () => {
 
         const payload = {
-            items: singlePaymentProduct ? [{ product: singlePaymentProduct, quantity: location.state?.quantity || 1, price: singlePaymentProduct?.price - (singlePaymentProduct?.price * (singlePaymentProduct?.discountPrice / 100)) }] : cartItems?.items,
+            items: isAuthenticated ? singlePaymentProduct ? [{ product: singlePaymentProduct, quantity: location.state?.quantity || 1, price: singlePaymentProduct?.price - (singlePaymentProduct?.price * (singlePaymentProduct?.discountPrice / 100)) }] : cartItems?.items : localCart,
             shippingAddress: selectedCheckAddress,
             shipping_charge: deleveryCharge
         };
@@ -175,12 +179,6 @@ export default function ReviewOrder({ selectedCheckAddress, discountAmount, dele
             },
         });
     };
-
-    const localCart = JSON.parse(
-        localStorage.getItem("guest_cart") || "[]"
-    );
-
-    console.log("localCart", localCart);
 
 
 

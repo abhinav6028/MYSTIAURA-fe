@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNotify } from "../../../utilsComp/useNotify";
 import apiClient from "../../apiClient/apiClient";
+import { useAppSelector } from "../../../store/hooks";
 
 interface ICheckout {
   items: {
@@ -16,9 +17,16 @@ export function useCheckout() {
   const queryClient = useQueryClient();
   const notify = useNotify();
 
+  const isAuthenticated = useAppSelector(
+    (state) => state.auth.isAuthenticated
+  );
+
   return useMutation({
     mutationFn: async (payload: Partial<ICheckout>) => {
-      const res = await apiClient.post("/api/order/create", payload);
+      const res = await apiClient.post(
+        isAuthenticated ? "/api/order/create" : "/api/order/guest/create",
+        payload);
+      // /order/guest/create
       return res.data;
     },
     onSuccess: (_res) => {

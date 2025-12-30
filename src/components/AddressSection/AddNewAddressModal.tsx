@@ -128,17 +128,13 @@ const AddNewAddressModal = ({ open, setOpen, selectedData }: { open: boolean, se
       }
     } else {
 
-      console.log("data", data);
 
-      // 1️⃣ Get existing addresses (or empty array)
       const existingAddresses = JSON.parse(
         localStorage.getItem("localAdress") || "[]"
       );
 
-      // 2️⃣ Add new object
       existingAddresses.push(data);
 
-      // 3️⃣ Save back to localStorage
       localStorage.setItem(
         "localAdress",
         JSON.stringify(existingAddresses)
@@ -148,7 +144,6 @@ const AddNewAddressModal = ({ open, setOpen, selectedData }: { open: boolean, se
 
   };
 
-  console.log("isAuthenticated", isAuthenticated);
 
 
   return (
