@@ -113,7 +113,7 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
             ? selectedCheckAddress.state === "Kerala"
                 ? 50
                 : 100
-            : 5
+            : 300
         : 0;
 
     // ------------------ Render ------------------

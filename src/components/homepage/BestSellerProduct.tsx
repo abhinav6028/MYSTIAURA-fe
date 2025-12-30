@@ -15,11 +15,10 @@ const BestSellerProduct = () => {
     const createAddToWishList = useAddToWishList()
     const { data: wishlistData } = useWishList(isAuthenticated);
     const deleteWishListItem = useRemoveFromWishList();
-     const createAddToCart = useAddToCartProduct();
+    const createAddToCart = useAddToCartProduct();
 
-    console.log("isAuthenticated", isAuthenticated);
 
-   
+
 
     const addToGuestWish = (product: any) => {
         const cartKey = "guest_cart";
