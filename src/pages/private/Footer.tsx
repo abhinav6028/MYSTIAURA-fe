@@ -16,6 +16,7 @@ import amexSvg from "../../assets/footer/amex.svg";
 import discoverSvg from "../../assets/footer/discover.svg";
 import mastercardSvg from "../../assets/footer/mastercard.svg";
 import { PRIMARY_COLOUR } from "../../utils";
+import { useNavigate } from "react-router-dom";
 
 const topInfoRow = [
     {
@@ -45,7 +46,10 @@ const topInfoRow = [
 
 ]
 
+
 const Footer: React.FC = () => {
+    const navigate = useNavigate()
+
     return (
         <footer className="w-full">
             {/* Top Info Row */}
@@ -79,6 +83,10 @@ const Footer: React.FC = () => {
                     <div className="flex flex-col justify-center items-center md:items-start">
                         <h3 className="font-bold mb-2">CONTACT US</h3>
                         <p style={{ color: PRIMARY_COLOUR }}>+91 9895 380 343</p>
+
+                        <p onClick={() => navigate('/privacy-policy')}>Privscy policy</p>
+                        <p onClick={() => navigate('/terms-condition')}>Terms and Conditions</p>
+
                     </div>
 
                     {/* Social */}

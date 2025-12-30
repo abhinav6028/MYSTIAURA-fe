@@ -5,7 +5,7 @@ import SideBar from './SideBar'
 
 const Dashboard = () => {
 
-    const pathName = useLocation()
+    const pathName = useLocation()   
 
     return (
         <div className={pathName?.pathname?.split('/').includes('admin') ? 'flex w-full h-screen' : ''}>

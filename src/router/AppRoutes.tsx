@@ -20,6 +20,7 @@ import Loading from "../components/loading";
 import LoginSuccess from "../pages/LoginSuccess/LoginSuccess";
 import PrivacyPolicy from "../pages/PrivacyPolicy/PrivacyPolicy";
 import TermsAndCondition from "../pages/TermsAndCondition/TermsAndCondition";
+import RefundPolicy from "../pages/RefundPolicy/RefundPolicy";
 
 const Login = lazy(() => import("../pages/public/Login"));
 const Register = lazy(() => import("../pages/public/Register"));
@@ -55,6 +56,8 @@ function AppRoutes() {
         <Route path="/privacy-policy" element={<PublicRoute><PrivacyPolicy /></PublicRoute>} />
         <Route path="/terms-condition" element={<PublicRoute><TermsAndCondition /></PublicRoute>} />
         <Route path="/login-success" element={<PublicRoute><LoginSuccess /></PublicRoute>} />
+        <Route path="/refund-policy" element={<PublicRoute><RefundPolicy /></PublicRoute>} />
+        {/* RefundPolicy */}
 
         <Route path="/" element={<PublicRoute><Dashboard /></PublicRoute>} >
           <Route index path="/" element={<HomePage />} />
@@ -66,7 +69,7 @@ function AppRoutes() {
           <Route path="revieworder" element={<ReviewOrder />} />
           <Route path="inventory/:id" element={<ProductListingPage />} />
 
-          <Route path="mycart" element={<MyCart  />} />
+          <Route path="mycart" element={<MyCart />} />
           <Route path="wishlist" element={<WishList />} />
 
           <Route path="selectadress" element={<SelectAdress showItems={true} />} />
