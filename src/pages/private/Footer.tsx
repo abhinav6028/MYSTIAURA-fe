@@ -84,8 +84,13 @@ const Footer: React.FC = () => {
                         <h3 className="font-bold mb-2">CONTACT US</h3>
                         <p style={{ color: PRIMARY_COLOUR }}>+91 9895 380 343</p>
 
-                        <p onClick={() => navigate('/privacy-policy')}>Privscy policy</p>
-                        <p onClick={() => navigate('/terms-condition')}>Terms and Conditions</p>
+                        <div className="space-y-1 mt-2 cursor-pointer">
+                            <p onClick={() => navigate('/privacy-policy')}>Privscy policy</p>
+                            <p onClick={() => navigate('/terms-condition')}>Terms and Conditions</p>
+                            <p onClick={() => navigate('/refund-policy')}>Refund Policy</p>
+                        </div>
+
+
 
                     </div>
 
