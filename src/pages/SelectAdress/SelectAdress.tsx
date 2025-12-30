@@ -96,17 +96,6 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
         }
     };
 
-
-    // const handleDelete = (item: any) => {
-    //     if (isAuthenticated) {
-    //         deleteAdress.mutate(item._id);
-    //     } else {
-    //         const updated = addressList.filter(addr => addr._id !== item._id);
-    //         localStorage.setItem("localAdress", JSON.stringify(updated));
-    //         setAddressList(updated);
-    //     }
-    // };
-
     // ------------------ Delivery Charge ------------------
     const deliveryCharge = selectedCheckAddress
         ? selectedCheckAddress.country === "India"
@@ -120,16 +109,6 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
     const localCart = JSON.parse(
         localStorage.getItem("guest_cart") || "[]"
     );
-
-    // console.log("localCart", localCart.reduce(
-    //     (sum: number, i: any) =>
-    //         sum + i.discountPrice * i.quantity,
-    //     0
-    // ));
-
-    console.log("selected", selectedCheckAddress);
-
-
 
     // isAuthenticated
     return (
