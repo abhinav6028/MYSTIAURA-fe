@@ -39,6 +39,9 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
     const { id } = useParams();
     const { data: singleProduct } = useProductWithId(id as string);
 
+    console.log("singleProduct", singleProduct);
+
+
 
     const navigate = useNavigate();
 
@@ -118,6 +121,7 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
                     deleveryCharge={deliveryCharge}
                     discountAmount={singleProduct?.discountPrice}
                     selectedCheckAddress={selectedCheckAddress}
+                    singleProduct={singleProduct?.discountPrice}
                 />
             )}
 
@@ -208,15 +212,19 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
                                             <span>Subtotal</span>
                                             <span>
                                                 ₹{
-                                                    isAuthenticated
-                                                        ? (id
-                                                            ? singleProduct?.discountPrice ?? 0
-                                                            : userCart?.totalPrice ?? 0)
-                                                        : localCart.reduce(
-                                                            (sum: number, i: any) =>
-                                                                sum + i.discountPrice * i.quantity,
-                                                            0
-                                                        )
+                                                    id ? (id
+                                                        ? singleProduct?.discountPrice ?? 0
+                                                        : userCart?.totalPrice ?? 0
+                                                    ) :
+                                                        isAuthenticated
+                                                            ? (id
+                                                                ? singleProduct?.discountPrice ?? 0
+                                                                : userCart?.totalPrice ?? 0)
+                                                            : localCart.reduce(
+                                                                (sum: number, i: any) =>
+                                                                    sum + i.discountPrice * i.quantity,
+                                                                0
+                                                            )
                                                 }
                                             </span>
 
@@ -236,23 +244,27 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
                                             <span>Grand Total</span>
                                             <span>
                                                 ₹{
-                                                    isAuthenticated
-                                                        ? (
-                                                            (id
-                                                                ? singleProduct?.discountPrice ?? 0
-                                                                : userCart?.totalPrice ?? 0
-                                                            ) + deliveryCharge
-                                                        )
-                                                        : (
-                                                            localCart.reduce(
-                                                                (sum: number, i: any) =>
-                                                                    sum + i.discountPrice * i.quantity,
-                                                                0
-                                                            ) + deliveryCharge
-                                                        )
+                                                    id ? (id
+                                                        ? singleProduct?.discountPrice ?? 0
+                                                        : userCart?.totalPrice ?? 0
+                                                    ) + deliveryCharge :
+                                                        isAuthenticated
+                                                            ? (
+                                                                (id
+                                                                    ? singleProduct?.discountPrice ?? 0
+                                                                    : userCart?.totalPrice ?? 0
+                                                                ) + deliveryCharge
+                                                            )
+                                                            : (
+                                                                localCart.reduce(
+                                                                    (sum: number, i: any) =>
+                                                                        sum + i.discountPrice * i.quantity,
+                                                                    0
+                                                                ) + deliveryCharge
+                                                            )
                                                 }
                                             </span>
-                                          
+
                                         </div>
 
                                         <button

@@ -118,8 +118,9 @@ interface ReviewOrderProps {
     selectedCheckAddress?: Address;
     discountAmount?: number;
     deleveryCharge?: number
+    singleProduct?: number
 }
-export default function ReviewOrder({ selectedCheckAddress, discountAmount, deleveryCharge }: ReviewOrderProps) {
+export default function ReviewOrder({ selectedCheckAddress, discountAmount, deleveryCharge, singleProduct }: ReviewOrderProps) {
 
     // const [cart] = useState<CartItem[]>(initialCart);
     const id = useParams();
@@ -130,11 +131,10 @@ export default function ReviewOrder({ selectedCheckAddress, discountAmount, dele
     const { data: userCart } = useCart(isAuthenticated);
 
     // const subtotal = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
-    const taxes = 25;
-    // const deliveryFee = 0;
-    // const grandTotal = subtotal + taxes + deliveryFee;
+    const taxes = 0;
 
-    // console.log("deleveryCharge", deleveryCharge);
+    console.log("singleProduct", singleProduct);
+
 
 
     const currentStep = 1;
@@ -304,11 +304,12 @@ export default function ReviewOrder({ selectedCheckAddress, discountAmount, dele
                         <div style={{ borderBottom: `1px solid ${PRIMARY_COLOUR}` }} className="flex justify-between my-1 md:my-2 py-2 md:py-3 border-b ">
                             <span>Subtotal</span>
                             <span>₹{
-                                !isAuthenticated ? localCart.reduce(
-                                    (sum: number, i: any) => sum + i.discountPrice * i.quantity,
-                                    0
-                                ) :
-                                    discountAmount ? discountAmount : userCart?.totalPrice ? userCart?.totalPrice : 0
+                                id ? (singleProduct ?? 0) + (deleveryCharge ?? 0) :
+                                    !isAuthenticated ? localCart.reduce(
+                                        (sum: number, i: any) => sum + i.discountPrice * i.quantity,
+                                        0
+                                    ) :
+                                        discountAmount ? discountAmount : userCart?.totalPrice ? userCart?.totalPrice : 0
                             }</span>
                         </div>
 
@@ -324,12 +325,13 @@ export default function ReviewOrder({ selectedCheckAddress, discountAmount, dele
                         <div className="flex justify-between font-bold text-lg py-3">
                             <span>Grand Total</span>
                             <span>₹{
-                                !isAuthenticated ? localCart.reduce(
-                                    (sum: number, i: any) =>
-                                        sum + i.discountPrice * i.quantity,
-                                    0
-                                ) + deleveryCharge :
-                                    discountAmount ? discountAmount + (deleveryCharge ?? 0) : userCart?.totalPrice ? userCart?.totalPrice + (deleveryCharge ?? 0) : 0
+                                id ? (singleProduct ?? 0) + (deleveryCharge ?? 0) :
+                                    !isAuthenticated ? localCart.reduce(
+                                        (sum: number, i: any) =>
+                                            sum + i.discountPrice * i.quantity,
+                                        0
+                                    ) + deleveryCharge :
+                                        discountAmount ? discountAmount + (deleveryCharge ?? 0) : userCart?.totalPrice ? userCart?.totalPrice + (deleveryCharge ?? 0) : 0
                             }
                             </span>
                         </div>
