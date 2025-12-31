@@ -324,7 +324,7 @@ const ProductDetailsMain = () => {
                         {/* Buy Now Button */}
                         <Button
                             onClick={() =>
-                                navigate(`/user/selectadress/${id}`, {
+                                navigate(isAuthenticated ?  `/user/selectadress/${id}` : `/selectadress/${id}`, {
                                     state: { product: singleProduct, quantity },
                                 })
                             }
