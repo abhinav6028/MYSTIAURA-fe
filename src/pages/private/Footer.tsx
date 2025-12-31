@@ -25,12 +25,6 @@ const topInfoRow = [
     title: "Free Shipping",
     content: "You will love at great low prices",
   },
-  // {
-  //     id: 2,
-  //     image: returnSvg,
-  //     title: "15 Days Returns",
-  //     content: "Within 15 days for an exchange"
-  // },
   {
     id: 3,
     image: cutomerSvg,
@@ -79,35 +73,53 @@ const Footer: React.FC = () => {
 
       {/* Middle Contact + Subscribe */}
       <div className="py-10 border-b px-6 sm:px-10 xl:px-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-center md:text-left">
-          {/* Contact */}
-          <div className="flex flex-col justify-center items-center md:items-start">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left items-center">
+
+          {/* CONTACT */}
+          <div className="flex flex-col items-center md:items-start">
             <h3 className="font-bold mb-2">CONTACT US</h3>
             <p style={{ color: PRIMARY_COLOUR }}>+91 9895 380 343</p>
-
-            <div className="space-y-1 mt-2 cursor-pointer">
-              <p onClick={() => navigate("/privacy-policy")}>Privacy policy</p>
-              <p onClick={() => navigate("/terms-condition")}>
-                Terms and Conditions
-              </p>
-              <p onClick={() => navigate("/refund-policy")}>Refund Policy</p>
-            </div>
           </div>
 
-          {/* Social */}
-          <div className="flex flex-col justify-center items-center md:items-end">
+          {/* POLICIES */}
+          <div className="flex flex-col items-center space-y-1">
+            <p
+              onClick={() => navigate("/privacy-policy")}
+              className="cursor-pointer hover:underline"
+            >
+              Privacy Policy
+            </p>
+            <p
+              onClick={() => navigate("/terms-condition")}
+              className="cursor-pointer hover:underline"
+            >
+              Terms & Conditions
+            </p>
+            <p
+              onClick={() => navigate("/refund-policy")}
+              className="cursor-pointer hover:underline"
+            >
+              Refund Policy
+            </p>
+          </div>
+
+          {/* SOCIAL */}
+          <div className="flex flex-col items-center md:items-end">
             <h3 className="font-bold mb-2">SOCIAL NETWORKS</h3>
-            <div className="flex justify-center md:justify-start gap-4">
-              {/* <Facebook className="cursor-pointer" /> */}
-              <a href="https://www.instagram.com/mysti__aura?igsh=Y2Y5eTY3OGg3OWNw">
-                <Instagram className="cursor-pointer" />
+            <div className="flex gap-4">
+              <a
+                href="https://www.instagram.com/mysti__aura?igsh=Y2Y5eTY3OGg3OWNw"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Instagram className="cursor-pointer hover:scale-110 transition" />
               </a>
-              {/* <Twitter className="cursor-pointer" /> */}
-              {/* <YouTube className="cursor-pointer" /> */}
             </div>
           </div>
+
         </div>
       </div>
+
 
       {/* Copyright + Payment */}
       <div
