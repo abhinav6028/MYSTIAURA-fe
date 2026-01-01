@@ -30,16 +30,23 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
     const { data: apiAddresses } = useAddresses();
     const deleteAdress = useDeleteAddress();
 
+    const localCart = JSON.parse(
+        localStorage.getItem("guest_cart") || "[]"
+    );
+
     const [open, setOpen] = useState(false);
     const [selectedData, setSelectedData] = useState<any>(null);
-    const [selectedCheckAddress, setSelectedCheckAddress] = useState<any>(null);
+    const [selectedCheckAddress, setSelectedCheckAddress] = useState<any>(isAuthenticated ? null : localCart[0]);
     const [addressList, setAddressList] = useState<any[]>([]);
     const [showComponent, setShowComponent] = useState(1);
 
     const { id } = useParams();
     const { data: singleProduct } = useProductWithId(id as string);
 
-    console.log("singleProduct", singleProduct);
+    console.log("selectedCheckAddress", selectedCheckAddress);
+
+
+    // localCart
 
 
 
@@ -109,9 +116,7 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
         : 0;
 
     // ------------------ Render ------------------
-    const localCart = JSON.parse(
-        localStorage.getItem("guest_cart") || "[]"
-    );
+
 
     // isAuthenticated
     return (
