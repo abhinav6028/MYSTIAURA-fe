@@ -115,6 +115,7 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
         return isNaN(num) ? 0 : num;
     };
 
+    console.log("addressList", addressList);
 
 
 
@@ -206,7 +207,7 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
                                 open={open}
                                 setOpen={setOpen}
                                 selectedData={selectedData}
-                                // setAddressList={setAddressList}
+                                setAddressList={setAddressList}
                             />
                         </div>
 

@@ -65,7 +65,12 @@ const schema = yup.object({
 }).required();
 
 // ----------------- Component -----------------
-const AddNewAddressModal = ({ open, setOpen, selectedData }: { open: boolean, setOpen: Dispatch<SetStateAction<boolean>>, selectedData: AddressFormOutput }) => {
+const AddNewAddressModal = ({ open, setOpen, selectedData, setAddressList }: {
+  open: boolean,
+  setOpen: Dispatch<SetStateAction<boolean>>,
+  selectedData: AddressFormOutput,
+  setAddressList: Dispatch<SetStateAction<any[]>>;
+}) => {
 
   const createAddressMutation = useCreateAddress();
   const updateAddressMutation = useUpdateAddress();
@@ -139,6 +144,7 @@ const AddNewAddressModal = ({ open, setOpen, selectedData }: { open: boolean, se
         "localAdress",
         JSON.stringify(existingAddresses)
       );
+      setAddressList(existingAddresses)
       setOpen(false);
     }
 
