@@ -255,7 +255,7 @@ const ProductDetailsMain = () => {
                                 style={{ borderColor: PRIMARY_COLOUR }}
                                 className="flex items-center justify-between border w-[120px] sm:w-[140px] md:w-[160px] h-full"
                             >
-                                    
+
                                 <button
                                     onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                                     disabled={quantity === 1}
@@ -293,7 +293,7 @@ const ProductDetailsMain = () => {
                                             localStorage.getItem("guest_cart") || "[]"
                                         );
 
-                                        localCart.push(singleProduct)
+                                        localCart.push({ ...singleProduct, quantity: 1 })
 
                                         console.log("localCart", localCart);
                                         // localStorage?.setItem("guest_cart", localCart)
@@ -321,7 +321,7 @@ const ProductDetailsMain = () => {
                         {/* Buy Now Button */}
                         <Button
                             onClick={() =>
-                                navigate(isAuthenticated ?  `/user/selectadress/${id}` : `/selectadress/${id}`, {
+                                navigate(isAuthenticated ? `/user/selectadress/${id}` : `/selectadress/${id}`, {
                                     state: { product: singleProduct, quantity },
                                 })
                             }

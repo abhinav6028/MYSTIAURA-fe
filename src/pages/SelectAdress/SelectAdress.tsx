@@ -43,13 +43,6 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
     const { id } = useParams();
     const { data: singleProduct } = useProductWithId(id as string);
 
-    console.log("selectedCheckAddress", selectedCheckAddress);
-
-
-    // localCart
-
-
-
     const navigate = useNavigate();
 
     // ------------------ Helpers ------------------
@@ -116,6 +109,14 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
         : 0;
 
     // ------------------ Render ------------------
+
+    const toNumber = (value: any) => {
+        const num = Number(value);
+        return isNaN(num) ? 0 : num;
+    };
+
+
+
 
 
     // isAuthenticated
@@ -205,6 +206,7 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
                                 open={open}
                                 setOpen={setOpen}
                                 selectedData={selectedData}
+                                // setAddressList={setAddressList}
                             />
                         </div>
 
@@ -225,11 +227,18 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
                                                             ? (id
                                                                 ? singleProduct?.discountPrice ?? 0
                                                                 : userCart?.totalPrice ?? 0)
-                                                            : localCart.reduce(
-                                                                (sum: number, i: any) =>
-                                                                    sum + i.discountPrice * i.quantity,
-                                                                0
-                                                            )
+                                                            :
+                                                            localCart.reduce((sum: number, item: any) => {
+                                                                const price = toNumber(item.discountPrice);
+                                                                const qty = toNumber(item.quantity) || 1;
+
+                                                                return sum + price * qty;
+                                                            }, 0)
+                                                    // localCart.reduce(
+                                                    //     (sum: number, i: any) =>
+                                                    //         sum + i.discountPrice * i.quantity,
+                                                    //     0
+                                                    // )
                                                 }
                                             </span>
 
@@ -261,11 +270,12 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
                                                                 ) + deliveryCharge
                                                             )
                                                             : (
-                                                                localCart.reduce(
-                                                                    (sum: number, i: any) =>
-                                                                        sum + i.discountPrice * i.quantity,
-                                                                    0
-                                                                ) + deliveryCharge
+                                                                localCart.reduce((sum: number, item: any) => {
+                                                                    const price = toNumber(item.discountPrice);
+                                                                    const qty = toNumber(item.quantity) || 1;
+
+                                                                    return sum + price * qty;
+                                                                }, 0) + deliveryCharge
                                                             )
                                                 }
                                             </span>

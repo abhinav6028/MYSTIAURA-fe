@@ -372,11 +372,18 @@ export default function ReviewOrder({ selectedCheckAddress, discountAmount, dele
                             <span>Grand Total</span>
                             <span>₹{
                                 id && Object.keys(id).length > 0 ? (singleProduct ?? 0) + (deleveryCharge ?? 0) :
-                                    !isAuthenticated ? localCart.reduce(
-                                        (sum: number, i: any) =>
-                                            sum + i.discountPrice * i.quantity,
-                                        0
-                                    ) + deleveryCharge :
+                                    !isAuthenticated ?
+                                        localCart.reduce(
+                                            (sum: number, i: any) =>
+                                                sum + (Number(i.discountPrice) || 0) * (Number(i.quantity) || 1),
+                                            0
+                                        )
+                                        // localCart.reduce(
+                                        //     (sum: number, i: any) =>
+                                        //         sum + i.discountPrice * i.quantity,
+                                        //     0
+                                        // )
+                                        + deleveryCharge :
                                         discountAmount ? discountAmount + (deleveryCharge ?? 0) : userCart?.totalPrice ? userCart?.totalPrice + (deleveryCharge ?? 0) : 0
                             }
                             </span>
