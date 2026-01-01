@@ -67,10 +67,6 @@ const ProductDetailsMain = () => {
         return () => window.removeEventListener("resize", checkMobile);
     }, []);
 
-
-
-
-
     return (
         <div className="px-4 md:px-6 lg:px-10 py-6">
             {/* Main grid: images + details */}
@@ -259,6 +255,7 @@ const ProductDetailsMain = () => {
                                 style={{ borderColor: PRIMARY_COLOUR }}
                                 className="flex items-center justify-between border w-[120px] sm:w-[140px] md:w-[160px] h-full"
                             >
+                                    
                                 <button
                                     onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                                     disabled={quantity === 1}
