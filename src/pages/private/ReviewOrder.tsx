@@ -189,14 +189,7 @@ export default function ReviewOrder({ selectedCheckAddress, discountAmount, dele
         });
     };
 
-    const one = localCart.reduce(
-        (sum: number, i: any) => sum + i.discountPrice * i.quantity,
-        0
-    )
-
-
-    console.log("one", one);
-    console.log("one", id ? "one" : "two");
+   
 
 
     return (
@@ -324,7 +317,7 @@ export default function ReviewOrder({ selectedCheckAddress, discountAmount, dele
                             <span>
                                 ₹{
                                     id && Object.keys(id).length > 0
-                                        ? (singleProduct ?? 0) + (deleveryCharge ?? 0)
+                                        ? (singleProduct ?? 0) 
                                         : !isAuthenticated
                                             ? localCart.reduce(
                                                 (sum: number, i: any) =>
