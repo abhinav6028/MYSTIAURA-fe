@@ -81,6 +81,26 @@ export default function PrivacyPolicy() {
           Contact: +91 9895 380 343<br />
           Website: <a href="https://www.mystiaura.net/" className="text-blue-600">https://www.mystiaura.net/</a>
         </p>
+        {/* domestic policy */}
+         <h2 className="text-xl font-semibold text-gray-800 mt-6 mb-2"> Domestic Shipping Information</h2>
+         <p className="text-gray-700 mb-4">
+          At <strong>MystiAura</strong>, we understand how important it is for you
+          to receive your purchase in top condition and on time. That’s why we
+          use a large network of courier partners to deliver your products as
+          quickly and safely as possible.
+        </p>
+
+        <p className="text-gray-700 mb-4">
+          Depending on your location, your order will be delivered within
+          <strong> 7–15 business days</strong> from the date it is dispatched
+          from our warehouse.
+        </p>
+
+        <p className="text-gray-700">
+          In case an order is cancelled or lost during transit, the complete
+          order amount, including shipping charges, will be refunded to the
+          original mode of payment.
+        </p>
 
         <footer className="text-center text-gray-500 text-sm mt-10">
           © 2025 MystiAura. All rights reserved.
