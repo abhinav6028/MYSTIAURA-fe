@@ -4,7 +4,7 @@ import GetInspired from "../../components/homepage/GetInspired";
 // import SectionSix from "../../components/homepage/SectionSix";
 import ShopByCategory from "../../components/homepage/ShopByCategory";
 import StunningBanner from "../../components/homepage/StunningBanner";
-import Testimonial from "../../components/homepage/Testimonial";
+// import Testimonial from "../../components/homepage/Testimonial";
 import LayoutContainer from "../../components/layout/LayoutContainer"
 
 const HomePage = () => {
