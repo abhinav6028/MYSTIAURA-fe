@@ -99,14 +99,35 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
         }
     };
 
+    const GCC_COUNTRIES = [
+        "Saudi Arabia",
+        "United Arab Emirates",
+        "UAE",
+        "Qatar",
+        "Kuwait",
+        "Oman",
+        "Bahrain"
+    ];
+
     // ------------------ Delivery Charge ------------------
+    // const deliveryCharge = selectedCheckAddress
+    //     ? selectedCheckAddress.country === "India"
+    //         ? selectedCheckAddress.state === "Kerala"
+    //             ? 50
+    //             : 100
+    //         : 300
+    //     : 0;
+
     const deliveryCharge = selectedCheckAddress
         ? selectedCheckAddress.country === "India"
             ? selectedCheckAddress.state === "Kerala"
                 ? 50
-                : 100
-            : 300
+                : 150
+            : GCC_COUNTRIES.includes(selectedCheckAddress.country)
+                ? 2500
+                : 3000
         : 0;
+
 
     // ------------------ Render ------------------
 
