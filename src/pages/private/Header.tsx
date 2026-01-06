@@ -146,8 +146,7 @@ const Header = () => {
               <img src={phone} alt="phone" className="w-3 h-3 lg:w-6 lg:h-6 md:w-6 md:h-6 sm:w-5 sm:h-5" />
               <span className="ml:1">+91 9895 380 343</span>
             </div>
-            <span className="text-center flex-1 font-medium md:text-[18px] text-[10px]"> Shop for ₹500 or more and get free delivery!
-            </span>
+            <span className="text-center flex-1 font-medium md:text-[18px] text-[10px]"> Shop for ₹500 or more and get free delivery!</span>
             <div className="flex items-center sm:gap-2 md:gap-3 lg:gap-4">
               {/* Language Dropdown */}
 
@@ -317,11 +316,16 @@ const Header = () => {
             </div>
           </div>
         </LayoutContainer>
+        <div className="w-full flex justify-center md:hidden">
+          <span className="text-center font-medium text-[14px]">
+            Shop for ₹500 or more and get free delivery!
+          </span>
+        </div>
 
       </nav>
 
       {/* Mobile Menu Overlay */}
-      <div className={`fixed inset-0 z-40 bg-white lg:hidden transition-all duration-500 ${isMenuOpen
+      <div className={`fixed inset-0 z-40 lg:hidden transition-all duration-500 ${isMenuOpen
         ? 'opacity-100 pointer-events-auto'
         : 'opacity-0 pointer-events-none'
         }`}>
@@ -332,11 +336,13 @@ const Header = () => {
           onClick={toggleMenu}
         ></div>
 
+
+
         {/* Full-screen menu sliding from left */}
         <div className={`absolute top-0 left-0 h-full w-full max-w-sm shadow-2xl transform transition-all duration-500 ease-out ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'
           }`}>
           {/* Menu Header */}
-          <div className="flex items-center justify-between p-6 border-b border-gray-200">
+          <div className="flex items-center justify-between p-6 border-b border-gray-200 ">
             <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               {/* Menu */}
             </h2>
