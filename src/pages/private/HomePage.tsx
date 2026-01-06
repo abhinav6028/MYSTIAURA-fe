@@ -22,7 +22,7 @@ const HomePage = () => {
                 {/* <PopularProducts /> */}
                 <StunningBanner />
             </LayoutContainer>
-            <Testimonial />
+            {/* <Testimonial /> */}
             <LayoutContainer>
                 <GetInspired />
             </LayoutContainer>
