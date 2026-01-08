@@ -118,10 +118,36 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
     //         : 300
     //     : 0;
 
+    const toNumber = (value: any) => {
+        const num = Number(value);
+        return isNaN(num) ? 0 : num;
+    };
+
+    console.log("addressList", addressList);
+
+    const purchaseAmount = (() => {
+        if (id) {
+            return singleProduct?.discountPrice ?? 0;
+        }
+
+        if (isAuthenticated) {
+            return userCart?.totalPrice ?? 0;
+        }
+
+        return localCart.reduce((sum: number, item: any) => {
+            const price = toNumber(item.discountPrice);
+            const qty = toNumber(item.quantity) || 1;
+            return sum + price * qty;
+        }, 0);
+    })();
+
+
     const deliveryCharge = selectedCheckAddress
         ? selectedCheckAddress.country === "India"
             ? selectedCheckAddress.state === "Kerala"
-                ? 50
+                ? purchaseAmount > 500
+                    ? 0
+                    : 50
                 : 150
             : GCC_COUNTRIES.includes(selectedCheckAddress.country)
                 ? 2500
@@ -129,14 +155,21 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
         : 0;
 
 
+
+    // const deliveryCharge = selectedCheckAddress
+    //     ? selectedCheckAddress.country === "India"
+    //         ? selectedCheckAddress.state === "Kerala"
+    //             ? 50
+    //             : 150
+    //         : GCC_COUNTRIES.includes(selectedCheckAddress.country)
+    //             ? 2500
+    //             : 3000
+    //     : 0;
+
+
     // ------------------ Render ------------------
 
-    const toNumber = (value: any) => {
-        const num = Number(value);
-        return isNaN(num) ? 0 : num;
-    };
 
-    console.log("addressList", addressList);
 
 
 
