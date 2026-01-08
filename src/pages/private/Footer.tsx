@@ -17,6 +17,7 @@ import discoverSvg from "../../assets/footer/discover.svg";
 import mastercardSvg from "../../assets/footer/mastercard.svg";
 import { PRIMARY_COLOUR } from "../../utils";
 import { useNavigate } from "react-router-dom";
+import logo from "../../assets/threads.png"
 
 const topInfoRow = [
   {
@@ -107,6 +108,9 @@ const Footer: React.FC = () => {
           <div className="flex flex-col items-center md:items-end">
             <h3 className="font-bold mb-2">SOCIAL NETWORKS</h3>
             <div className="flex gap-4">
+              <a href="https://www.threads.com/@mysti__aura">
+                <img src={logo} alt="" className="w-6 h-6" />
+              </a>
               <a
                 href="https://www.instagram.com/mysti__aura?igsh=Y2Y5eTY3OGg3OWNw"
                 target="_blank"
