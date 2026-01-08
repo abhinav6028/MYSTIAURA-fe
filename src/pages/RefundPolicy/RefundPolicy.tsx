@@ -27,7 +27,7 @@ export default function RefundPolicy() {
 
                 <h2 className="text-xl font-semibold text-gray-800 mt-6 mb-2">Cancellation policy</h2>
                 <p className="text-gray-700 mb-2">
-                    mystiaura.net reserves the right to cancel an order without cause if the request is not complied with. The company will ensure timely notice of order cancellation or applicable refund. If the customer partially cancels when the total cart value is less than the free shipping amount, ohbyozy.com reserves the right to charge his Rs.99/- shipping fee.
+                    mystiaura.net reserves the right to cancel an order without cause if the request is not complied with. The company will ensure timely notice of order cancellation or applicable refund. If the customer partially cancels when the total cart value is less than the free shipping amount, mystiaura.net reserves the right to charge his Rs.99/- shipping fee.
                 </p>
 
                 <h2 className="text-xl font-semibold text-gray-800 mt-6 mb-2">Cookies</h2>
@@ -68,7 +68,7 @@ export default function RefundPolicy() {
                 <h2 className="text-xl font-semibold text-gray-800 mt-6 mb-2">Grievance Officer & Contact</h2>
                 <p className="text-gray-700 mb-2">
                     {/* Mr. Shremanth M, Senior Manager, MystiAura Pvt Ltd.<br /> */}
-                    Email: <a href="mailto:privacy@mystiaura.net" className="text-blue-600">privacy@mystiaura.net</a><br />
+                    Email: <a href="mailto:mystiaura108@gmail.com" className="text-blue-600">mystiaura108@gmail.com</a><br />
                     Contact: +91 9895 380 343<br />
                     Website: <a href="https://www.mystiaura.net/" className="text-blue-600">https://www.mystiaura.net/</a>
                 </p>

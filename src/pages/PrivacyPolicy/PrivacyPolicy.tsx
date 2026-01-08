@@ -77,7 +77,7 @@ export default function PrivacyPolicy() {
         <h2 className="text-xl font-semibold text-gray-800 mt-6 mb-2">Grievance Officer & Contact</h2>
         <p className="text-gray-700 mb-2">
           {/* Mr. Shremanth M, Senior Manager, MystiAura Pvt Ltd.<br /> */}
-          Email: <a href="mailto:privacy@mystiaura.net" className="text-blue-600">privacy@mystiaura.net</a><br />
+          Email: <a href="mailto:mystiaura108@gmail.com" className="text-blue-600">mystiaura108@gmail.com</a><br />
           Contact: +91 9895 380 343<br />
           Website: <a href="https://www.mystiaura.net/" className="text-blue-600">https://www.mystiaura.net/</a>
         </p>
