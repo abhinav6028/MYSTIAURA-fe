@@ -44,7 +44,7 @@ const Footer: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <footer className="w-full">
+    <footer className="w-full mt-10">
       {/* Top Info Row */}
       <div
         style={{ background: PRIMARY_COLOUR }}

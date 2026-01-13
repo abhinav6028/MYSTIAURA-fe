@@ -1,5 +1,5 @@
 import BestSellerProduct from "../../components/homepage/BestSellerProduct";
-import GetInspired from "../../components/homepage/GetInspired";
+// import GetInspired from "../../components/homepage/GetInspired";
 // import HeroBannerSection from "../../components/homepage/HeroBannerSection"
 // import SectionSix from "../../components/homepage/SectionSix";
 import ShopByCategory from "../../components/homepage/ShopByCategory";
@@ -23,9 +23,9 @@ const HomePage = () => {
                 <StunningBanner />
             </LayoutContainer>
             {/* <Testimonial /> */}
-            <LayoutContainer>
+            {/* <LayoutContainer>
                 <GetInspired />
-            </LayoutContainer>
+            </LayoutContainer> */}
         </div>
     )
 }
