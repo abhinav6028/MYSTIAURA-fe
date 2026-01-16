@@ -1,5 +1,5 @@
 import { ArrowUpRight, Heart } from "lucide-react";
-import subbanner from "../../assets/homepage/subbanner.png";
+// import subbanner from "../../assets/homepage/subbanner.png";
 import { FONT_FAMILY, navigatePath, PRIMARY_COLOUR } from "../../utils";
 import { useNavigate } from "react-router-dom";
 import { useProductList } from "../../services/api/product/product";
@@ -158,13 +158,13 @@ const BestSellerProduct = () => {
             </div>
 
             {/* Sub-banner */}
-            <div className="py-10 px-4">
+            {/* <div className="py-10 px-4">
                 <img
                     src={subbanner}
                     alt=""
                     className="w-full h-80 md:h-[40rem] object-cover"
                 />
-            </div>
+            </div> */}
         </div >
     )
 }
