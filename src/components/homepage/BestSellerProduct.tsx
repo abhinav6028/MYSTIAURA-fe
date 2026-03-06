@@ -17,9 +17,6 @@ const BestSellerProduct = () => {
     const deleteWishListItem = useRemoveFromWishList();
     const createAddToCart = useAddToCartProduct();
 
-
-
-
     const addToGuestWish = (product: any) => {
         const cartKey = "guest_cart";
 
@@ -42,6 +39,8 @@ const BestSellerProduct = () => {
         }
 
         localStorage.setItem(cartKey, JSON.stringify(existingCart));
+        window.dispatchEvent(new Event("guestCartUpdated"));
+
     };
     return (
         <div className="pb-8">

@@ -124,12 +124,25 @@ const Header = () => {
     "Neck in Shop By Gender",
   ];
 
-  const localCart = JSON.parse(
-    localStorage.getItem("guest_cart") || "[]"
-  );
+  // const localCart = JSON.parse(
+  //   localStorage.getItem("guest_cart") || "[]"
+  // );
+  const [guestCartCount, setGuestCartCount] = useState(0);
 
-  console.log("localCart", localCart.length);
+  useEffect(() => {
+    const updateGuestCart = () => {
+      const cart = JSON.parse(localStorage.getItem("guest_cart") || "[]");
+      setGuestCartCount(cart.length);
+    };
 
+    updateGuestCart(); // initial load
+
+    window.addEventListener("guestCartUpdated", updateGuestCart);
+
+    return () => {
+      window.removeEventListener("guestCartUpdated", updateGuestCart);
+    };
+  }, []);
 
   return (
     <>
@@ -285,12 +298,8 @@ const Header = () => {
                 </div>
               }
               {/* localCart.length */}
-              <Badge badgeContent={isAuthenticated ? cartCount : localCart.length} color="primary">
+              <Badge badgeContent={isAuthenticated ? cartCount : guestCartCount} color="primary">
                 <ShoppingCart onClick={() => {
-                  // if (!isAuthenticated) {
-                  //   return;
-                  // }
-                  // navigate(`{isAuthenticated ? "users/mycart" : "/mycart"}`);
                   navigate(isAuthenticated ? "/user/mycart" : "/mycart");
                 }} className="cursor-pointer w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-7 lg:h-7" strokeWidth={1} />
               </Badge>
