@@ -172,8 +172,8 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
             ? selectedCheckAddress.state === "Kerala"
                 ? purchaseAmount > 500
                     ? 0
-                    : 50
-                : 150
+                    : 60
+                : 100
             : GCC_COUNTRIES.includes(selectedCheckAddress.country)
                 ? 2500
                 : 3000
