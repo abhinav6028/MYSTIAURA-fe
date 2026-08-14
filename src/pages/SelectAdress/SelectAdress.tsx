@@ -1,4 +1,3 @@
-
 import LayoutContainer from '../../components/layout/LayoutContainer'
 import { FONT_FAMILY } from '../../utils'
 
@@ -36,9 +35,18 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
 
     const [open, setOpen] = useState(false);
     const [selectedData, setSelectedData] = useState<any>(null);
-    const [selectedCheckAddress, setSelectedCheckAddress] = useState<any>(isAuthenticated ? null : localCart[0]);
+    const [selectedCheckAddress, setSelectedCheckAddress] = useState<any>(null);
     const [addressList, setAddressList] = useState<any[]>([]);
     const [showComponent, setShowComponent] = useState(1);
+
+    const getAddressKey = (item: any) => {
+        if (!item) return "";
+        return item._id || `${item.phone || ""}-${item.addressLine1 || ""}-${item.city || ""}`;
+    };
+
+    const isSameAddress = (a: any, b: any) => {
+        return !!a && !!b && getAddressKey(a) === getAddressKey(b);
+    };
 
     const { id } = useParams();
     const { data: singleProduct } = useProductWithId(id as string);
@@ -65,16 +73,33 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
         }
     }, [isAuthenticated, apiAddresses]);
 
+    useEffect(() => {
+        if (addressList.length === 0) return;
+
+        if (!selectedCheckAddress) {
+            setSelectedCheckAddress(addressList[0]);
+            return;
+        }
+
+        const selectedStillExists = addressList.some((item) => isSameAddress(item, selectedCheckAddress));
+        if (!selectedStillExists) {
+            setSelectedCheckAddress(addressList[0]);
+        }
+    }, [addressList, selectedCheckAddress]);
+
     // ------------------ Handlers ------------------
     const handleEdit = (item: any) => {
         setSelectedData(item);
         setOpen(true);
     };
 
+    const handleAddressSelect = (item: any) => {
+        setSelectedCheckAddress(item);
+    };
 
     const handleDelete = (item: any) => {
         // If deleted item is currently selected → clear selection
-        if (selectedCheckAddress?._id === item._id) {
+        if (isSameAddress(selectedCheckAddress, item)) {
             setSelectedCheckAddress(null);
         }
 
@@ -223,9 +248,8 @@ export default function SelectAdress({ showItems }: SelectAddressProps) {
                                                 <input
                                                     type="radio"
                                                     name="selectedAddress"
-                                                    checked={selectedCheckAddress?._id === item._id}
-                                                    onClick={() => setSelectedCheckAddress(item)}
-                                                    onChange={() => setSelectedCheckAddress(item)}
+                                                    checked={isSameAddress(selectedCheckAddress, item)}
+                                                    onChange={() => handleAddressSelect(item)}
                                                     className="mt-2"
                                                 />
 
