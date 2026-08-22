@@ -164,7 +164,7 @@ export default function ReviewOrder({ selectedCheckAddress, discountAmount, dele
         const payload = {
             items: isAuthenticated
                 ?
-                singlePaymentProduct ? [{ product: singlePaymentProduct, quantity: location.state?.quantity || 1, price: singlePaymentProduct?.price - (singlePaymentProduct?.price * (singlePaymentProduct?.discountPrice / 100)) }]
+                singlePaymentProduct ? [{ product: singlePaymentProduct._id, quantity: location.state?.quantity || 1 }]
                     :
                     cartItems?.items
                 :

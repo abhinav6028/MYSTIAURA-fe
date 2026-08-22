@@ -59,8 +59,8 @@ const ReviewDialog = () => {
     }, [open, reset]);
 
     const onSubmit = async (data: ReviewFormData) => {
-        const response = await createReview.mutateAsync({ ...data, productId: id });
-        if (response.status === 201) {
+        const response = await createReview.mutateAsync({ comment: data.review, rating: data.rating, productId: id });
+        if (response.success) {
             reset();
             setOpen(false);
         }

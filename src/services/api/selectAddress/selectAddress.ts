@@ -35,7 +35,7 @@ export function useCreateAddress() {
   return useMutation({
     mutationFn: async (newAddress: Address) => {
       const res = await apiClient.post("/api/address", newAddress);
-      return res.data.address; // assuming API returns { address: Address }
+      return res.data.data;
     },
     onSuccess: () => {
       notify.success("Address created successfully!");
@@ -55,7 +55,7 @@ export function useUpdateAddress() {
     mutationFn: async (updatedAddress: Address) => {
       if (!updatedAddress._id) throw new Error("Address ID is required");
       const res = await apiClient.put(`/api/address/${updatedAddress._id}`, updatedAddress);
-      return res.data.address;
+      return res.data.data;
     },
     onSuccess: (res) => {
       notify.success(res?.message || "Address updated successfully!");

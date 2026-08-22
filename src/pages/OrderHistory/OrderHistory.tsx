@@ -75,7 +75,7 @@ export default function MyOrders() {
                                 <div className="flex-1">
                                     <div className="flex flex-wrap items-center gap-2 text-sm mb-1">
                                         <span
-                                            className={`px-3 py-1 rounded-lg text-white text-xs ${order.orderStatus === "Delivered" ? "bg-green-500" : "bg-yellow-500"
+                                            className={`px-3 py-1 rounded-lg text-white text-xs ${order.orderStatus?.toLowerCase() === "delivered" ? "bg-green-500" : "bg-yellow-500"
                                                 }`}
                                         >
                                             {order.orderStatus}
